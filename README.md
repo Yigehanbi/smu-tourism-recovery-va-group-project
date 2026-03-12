@@ -98,4 +98,7 @@ powershell -ExecutionPolicy Bypass -File scripts/start-dev.ps1 -DryRun
 
 ## Repository
 
-GitHub URL will be updated after first push.
+[smu-tourism-recovery-va-group-project](https://github.com/ZoRan-Wang/smu-tourism-recovery-va-group-project)
+
+Team members can clone directly with this link.  
+For write access, add collaborators in repository `Settings -> Collaborators`.
