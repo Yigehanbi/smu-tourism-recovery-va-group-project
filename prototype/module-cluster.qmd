@@ -299,12 +299,16 @@ cluster_results <- cluster_results |>
   )
 
 cluster_size_table <- cluster_results |>
-  count(state_label, name = "Months")
+  count(state_label, name = "Months") |>
+  arrange(state_label)
+
+largest_state_name <- as.character(cluster_size_table$state_label[which.max(cluster_size_table$Months)])
+largest_state_months <- cluster_size_table$Months[which.max(cluster_size_table$Months)]
 
 knitr::kable(cluster_size_table, align = c("l", "r"))
 ```
 
-The fitted model produces three interpretable groups, with the high-performance state containing the largest number of months.
+The fitted model produces three interpretable groups. In the current dataset, the largest group is `r largest_state_name` with `r largest_state_months` months.
 
 ## 12. Examine The Standardized Cluster Centers
 
@@ -316,11 +320,12 @@ center_table <- as.data.frame(cluster_fit$centers) |>
   left_join(label_map, by = "cluster_id") |>
   transmute(
     `Market state` = state_label,
-    `Center: visitor arrivals` = round(visitor_arrivals, 3),
-    `Center: China share` = round(china_share, 3),
-    `Center: hotel occupancy` = round(hotel_occ, 3),
-    `Center: stay length` = round(avg_stay_monthly_capped, 3)
-  )
+    `Standardized center: visitor arrivals` = round(visitor_arrivals, 3),
+    `Standardized center: China share` = round(china_share, 3),
+    `Standardized center: hotel occupancy` = round(hotel_occ, 3),
+    `Standardized center: stay length` = round(avg_stay_monthly_capped, 3)
+  ) |>
+  arrange(match(`Market state`, levels(cluster_results$state_label)))
 
 knitr::kable(center_table, align = c("l", "r", "r", "r", "r"))
 ```
@@ -427,10 +432,16 @@ period_state_view <- period_state_view |>
     Recovery = recovery
   )
 
+high_perf_pre_covid <- period_state_view$`Pre-COVID`[period_state_view$`Market state` == "High-performance months"]
+high_perf_recovery <- period_state_view$Recovery[period_state_view$`Market state` == "High-performance months"]
+shock_covid <- period_state_view$`COVID shock`[period_state_view$`Market state` == "Pandemic shock months"]
+transition_covid <- period_state_view$`COVID shock`[period_state_view$`Market state` == "Recovery transition months"]
+transition_recovery <- period_state_view$Recovery[period_state_view$`Market state` == "Recovery transition months"]
+
 knitr::kable(period_state_view, align = c("l", "r", "r", "r"))
 ```
 
-This table confirms the storytelling logic of the model: the high-performance state covers all pre-COVID months and many recovery months, while the shock and transition states capture the disturbed part of the tourism timeline.
+This table confirms the storytelling logic of the model. In the current data, the high-performance state contains `r high_perf_pre_covid` pre-COVID months and `r high_perf_recovery` recovery months, the pandemic shock state contains `r shock_covid` COVID-shock months, and the recovery transition state spans `r transition_covid` COVID-shock months plus `r transition_recovery` recovery months.
 
 ## 17. Define The UI Parameters
 

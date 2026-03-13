@@ -28,6 +28,14 @@ The draft said "start with K = 3", but it did not show the elbow pattern, silhou
 
 The original file was a short module note, not a full prototype report. It lacked a visible end-to-end analytical workflow, detailed results sections, and a stronger explanation layer after each output.
 
+### Finding 6: Some narrative statements were too static
+
+After the restructuring, a few explanatory sentences still assumed fixed outcomes, such as which state was the largest. That could drift out of sync if the dataset changed later.
+
+### Finding 7: The centroid table labels could be misread
+
+The cluster-center table displayed standardized values, but the column names did not make that explicit enough. A reader could incorrectly read them as raw monthly averages.
+
 ## Fixes Implemented
 
 1. Rewrote `prototype/module-cluster.qmd` again into smaller analytical blocks.
@@ -36,7 +44,9 @@ The original file was a short module note, not a full prototype report. It lacke
 4. Kept package loading and data import visible.
 5. Retained `avg_stay_monthly_capped` as the modeling stay variable.
 6. Preserved the code-generated elbow, silhouette, cluster profile, and timeline outputs.
-7. Kept the narrative aligned with the Habari Tanzania reference structure while using k-means appropriately for continuous monthly data.
+7. Replaced static statements with result-driven narrative where appropriate.
+8. Renamed the centroid columns so they clearly indicate standardized values.
+9. Kept the narrative aligned with the Habari Tanzania reference structure while using k-means appropriately for continuous monthly data.
 
 ## Verification Checklist
 
@@ -47,6 +57,8 @@ The original file was a short module note, not a full prototype report. It lacke
 | Visible data import section included | PASS | workbook path and sheet import are shown directly |
 | Modeling variables match cleaned data design | PASS | uses `visitor_arrivals`, `china_share`, `hotel_occ`, `avg_stay_monthly_capped` |
 | Results are generated from code | PASS | tables and figures are produced from chunk objects |
+| Narrative statements are data-driven | PASS | the largest-state and period-distribution text now reads from computed objects |
+| Standardized centers are clearly labeled | PASS | center-table headers now state that values are standardized |
 | UI design section included | PASS | parameter and output exposure are documented via code-generated tables |
 | Quarto page renders successfully | PASS | verified with `quarto render prototype/module-cluster.qmd` |
 | Review report page renders successfully | PASS | verified with `quarto render prototype/wang-zhuoran-review-report.qmd` |

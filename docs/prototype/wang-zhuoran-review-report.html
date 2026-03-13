@@ -157,6 +157,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#finding-3-the-stay-duration-feature-was-underspecified" id="toc-finding-3-the-stay-duration-feature-was-underspecified" class="nav-link" data-scroll-target="#finding-3-the-stay-duration-feature-was-underspecified">Finding 3: The stay-duration feature was underspecified</a></li>
   <li><a href="#finding-4-the-choice-of-k-3-needed-evidence" id="toc-finding-4-the-choice-of-k-3-needed-evidence" class="nav-link" data-scroll-target="#finding-4-the-choice-of-k-3-needed-evidence">Finding 4: The choice of <code>k = 3</code> needed evidence</a></li>
   <li><a href="#finding-5-the-page-was-not-yet-submission-ready" id="toc-finding-5-the-page-was-not-yet-submission-ready" class="nav-link" data-scroll-target="#finding-5-the-page-was-not-yet-submission-ready">Finding 5: The page was not yet submission-ready</a></li>
+  <li><a href="#finding-6-some-narrative-statements-were-too-static" id="toc-finding-6-some-narrative-statements-were-too-static" class="nav-link" data-scroll-target="#finding-6-some-narrative-statements-were-too-static">Finding 6: Some narrative statements were too static</a></li>
+  <li><a href="#finding-7-the-centroid-table-labels-could-be-misread" id="toc-finding-7-the-centroid-table-labels-could-be-misread" class="nav-link" data-scroll-target="#finding-7-the-centroid-table-labels-could-be-misread">Finding 7: The centroid table labels could be misread</a></li>
   </ul></li>
   <li><a href="#fixes-implemented" id="toc-fixes-implemented" class="nav-link" data-scroll-target="#fixes-implemented">Fixes Implemented</a></li>
   <li><a href="#verification-checklist" id="toc-verification-checklist" class="nav-link" data-scroll-target="#verification-checklist">Verification Checklist</a></li>
@@ -213,6 +215,14 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="finding-5-the-page-was-not-yet-submission-ready">Finding 5: The page was not yet submission-ready</h3>
 <p>The original file was a short module note, not a full prototype report. It lacked a visible end-to-end analytical workflow, detailed results sections, and a stronger explanation layer after each output.</p>
 </section>
+<section id="finding-6-some-narrative-statements-were-too-static" class="level3">
+<h3 class="anchored" data-anchor-id="finding-6-some-narrative-statements-were-too-static">Finding 6: Some narrative statements were too static</h3>
+<p>After the restructuring, a few explanatory sentences still assumed fixed outcomes, such as which state was the largest. That could drift out of sync if the dataset changed later.</p>
+</section>
+<section id="finding-7-the-centroid-table-labels-could-be-misread" class="level3">
+<h3 class="anchored" data-anchor-id="finding-7-the-centroid-table-labels-could-be-misread">Finding 7: The centroid table labels could be misread</h3>
+<p>The cluster-center table displayed standardized values, but the column names did not make that explicit enough. A reader could incorrectly read them as raw monthly averages.</p>
+</section>
 </section>
 <section id="fixes-implemented" class="level2">
 <h2 class="anchored" data-anchor-id="fixes-implemented">Fixes Implemented</h2>
@@ -223,6 +233,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Kept package loading and data import visible.</li>
 <li>Retained <code>avg_stay_monthly_capped</code> as the modeling stay variable.</li>
 <li>Preserved the code-generated elbow, silhouette, cluster profile, and timeline outputs.</li>
+<li>Replaced static statements with result-driven narrative where appropriate.</li>
+<li>Renamed the centroid columns so they clearly indicate standardized values.</li>
 <li>Kept the narrative aligned with the Habari Tanzania reference structure while using k-means appropriately for continuous monthly data.</li>
 </ol>
 </section>
@@ -266,6 +278,16 @@ ul.task-list li input[type="checkbox"] {
 <td>Results are generated from code</td>
 <td>PASS</td>
 <td>tables and figures are produced from chunk objects</td>
+</tr>
+<tr class="even">
+<td>Narrative statements are data-driven</td>
+<td>PASS</td>
+<td>the largest-state and period-distribution text now reads from computed objects</td>
+</tr>
+<tr class="odd">
+<td>Standardized centers are clearly labeled</td>
+<td>PASS</td>
+<td>center-table headers now state that values are standardized</td>
 </tr>
 <tr class="even">
 <td>UI design section included</td>
