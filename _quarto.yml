@@ -18,8 +18,8 @@ website:
     right:
       - href: index.qmd
         text: Home
-      - href: take-home-ex2.qmd
-        text: Take-home 2
+      - href: Proposal/Proposal.qmd
+        text: Proposal
       - text: Prototype
         menu:
           - href: prototype/module-cluster.qmd
