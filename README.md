@@ -54,6 +54,10 @@ group_project/
 
 ## Quick Start
 
+Open the RStudio project file in the repository root:
+
+`smu-tourism-recovery-va-group-project.Rproj`
+
 1. Run package audit and smoke tests:
 
 ```bash
