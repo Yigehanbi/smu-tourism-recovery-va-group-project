@@ -13,6 +13,13 @@ This record documents the team's early coordination work, code review outcomes, 
 3. Added the `Proposal/` draft materials so the project site could keep a proposal page as a shared working draft.
 4. Provided the analytical baseline for decision-tree and random-forest modeling, including exported figures and result tables for later team integration.
 
+## Xi Zixun's Contributions
+
+1. Contributed the exploratory data analysis and confirmatory data analysis materials that were later incorporated into the project site.
+2. Added branch content that expanded the analytical coverage of the prototype beyond clustering and tree-based modeling.
+3. Helped strengthen the team's project structure by contributing coursework-ready analysis pages that align with the group storyline on tourism recovery.
+4. Provided additional visual and statistical analysis outputs that support the project's interpretation of tourism trends across the study periods.
+
 ## Wang Zhuoran Review Work
 
 1. Reviewed the `jin-qinhao` branch against `main` and confirmed that the uppercase `JIN-QINHAO` branch was an erroneous branch.
@@ -25,7 +32,8 @@ This record documents the team's early coordination work, code review outcomes, 
 
 1. The `Proposal` page remains in place as a draft reference for the team.
 2. Jin Qinghao's coursework materials were corrected and validated in the shared repository environment.
-3. The current `main` branch is ready for continued development in Quarto and RStudio.
+3. Xi Zixun's analysis contributions were incorporated into the shared project history and recognized as part of the team's analytical development.
+4. The current `main` branch is ready for continued development in Quarto and RStudio.
 
 ## Follow-up Guidelines
 
