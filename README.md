@@ -3,7 +3,7 @@
 This project combines **Quarto coursework publishing** and a **modular Shiny prototype** for:
 
 Take-home Exercise 2: Prototyping Modules for Visual Analytics Shiny Application  
-Due date: **March 15, 2026**
+Due date: **March 15, 2026** (Individual) | **March 18, 2026** (Project Proposal)
 
 ## What This Starter Includes
 
