@@ -593,5 +593,61 @@
     "title": "Visualization of classification trees and random forest analysis",
     "section": "3.8Export results",
     "text": "3.8Export results\n\n\nShow the code\nwrite.csv(\n  metrics_tbl,\n  file.path(output_dir, \"random_forest_metrics.csv\"),\n  row.names = FALSE\n)\n\nwrite.csv(\n  conf_tbl,\n  file.path(output_dir, \"random_forest_confusion_matrix.csv\"),\n  row.names = FALSE\n)\n\nwrite.csv(\n  importance_tbl,\n  file.path(output_dir, \"random_forest_variable_importance.csv\"),\n  row.names = FALSE\n)\n\nwrite.csv(\n  oob_tbl,\n  file.path(output_dir, \"random_forest_oob_accuracy.csv\"),\n  row.names = FALSE\n)\n\nprediction_tbl &lt;- bind_cols(\n  test_df %&gt;% select(date, hotel_occ_level_tertile),\n  tibble(predicted_class = pred_class),\n  pred_prob\n)\n\nwrite.csv(\n  prediction_tbl,\n  file.path(output_dir, \"random_forest_test_predictions.csv\"),\n  row.names = FALSE\n)\n\ncat(\"Random forest analysis complete.\\n\")\n\n\nRandom forest analysis complete.\n\n\nShow the code\ncat(\"Outputs saved to:\", output_dir, \"\\n\")\n\n\nOutputs saved to: C:/Users/12697/Desktop/VAA 小组作业/team/jin-qinhao/Take-Home-Exercise2/outputs"
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html",
+    "href": "prototype/module-decision-tree.html",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "",
+    "text": "Prototype a Shiny module that explains hotel occupancy classification with an interpretable decision tree and supporting diagnostics."
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html#objective",
+    "href": "prototype/module-decision-tree.html#objective",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "",
+    "text": "Prototype a Shiny module that explains hotel occupancy classification with an interpretable decision tree and supporting diagnostics."
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html#data-contract",
+    "href": "prototype/module-decision-tree.html#data-contract",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "Data Contract",
+    "text": "Data Contract\nInput dataset: team/jin-qinhao/Take-Home-Exercise2/data/tourism_decision_tree_ready.csv\nRequired fields:\n\ndate\nmonth\nquarter\nperiod\nvisitor_arrivals\nvisitor_arrivals_china\nchina_share\nhotel_occ\navg_stay_monthly_capped\nhotel_occ_level_tertile\ndataset_split\n\nDerived fields used by the module:\n\narrivals_million\nchina_share_pct\nstay_days"
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html#analytical-design",
+    "href": "prototype/module-decision-tree.html#analytical-design",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "Analytical Design",
+    "text": "Analytical Design\n\nLoad the prepared classification dataset.\nSplit observations into training and testing sets with dataset_split.\nDerive presentation-friendly predictors for the tree view.\nTrain a classification tree to predict hotel_occ_level_tertile.\nTune and prune the tree using the minimum cross-validation error.\nGenerate an interpretable tree image and an interactive HTML tree.\nScore the test set and compute confusion matrix, accuracy, kappa, and variable importance.\nReturn visuals and summary cards for the Shiny page."
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html#parameter-exposure",
+    "href": "prototype/module-decision-tree.html#parameter-exposure",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "Parameter Exposure",
+    "text": "Parameter Exposure\n\n\n\n\n\n\n\n\n\nParameter\nUI Component\nDefault\nValidation\n\n\n\n\ntree_view_mode\nradioButtons\nstatic image\none of static / interactive\n\n\nprediction_rows\nsliderInput\n10\nmin 5, max 20\n\n\nprediction_filter\nselectInput\nall rows\nvalid option only\n\n\nactual_class_filter\nselectInput\nall classes\nvalid occupancy label\n\n\ntop_variables\nsliderInput\n4\nmin 1, max 6"
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html#output-exposure",
+    "href": "prototype/module-decision-tree.html#output-exposure",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "Output Exposure",
+    "text": "Output Exposure\n\n\n\n\n\n\n\n\nOutput\nFormat\nPurpose\n\n\n\n\nDecision tree visual\nimage / HTML widget\nExplain the split path and occupancy classes\n\n\nComplexity parameter table\nDT::datatable\nShow pruning path and selected CP\n\n\nConfusion matrix\nggplot2 heatmap\nShow where classes are mixed up\n\n\nPrediction preview\nDT::datatable\nInspect actual vs predicted records\n\n\nKPI cards\nstyled value boxes\nHighlight accuracy, kappa, chosen CP, leaf nodes\n\n\nKey message card\ntext block\nSummarize main split and hardest class"
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html#implementation-files",
+    "href": "prototype/module-decision-tree.html#implementation-files",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "Implementation Files",
+    "text": "Implementation Files\n\nshiny/app.R\nteam/jin-qinhao/Take-Home-Exercise2/Take-Home-Exercise2.qmd\nteam/jin-qinhao/Take-Home-Exercise2/data/tourism_decision_tree_ready.csv\nteam/jin-qinhao/Take-Home-Exercise2/outputs/decision_tree_visual.html\nteam/jin-qinhao/Take-Home-Exercise2/outputs/decision_tree_static.png"
+  },
+  {
+    "objectID": "prototype/module-decision-tree.html#quality-gates",
+    "href": "prototype/module-decision-tree.html#quality-gates",
+    "title": "Module Prototype: Decision Tree Analysis",
+    "section": "Quality Gates",
+    "text": "Quality Gates\n\nNo missing target labels in the training or testing sets.\nTree rendering must work even when the source workbook changes column order.\nOccupancy labels must be shown consistently as Low Occupancy, Medium Occupancy, and High Occupancy in the app.\nThe published Quarto page and the Shiny module must point to the same analysis outputs.\nRendered assets must be committed under docs/prototype/ before review."
   }
 ]
