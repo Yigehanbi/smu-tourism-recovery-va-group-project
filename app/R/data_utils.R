@@ -67,6 +67,48 @@ clean_country_series_label <- function(x) {
   x
 }
 
+load_clustering_series_metadata <- function(path = resolve_arrival_workbook()) {
+  processed_path <- resolve_processed_path("clustering_series_metadata.csv")
+
+  if (file.exists(processed_path)) {
+    meta <- read.csv(processed_path, stringsAsFactors = FALSE, check.names = FALSE)
+  } else {
+    catalog <- country_series_catalog(path)
+    meta <- catalog |>
+      transmute(
+        series_id = series_label,
+        country = clean_country_series_label(raw_name),
+        source_column = raw_name
+      )
+  }
+
+  meta |>
+    mutate(
+      display_name = make.unique(clean_country_series_label(source_column))
+    )
+}
+
+clustering_display_lookup <- function(path = resolve_arrival_workbook()) {
+  meta <- load_clustering_series_metadata(path)
+  lookup <- meta$display_name
+  names(lookup) <- meta$series_id
+  lookup
+}
+
+display_names_for_series <- function(series_ids, path = resolve_arrival_workbook()) {
+  lookup <- clustering_display_lookup(path)
+  labels <- unname(lookup[series_ids])
+
+  missing_idx <- which(is.na(labels) | labels == "")
+  if (length(missing_idx) > 0) {
+    fallback <- gsub("_", " ", series_ids[missing_idx], fixed = TRUE)
+    fallback <- tools::toTitleCase(fallback)
+    labels[missing_idx] <- fallback
+  }
+
+  labels
+}
+
 country_series_catalog <- function(path = resolve_arrival_workbook()) {
   meta <- read_arrival_metadata(path)
 
@@ -155,9 +197,15 @@ load_clustering_country_long <- function(path = resolve_arrival_workbook()) {
   long
 }
 
-available_clustering_series <- function(path = resolve_arrival_workbook()) {
+available_clustering_series <- function(path = resolve_arrival_workbook(), named = TRUE) {
   wide <- load_clustering_country_wide(path)
-  setdiff(names(wide), "date")
+  series_ids <- setdiff(names(wide), "date")
+
+  if (!named) {
+    return(series_ids)
+  }
+
+  stats::setNames(series_ids, display_names_for_series(series_ids, path = path))
 }
 
 default_clustering_series <- function(path = resolve_arrival_workbook(), n = 8) {
@@ -322,17 +370,36 @@ assign_cluster_labels <- function(cluster_summary) {
   cluster_summary
 }
 
-summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china_series = NULL) {
+summarize_cluster_solution <- function(
+  panel,
+  cluster_id,
+  distance_matrix,
+  china_series = NULL,
+  series_labels = NULL
+) {
+  if (is.null(series_labels)) {
+    series_labels <- stats::setNames(panel$series, panel$series)
+  }
+
+  series_name_for <- function(series_id) {
+    label <- unname(series_labels[series_id])
+    if (is.na(label) || label == "") {
+      return(series_id)
+    }
+    label
+  }
+
   sil <- as.data.frame(cluster::silhouette(cluster_id, distance_matrix))
   sil_width <- as.numeric(sil$sil_width)
 
   membership <- data.frame(
     series = rownames(panel$matrix),
+    series_name = vapply(rownames(panel$matrix), series_name_for, character(1)),
     cluster = paste0("Cluster ", cluster_id),
     silhouette = round(sil_width, 3),
     stringsAsFactors = FALSE
   ) |>
-    arrange(cluster, desc(silhouette), series)
+    arrange(cluster, desc(silhouette), series_name)
 
   candidate_k <- 2:min(8, nrow(panel$matrix) - 1)
   diagnostics <- lapply(
@@ -368,6 +435,7 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
       cluster = paste0("Cluster ", cl),
       n_series = length(members),
       representative_series = medoid,
+      representative_series_name = series_name_for(medoid),
       mean_silhouette = round(
         mean(membership$silhouette[membership$cluster == paste0("Cluster ", cl)], na.rm = TRUE),
         3
@@ -384,7 +452,7 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
         mean(membership$rebound_multiple[membership$cluster == paste0("Cluster ", cl)], na.rm = TRUE),
         3
       ),
-      members = paste(members, collapse = ", "),
+      members = paste(vapply(members, series_name_for, character(1)), collapse = ", "),
       stringsAsFactors = FALSE
     )
   }) |>
@@ -395,7 +463,7 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
 
   membership <- membership |>
     left_join(cluster_summary[, c("cluster", "cluster_label")], by = "cluster") |>
-    arrange(cluster, desc(end_index), series)
+    arrange(cluster, desc(end_index), series_name)
 
   member_plot_long <- lapply(seq_along(panel$series), function(i) {
     series_name <- panel$series[i]
@@ -403,6 +471,7 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
       date = panel$normalized_wide$date,
       value = panel$normalized_wide[[series_name]],
       series = series_name,
+      series_name = series_name_for(series_name),
       cluster = membership$cluster[match(series_name, membership$series)],
       type = "Series",
       stringsAsFactors = FALSE
@@ -419,6 +488,7 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
       date = panel$normalized_wide$date,
       value = cluster_mean,
       series = paste0("Cluster mean ", cl),
+      series_name = paste0("Cluster mean ", cl),
       cluster = cluster_name,
       type = "Cluster mean",
       stringsAsFactors = FALSE
@@ -427,7 +497,14 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
     bind_rows()
 
   plot_data <- bind_rows(member_plot_long, cluster_mean_long) |>
-    mutate(cluster = factor(cluster, levels = paste0("Cluster ", cluster_levels)))
+    left_join(cluster_summary[, c("cluster", "cluster_label")], by = "cluster") |>
+    mutate(
+      cluster = factor(cluster, levels = paste0("Cluster ", cluster_levels)),
+      cluster_view = factor(
+        paste0(as.character(cluster), " · ", cluster_label),
+        levels = paste0(cluster_summary$cluster, " · ", cluster_summary$cluster_label)
+      )
+    )
 
   china_context <- NULL
   china_note <- "China is not included in the selected subset."
@@ -441,17 +518,20 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
       arrange(distance_to_china)
 
     representative <- cluster_summary$representative_series[cluster_summary$cluster == china_cluster][1]
+    representative_name <- cluster_summary$representative_series_name[cluster_summary$cluster == china_cluster][1]
     peer_names <- setdiff(china_members$series, china_series)
+    peer_labels <- vapply(peer_names, series_name_for, character(1))
 
     china_note <- sprintf(
       "China falls in %s (%s). Its closest peers in the selected set are %s, and the representative series for this cluster is %s.",
       china_cluster,
       china_label,
-      if (length(peer_names) == 0) "none" else paste(peer_names, collapse = ", "),
-      representative
+      if (length(peer_labels) == 0) "none" else paste(peer_labels, collapse = ", "),
+      representative_name
     )
 
-    china_context <- china_members
+    china_context <- china_members |>
+      mutate(peer_name = vapply(series, series_name_for, character(1)))
   }
 
   list(
@@ -461,7 +541,7 @@ summarize_cluster_solution <- function(panel, cluster_id, distance_matrix, china
     summary = cluster_summary,
     plot_data = plot_data,
     series_features = membership |>
-      select(series, cluster, cluster_label, end_index, trough_index, rebound_multiple, volatility) |>
+      select(series, series_name, cluster, cluster_label, end_index, trough_index, rebound_multiple, volatility) |>
       arrange(cluster, desc(end_index)),
     china_context = china_context,
     china_note = china_note

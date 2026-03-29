@@ -36,67 +36,106 @@ ui <- page_navbar(
   ),
   nav_panel(
     "Visual Analysis",
-    layout_column_wrap(
-      width = 1,
-      card(
-        card_header("Planned Module"),
-        card_body(
-          p("This module will become the comparative time-series visual analysis space."),
-          tags$ul(
-            tags$li("Country-level arrivals comparison."),
-            tags$li("Transport-mode composition."),
-            tags$li("Indexed and share-based line charts.")
+    div(
+      class = "va-preview",
+      div(class = "va-kicker", "Module 1"),
+      h2("Time Series Visual Analysis"),
+      p("This panel will become the comparative exploration space for country and transport trajectories."),
+      layout_columns(
+        card(
+          class = "va-card va-preview-card",
+          card_header("Planned outputs"),
+          card_body(
+            tags$ul(
+              tags$li("Country-level arrivals comparison."),
+              tags$li("Transport-mode composition."),
+              tags$li("Indexed and share-based line charts.")
+            )
           )
-        )
+        ),
+        card(
+          class = "va-card va-preview-card",
+          card_header("Interaction goal"),
+          card_body(
+            p("Help users move from raw trends to relative market structure without leaving the app.")
+          )
+        ),
+        col_widths = c(6, 6)
       )
     )
   ),
   nav_panel("Time Series Clustering", mod_cluster_ui("cluster_module")),
   nav_panel(
     "Forecasting",
-    layout_column_wrap(
-      width = 1,
-      card(
-        card_header("Planned Module"),
-        card_body(
-          p("This module will become the forecasting space for selected tourism series."),
-          tags$ul(
-            tags$li("Train-test split for monthly arrivals."),
-            tags$li("Baseline and forecast comparison."),
-            tags$li("Forecast accuracy tables and residual checks.")
+    div(
+      class = "va-preview",
+      div(class = "va-kicker", "Module 3"),
+      h2("Forecasting"),
+      p("This panel will complete the app with a forward-looking view of selected tourism series."),
+      layout_columns(
+        card(
+          class = "va-card va-preview-card",
+          card_header("Planned outputs"),
+          card_body(
+            tags$ul(
+              tags$li("Train-test split for monthly arrivals."),
+              tags$li("Baseline and forecast comparison."),
+              tags$li("Forecast accuracy tables and residual checks.")
+            )
           )
-        )
+        ),
+        card(
+          class = "va-card va-preview-card",
+          card_header("Interaction goal"),
+          card_body(
+            p("Let users test simple versus richer models, then inspect forecast uncertainty and short-term directional change.")
+          )
+        ),
+        col_widths = c(6, 6)
       )
     )
   ),
   nav_panel(
     "About",
-    layout_column_wrap(
-      width = 1,
-      card(
-        card_header("Prototype Scope"),
-        card_body(
-          p("This Shiny app is being refactored into a three-module time-series visual analytics prototype."),
-          tags$ul(
-            tags$li("Data: visitor_arrivals_full_dataset.xlsx"),
-            tags$li("Clustering unit: country or market series across time."),
-            tags$li("Controls: series subset, year window, normalization, cluster count."),
-            tags$li("Insights: recovery position map, cluster narratives, and China placement summary.")
+    div(
+      class = "va-preview",
+      div(class = "va-kicker", "Prototype scope"),
+      h2("About this refactor"),
+      layout_columns(
+        card(
+          class = "va-card va-preview-card",
+          card_header("Current focus"),
+          card_body(
+            p("This app is being reshaped into a three-module time-series visual analytics prototype."),
+            tags$ul(
+              tags$li("Data: visitor_arrivals_full_dataset.xlsx"),
+              tags$li("Clustering unit: country or market series across time."),
+              tags$li("Insights: recovery position map, cluster narratives, and China placement summary.")
+            )
           )
-        )
-      ),
-      card(
-        card_header("Run Notes"),
-        card_body(
-          tags$ol(
-            tags$li("Keep this app running on port 3838."),
-            tags$li("Open the Quarto site in parallel for write-up updates."),
-            tags$li("Use the clustering tab to validate the time-series workflow first.")
+        ),
+        card(
+          class = "va-card va-preview-card",
+          card_header("Working rhythm"),
+          card_body(
+            tags$ol(
+              tags$li("Validate the clustering module first."),
+              tags$li("Keep the storyboard and proposal aligned with the app outputs."),
+              tags$li("Use the remaining placeholders as integration targets for the other branches.")
+            )
           )
-        )
+        ),
+        col_widths = c(6, 6)
       )
     )
   )
+)
+
+ui <- tagList(
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "app-theme.css")
+  ),
+  ui
 )
 
 server <- function(input, output, session) {

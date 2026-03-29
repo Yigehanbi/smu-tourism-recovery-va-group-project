@@ -72,18 +72,20 @@ flowchart LR
 5. Distance or linkage setting
 6. Cluster count slider
 7. Run clustering button
+8. Insight note describing what to look for
 :::
 
 ::: {.storyboard-box}
 **Right Panel**
 
-1. Cluster diagnostic chart
-2. Cluster membership table
+1. Cluster quality strip with silhouette, selected `k`, and window summary
+2. Cluster insight card with lead pattern and China placement narrative
 3. Representative pattern plot
-4. Recovery position map
-5. Cluster insight narrative
-6. China placement narrative
-7. Assignment download button
+4. Cluster diagnostic table
+5. Recovery position map
+6. Cluster summary table
+7. Membership table with assignment download
+8. Recovery metrics table
 :::
 
 ## Module 3: Forecasting
