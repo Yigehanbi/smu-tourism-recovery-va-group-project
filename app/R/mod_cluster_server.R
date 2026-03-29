@@ -653,6 +653,7 @@ mod_cluster_server <- function(id, data) {
         series_features = indexed_solution$series_features,
         china_context = indexed_solution$china_context,
         china_note = indexed_solution$china_note,
+        distance_matrix = as.matrix(d),
         hc = hc
       )
     }, ignoreNULL = FALSE)
@@ -856,6 +857,11 @@ mod_cluster_server <- function(id, data) {
 
     output$insight_panel <- renderUI({
       res <- cluster_results()
+      focus_series <- input$focus_series
+      focus_name <- display_names_for_series(focus_series)
+      focus_row <- res$membership |>
+        filter(series == focus_series) |>
+        slice(1)
       strongest <- res$summary |>
         arrange(desc(avg_end_index)) |>
         slice(1)
@@ -885,36 +891,81 @@ mod_cluster_server <- function(id, data) {
             recommended_row$k,
             input$k_value
           )
-        )
+        ),
+        if (nrow(focus_row) == 1) {
+          tags$p(
+            class = "va-insight-secondary",
+            sprintf(
+              "The current priority market is %s. It sits in %s and ends the selected window at %.1f on the indexed scale.",
+              focus_name,
+              focus_row$cluster_label,
+              focus_row$end_index
+            )
+          )
+        }
+        else {
+          NULL
+        }
       )
     })
 
-    render_china_context <- function() {
+    render_focus_context <- function() {
       res <- cluster_results()
-      if (is.null(res$china_context) || nrow(res$china_context) == 0) {
-        return(tags$p("China is not included in the current country selection."))
+      focus_series <- input$focus_series
+
+      if (is.null(focus_series) || !nzchar(focus_series)) {
+        return(tags$p("Select a focus market to read its placement in the current clustering."))
       }
 
-      china_row <- res$china_context |>
-        filter(series == "china") |>
+      focus_row <- res$membership |>
+        filter(series == focus_series) |>
         slice(1)
-      peer_rows <- res$china_context |>
-        filter(series != "china") |>
+
+      if (nrow(focus_row) == 0) {
+        return(tags$p("The selected focus market is not included in the current country set."))
+      }
+
+      focus_name <- focus_row$series_name[[1]]
+      focus_cluster <- focus_row$cluster[[1]]
+      focus_label <- focus_row$cluster_label[[1]]
+
+      peer_rows <- res$membership |>
+        filter(cluster == focus_cluster, series != focus_series) |>
+        mutate(distance_to_focus = round(res$distance_matrix[focus_series, series], 3)) |>
+        arrange(distance_to_focus) |>
         slice_head(n = 4)
+
+      representative_name <- res$summary$representative_series_name[res$summary$cluster == focus_cluster][1]
+
+      note <- sprintf(
+        "%s falls in %s (%s). Its representative market is %s, and it finishes the selected window at %.1f after reaching a trough of %.1f.",
+        focus_name,
+        focus_cluster,
+        focus_label,
+        representative_name,
+        focus_row$end_index[[1]],
+        focus_row$trough_index[[1]]
+      )
 
       tags$div(
         class = "cluster-context-grid",
         tags$div(
           class = "cluster-context-card cluster-context-card-wide",
-          tags$div(class = "cluster-context-label", "China summary"),
-          tags$div(class = "cluster-context-value", china_row$cluster_label),
-          tags$p(class = "cluster-context-copy", res$china_note)
+          tags$div(class = "cluster-context-label", "Priority market summary"),
+          tags$div(class = "cluster-context-value", focus_label),
+          tags$p(class = "cluster-context-copy", note),
+          tags$div(
+            class = "cluster-context-metrics",
+            tags$span(sprintf("Ending level %.1f", focus_row$end_index[[1]])),
+            tags$span(sprintf("Trough %.1f", focus_row$trough_index[[1]])),
+            tags$span(sprintf("Rebound %.3f", focus_row$rebound_multiple[[1]]))
+          )
         ),
         tags$div(
           class = "cluster-context-card",
           tags$div(class = "cluster-context-label", "Closest peers"),
           if (nrow(peer_rows) == 0) {
-            tags$p(class = "cluster-context-copy", "No peer series are available in the current subset.")
+            tags$p(class = "cluster-context-copy", "No peer markets are available in the current cluster.")
           } else {
             tags$ul(
               class = "cluster-context-list",
@@ -922,8 +973,8 @@ mod_cluster_server <- function(id, data) {
                 tags$li(
                   sprintf(
                     "%s (distance %.3f)",
-                    peer_rows$peer_name[i],
-                    peer_rows$distance_to_china[i]
+                    peer_rows$series_name[i],
+                    peer_rows$distance_to_focus[i]
                   )
                 )
               })
@@ -934,11 +985,11 @@ mod_cluster_server <- function(id, data) {
     }
 
     output$dashboard_china_context_panel <- renderUI({
-      render_china_context()
+      render_focus_context()
     })
 
     output$china_context_panel <- renderUI({
-      render_china_context()
+      render_focus_context()
     })
 
     output$download_clusters <- downloadHandler(

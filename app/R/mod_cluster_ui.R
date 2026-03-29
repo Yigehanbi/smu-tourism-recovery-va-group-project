@@ -15,7 +15,7 @@ mod_cluster_ui <- function(id) {
         class = "cluster-header-copy",
         div(class = "cluster-kicker", "Module 2"),
         h2("Time Series Clustering"),
-        p("Read the clustering result as a guided workspace: start with fit quality, inspect the dominant trajectory patterns, then focus on China's placement and the final assignments.")
+        p("Read the clustering result as a guided workspace: start with fit quality, inspect the dominant trajectory patterns, then focus on the selected priority market and the final assignments.")
       )
     ),
     div(
@@ -37,7 +37,7 @@ mod_cluster_ui <- function(id) {
         ),
         selectInput(
           ns("focus_series"),
-          "Focus series",
+          "Focus market",
           choices = focus_choices,
           selected = default_focus
         ),
@@ -76,7 +76,7 @@ mod_cluster_ui <- function(id) {
           tags$ul(
             tags$li("Start Here: confirm whether the clustering is stable and what the lead patterns are."),
             tags$li("Pattern Explorer: hover a line to inspect a country path, then compare it against the cluster mean."),
-            tags$li("China in Context: use the position map after narrowing the market set."),
+            tags$li("Focus Market in Context: use the position map after narrowing the market set."),
             tags$li("Assignments: export the final cluster labels after the picture is clear.")
           )
         )
@@ -150,7 +150,7 @@ mod_cluster_ui <- function(id) {
                 ),
                 card(
                   class = "cluster-panel",
-                  card_header("China Placement"),
+                  card_header("Priority Market Placement"),
                   card_body(uiOutput(ns("dashboard_china_context_panel")))
                 ),
                 col_widths = c(8, 4)
@@ -177,28 +177,28 @@ mod_cluster_ui <- function(id) {
             )
           ),
           nav_panel(
-            "China in Context",
+            "Focus Market in Context",
             div(
               class = "cluster-tab-stack",
               card(
                 class = "cluster-panel",
                 card_header("Recovery Position Map"),
                 card_body(
-                  div(class = "cluster-helper-text", "Hover a point to inspect the trough level, latest level, rebound multiple, and volatility. China and the focus series stay labelled."),
+                  div(class = "cluster-helper-text", "Hover a point to inspect the trough level, latest level, rebound multiple, and volatility. The selected focus market stays labelled."),
                   plotly::plotlyOutput(ns("china_recovery_plot"), height = "560px")
                 )
               ),
               card(
                 class = "cluster-panel",
-                card_header("China Cluster Explorer"),
+                card_header("Focus Market Cluster Explorer"),
                 card_body(
-                  div(class = "cluster-helper-text", "Read China or the selected focus market against only the peers that share its cluster."),
+                  div(class = "cluster-helper-text", "Read the selected focus market against only the peers that share its cluster."),
                   plotly::plotlyOutput(ns("china_focus_plot"), height = "420px")
                 )
               ),
               card(
                 class = "cluster-panel",
-                card_header("China Placement"),
+                card_header("Focus Market Placement"),
                 card_body(uiOutput(ns("china_context_panel")))
               )
             )
