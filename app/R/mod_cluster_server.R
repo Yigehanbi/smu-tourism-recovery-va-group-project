@@ -5,72 +5,113 @@ library(cluster)
 
 mod_cluster_server <- function(id, data) {
   moduleServer(id, function(input, output, session) {
-    state_palette <- c(
-      "State 1" = "#0f6b5b",
-      "State 2" = "#ef9f23",
-      "State 3" = "#b6405d",
-      "State 4" = "#4c6faf",
-      "State 5" = "#8b5fbf",
-      "State 6" = "#8f5a2b"
-    )
-
     cluster_results <- eventReactive(input$run_cluster, {
       validate(
-        need(length(input$period_filter) > 0, "Select at least one period."),
-        need(length(input$feature_cols) >= 2, "Select at least two features.")
+        need(length(input$series_subset) >= 2, "Select at least two series."),
+        need(length(input$year_window) == 2, "Select a valid year window.")
       )
 
-      prep <- prepare_cluster_data(
+      panel <- prepare_country_clustering_data(
         data(),
-        periods = input$period_filter,
-        features = input$feature_cols,
-        scale_features = input$scale_features
+        selected_series = input$series_subset,
+        year_window = input$year_window,
+        normalization = input$normalization_mode
       )
 
-      mat <- prep$matrix
-      meta <- prep$metadata
+      mat <- panel$matrix
+      d <- stats::dist(mat)
 
       validate(
-        need(nrow(mat) > input$k_value, "Not enough rows for current k."),
-        need(nrow(mat) > 2, "Filtered data is too small.")
+        need(nrow(mat) > input$k_value, "Not enough series for the selected k."),
+        need(nrow(mat) >= 3, "Need at least three series to form meaningful clusters.")
       )
 
-      set.seed(input$random_seed)
-      km <- kmeans(mat, centers = input$k_value, nstart = 25)
+      hc <- stats::hclust(d, method = "ward.D2")
+      cluster_id <- stats::cutree(hc, k = input$k_value)
+      sil <- as.data.frame(cluster::silhouette(cluster_id, d))
+      sil_width <- as.numeric(sil$sil_width)
 
-      sil <- silhouette(km$cluster, dist(mat))
-      sil_mean <- mean(sil[, "sil_width"], na.rm = TRUE)
-
-      pca <- prcomp(mat)
-      plot_df <- data.frame(
-        date = meta$date,
-        period = meta$period,
-        cluster = factor(paste0("State ", km$cluster)),
-        PC1 = pca$x[, 1],
-        PC2 = pca$x[, 2]
-      )
-
-      profile <- bind_cols(
-        tibble(cluster = factor(paste0("State ", km$cluster))),
-        as.data.frame(meta[, input$feature_cols, drop = FALSE])
+      membership <- data.frame(
+        series = rownames(mat),
+        cluster = paste0("Cluster ", cluster_id),
+        silhouette = round(sil_width, 3),
+        stringsAsFactors = FALSE
       ) |>
-        group_by(cluster) |>
-        summarise(across(everything(), mean), .groups = "drop")
+        arrange(cluster, desc(silhouette), series)
 
-      assignments <- meta |>
-        mutate(cluster = paste0("State ", km$cluster)) |>
-        select(date, period, cluster, all_of(input$feature_cols))
+      diagnostics <- lapply(
+        seq_len(min(8, nrow(mat) - 1)),
+        function(k) {
+          cl <- stats::cutree(hc, k = k)
+          sil_k <- as.data.frame(cluster::silhouette(cl, d))
+          sil_k_width <- as.numeric(sil_k$sil_width)
+          data.frame(
+            k = k,
+            mean_silhouette = mean(sil_k_width, na.rm = TRUE)
+          )
+        }
+      ) |>
+        bind_rows() |>
+        mutate(mean_silhouette = round(mean_silhouette, 3))
 
-      cluster_levels <- paste0("State ", seq_len(input$k_value))
-      plot_df$cluster <- factor(plot_df$cluster, levels = cluster_levels)
-      profile$cluster <- factor(profile$cluster, levels = cluster_levels)
-      assignments$cluster <- factor(assignments$cluster, levels = cluster_levels)
+      dmat <- as.matrix(d)
+      cluster_levels <- sort(unique(cluster_id))
+
+      cluster_summary <- lapply(cluster_levels, function(cl) {
+        members <- membership$series[membership$cluster == paste0("Cluster ", cl)]
+        cluster_dmat <- dmat[members, members, drop = FALSE]
+        medoid <- if (length(members) == 1) {
+          members[[1]]
+        } else {
+          members[which.min(rowSums(cluster_dmat))]
+        }
+        data.frame(
+          cluster = paste0("Cluster ", cl),
+          n_series = length(members),
+          representative_series = medoid,
+          mean_silhouette = round(mean(membership$silhouette[membership$cluster == paste0("Cluster ", cl)], na.rm = TRUE), 3),
+          stringsAsFactors = FALSE
+        )
+      }) |>
+        bind_rows() |>
+        arrange(cluster)
+
+      member_plot_long <- lapply(seq_along(panel$series), function(i) {
+        series_name <- panel$series[i]
+        tibble::tibble(
+          date = panel$normalized_wide$date,
+          value = panel$normalized_wide[[series_name]],
+          series = series_name,
+          cluster = paste0("Cluster ", cluster_id[i]),
+          type = "Series"
+        )
+      }) |>
+        bind_rows()
+
+      cluster_mean_long <- lapply(cluster_levels, function(cl) {
+        members <- membership$series[membership$cluster == paste0("Cluster ", cl)]
+        cluster_mean <- rowMeans(panel$normalized_wide[, members, drop = FALSE], na.rm = TRUE)
+        tibble::tibble(
+          date = panel$normalized_wide$date,
+          value = cluster_mean,
+          series = paste0("Cluster mean ", cl),
+          cluster = paste0("Cluster ", cl),
+          type = "Cluster mean"
+        )
+      }) |>
+        bind_rows()
+
+      plot_data <- bind_rows(member_plot_long, cluster_mean_long) |>
+        mutate(cluster = factor(cluster, levels = paste0("Cluster ", cluster_levels)))
 
       list(
-        silhouette = sil_mean,
-        plot_df = plot_df,
-        profile = profile,
-        assignments = assignments
+        panel = panel,
+        silhouette = mean(sil_width, na.rm = TRUE),
+        membership = membership,
+        diagnostics = diagnostics,
+        summary = cluster_summary,
+        plot_data = plot_data,
+        hc = hc
       )
     }, ignoreNULL = FALSE)
 
@@ -79,56 +120,80 @@ mod_cluster_server <- function(id, data) {
       sprintf("Mean silhouette score: %.3f", res$silhouette)
     })
 
-    output$cluster_plot <- renderPlot({
+    output$cluster_window_note <- renderText({
       res <- cluster_results()
-      palette_values <- state_palette[levels(res$plot_df$cluster)]
-
-      ggplot(res$plot_df, aes(x = PC1, y = PC2, color = cluster, shape = period)) +
-        geom_point(size = 2.8, alpha = 0.85) +
-        scale_color_manual(values = palette_values, drop = FALSE) +
-        labs(
-          title = "Cluster State Scatter (PCA projection)",
-          x = "Principal Component 1",
-          y = "Principal Component 2",
-          color = "Cluster",
-          shape = "Period"
-        ) +
-        theme_minimal(base_size = 13)
+      sprintf(
+        "Window: %s to %s | Normalization: %s | Series: %d",
+        format(min(res$panel$dates), "%Y-%m"),
+        format(max(res$panel$dates), "%Y-%m"),
+        res$panel$normalization,
+        length(res$panel$series)
+      )
     })
 
-    output$timeline_plot <- renderPlot({
+    output$diagnostics_table <- DT::renderDT({
       res <- cluster_results()
-      palette_values <- state_palette[levels(res$assignments$cluster)]
+      DT::datatable(
+        res$diagnostics,
+        rownames = FALSE,
+        options = list(pageLength = 5, dom = "t")
+      )
+    })
 
-      ggplot(res$assignments, aes(x = date, y = cluster, color = cluster)) +
-        geom_point(size = 2.8, alpha = 0.85) +
-        scale_color_manual(values = palette_values, drop = FALSE) +
+    output$membership_table <- DT::renderDT({
+      res <- cluster_results()
+      DT::datatable(
+        res$membership,
+        rownames = FALSE,
+        options = list(pageLength = 10, scrollX = TRUE)
+      )
+    })
+
+    output$cluster_summary_table <- DT::renderDT({
+      res <- cluster_results()
+      DT::datatable(
+        res$summary,
+        rownames = FALSE,
+        options = list(pageLength = 5, dom = "t")
+      )
+    })
+
+    output$cluster_pattern_plot <- renderPlot({
+      res <- cluster_results()
+
+      ggplot(res$plot_data, aes(x = date, y = value, group = interaction(series, type), color = cluster)) +
+        geom_line(
+          data = subset(res$plot_data, type == "Series"),
+          alpha = 0.15,
+          linewidth = 0.4
+        ) +
+        geom_line(
+          data = subset(res$plot_data, type == "Cluster mean"),
+          linewidth = 1.3
+        ) +
+        facet_wrap(~cluster, ncol = 1, scales = "free_y") +
         labs(
-          title = "Timeline of Cluster Assignments",
+          title = "Representative Time-Series Patterns by Cluster",
+          subtitle = paste(
+            "Selected country series clustered by trajectory similarity using",
+            res$panel$normalization,
+            "normalization"
+          ),
           x = "Month",
-          y = "Cluster state",
+          y = "Normalized value",
           color = "Cluster"
         ) +
-        theme_minimal(base_size = 13)
-    })
-
-    output$profile_table <- DT::renderDT({
-      res <- cluster_results()
-      DT::datatable(res$profile, options = list(pageLength = 6, scrollX = TRUE))
-    })
-
-    output$assignment_table <- DT::renderDT({
-      res <- cluster_results()
-      DT::datatable(res$assignments, options = list(pageLength = 8, scrollX = TRUE))
+        theme_minimal(base_size = 13) +
+        theme(legend.position = "none")
     })
 
     output$download_clusters <- downloadHandler(
       filename = function() {
-        sprintf("cluster-assignments-%s.csv", Sys.Date())
+        sprintf("country-series-cluster-assignments-%s.csv", Sys.Date())
       },
       content = function(file) {
         res <- cluster_results()
-        utils::write.csv(res$assignments, file, row.names = FALSE)
+        utils::write.csv(res$membership, file, row.names = FALSE)
       }
     )
   })

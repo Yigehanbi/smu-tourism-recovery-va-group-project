@@ -24,13 +24,13 @@ website:
         text: Proposal
       - text: Prototype
         menu:
-          - href: prototype/EDA.qmd
+          - href: prototype/EDA.html
             text: Time Series Visual Analysis
-          - href: prototype/module-cluster.qmd
+          - href: prototype/module-cluster.html
             text: Time Series Clustering
-          - href: Proposal/Proposal.qmd#time-series-forecasting
+          - href: Proposal/Proposal.html#time-series-forecasting
             text: Forecasting
-          - href: prototype/ui-storyboard.qmd
+          - href: prototype/ui-storyboard.html
             text: UI Storyboard
       - href: app-guide.qmd
         text: Shiny App

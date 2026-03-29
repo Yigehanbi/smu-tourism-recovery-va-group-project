@@ -1,9 +1,28 @@
 library(shiny)
 library(bslib)
 
-source("R/data_utils.R")
-source("R/mod_cluster_ui.R")
-source("R/mod_cluster_server.R")
+find_project_root <- function(start = getwd()) {
+  current <- normalizePath(start, winslash = "/", mustWork = TRUE)
+
+  repeat {
+    if (file.exists(file.path(current, "_quarto.yml"))) {
+      return(current)
+    }
+
+    parent <- dirname(current)
+    if (identical(parent, current)) {
+      stop("Project root not found. Expected to locate _quarto.yml.")
+    }
+
+    current <- parent
+  }
+}
+
+project_root <- find_project_root()
+
+source(file.path(project_root, "app", "R", "data_utils.R"))
+source(file.path(project_root, "app", "R", "mod_cluster_ui.R"))
+source(file.path(project_root, "app", "R", "mod_cluster_server.R"))
 
 ui <- page_navbar(
   title = "Singapore Tourism Recovery Prototype",
@@ -15,7 +34,41 @@ ui <- page_navbar(
     base_font = font_google("Space Grotesk"),
     heading_font = font_google("Fraunces")
   ),
-  nav_panel("Cluster Prototype", mod_cluster_ui("cluster_module")),
+  nav_panel(
+    "Visual Analysis",
+    layout_column_wrap(
+      width = 1,
+      card(
+        card_header("Planned Module"),
+        card_body(
+          p("This module will become the comparative time-series visual analysis space."),
+          tags$ul(
+            tags$li("Country-level arrivals comparison."),
+            tags$li("Transport-mode composition."),
+            tags$li("Indexed and share-based line charts.")
+          )
+        )
+      )
+    )
+  ),
+  nav_panel("Time Series Clustering", mod_cluster_ui("cluster_module")),
+  nav_panel(
+    "Forecasting",
+    layout_column_wrap(
+      width = 1,
+      card(
+        card_header("Planned Module"),
+        card_body(
+          p("This module will become the forecasting space for selected tourism series."),
+          tags$ul(
+            tags$li("Train-test split for monthly arrivals."),
+            tags$li("Baseline and forecast comparison."),
+            tags$li("Forecast accuracy tables and residual checks.")
+          )
+        )
+      )
+    )
+  ),
   nav_panel(
     "About",
     layout_column_wrap(
@@ -23,11 +76,11 @@ ui <- page_navbar(
       card(
         card_header("Prototype Scope"),
         card_body(
-          p("This Shiny module prototypes clustering analysis for monthly tourism states."),
+          p("This Shiny app is being refactored into a three-module time-series visual analytics prototype."),
           tags$ul(
-            tags$li("Data: tourism_four_part_analysis_ready.xlsx"),
-            tags$li("Features: arrivals, China share, hotel occupancy, length of stay"),
-            tags$li("Controls: period filter, k, scaling, random seed")
+            tags$li("Data: visitor_arrivals_full_dataset.xlsx"),
+            tags$li("Clustering unit: country or market series across time."),
+            tags$li("Controls: series subset, year window, normalization, cluster count.")
           )
         )
       ),
@@ -36,8 +89,8 @@ ui <- page_navbar(
         card_body(
           tags$ol(
             tags$li("Keep this app running on port 3838."),
-            tags$li("Open Quarto site in parallel for write-up updates."),
-            tags$li("Tune cluster k and compare silhouette scores.")
+            tags$li("Open the Quarto site in parallel for write-up updates."),
+            tags$li("Use the clustering tab to validate the time-series workflow first.")
           )
         )
       )
@@ -47,7 +100,7 @@ ui <- page_navbar(
 
 server <- function(input, output, session) {
   data <- reactive({
-    load_tourism_data()
+    load_clustering_country_wide()
   })
 
   mod_cluster_server("cluster_module", data = data)
