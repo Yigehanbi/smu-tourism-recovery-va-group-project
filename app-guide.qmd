@@ -5,17 +5,38 @@ format:
     toc: false
 ---
 
+```{r}
+shiny_app_url <- Sys.getenv("SHINY_APP_URL", unset = "http://127.0.0.1:3838")
+is_local_target <- grepl("127\\.0\\.0\\.1|localhost", shiny_app_url)
+shiny_target_label <- if (is_local_target) "Local target" else "Deployment target"
+shiny_target_note <- if (is_local_target) {
+  "The site currently points to a locally running Shiny process on port 3838."
+} else {
+  "The site is currently configured to point to the deployed Shiny application."
+}
+```
+
 ## Open The App
 
-Use the local launch link below when the Shiny process is already running on port `3838`.
+This page is the website entry point for the Shiny application. Right now it is configured to open:
+
+`r shiny_app_url`
 
 ::: {.grid-cards}
 ::: {.card-block}
-### Launch Local App
+### Launch Shiny App
 
-[Open the local Shiny app](http://127.0.0.1:3838){target="_blank"}
+[Open the Shiny app](`r shiny_app_url`){target="_blank"}
 
-This opens the running app in a new browser tab.
+`r shiny_target_note`
+:::
+
+::: {.card-block}
+### Current Target
+
+- Label: `r shiny_target_label`
+- URL: `r shiny_app_url`
+- Mode: `r if (is_local_target) "Local development" else "External deployment"`
 :::
 
 ::: {.card-block}
@@ -35,20 +56,22 @@ Rscript run_app.R 3838
 
 ## Embedded Preview
 
-When the app is running locally, the frame below gives the website a direct in-page entry point into the Shiny prototype.
+When the target app is available, the frame below gives the website a direct in-page preview.
 
-```{=html}
-<div style="background:#fff;border:1px solid #e3d8c8;border-radius:18px;overflow:hidden;box-shadow:0 12px 28px rgba(27,41,45,0.06);">
-  <div style="padding:0.9rem 1rem;border-bottom:1px solid #eadfce;background:#fffaf3;font-weight:700;">
-    Local Shiny Preview (`http://127.0.0.1:3838`)
-  </div>
-  <iframe
-    src="http://127.0.0.1:3838"
-    title="Singapore Tourism Time-Series VA Prototype"
-    style="width:100%;height:900px;border:0;background:#fff;"
-    loading="lazy">
-  </iframe>
-</div>
+```{r, echo=FALSE}
+htmltools::div(
+  style = "background:#fff;border:1px solid #e3d8c8;border-radius:18px;overflow:hidden;box-shadow:0 12px 28px rgba(27,41,45,0.06);",
+  htmltools::div(
+    style = "padding:0.9rem 1rem;border-bottom:1px solid #eadfce;background:#fffaf3;font-weight:700;",
+    sprintf("Shiny Preview (%s)", shiny_app_url)
+  ),
+  htmltools::tags$iframe(
+    src = shiny_app_url,
+    title = "Singapore Tourism Time-Series VA Prototype",
+    style = "width:100%;height:900px;border:0;background:#fff;",
+    loading = "lazy"
+  )
+)
 ```
 
 ## Current Module Status
@@ -75,8 +98,23 @@ The current clustering workflow reads from:
 4. Choose a year window and normalization mode.
 5. Review the outputs in order: `Overview`, `Patterns`, `Assignments`, `Series Metrics`.
 
+## Deployment Switch
+
+For local testing, no extra configuration is needed because the page defaults to:
+
+`http://127.0.0.1:3838`
+
+When you are ready to switch to `shinyapps.io`, re-render the site with:
+
+```powershell
+$env:SHINY_APP_URL='https://YOUR-APP-NAME.shinyapps.io/YOUR-APP/'
+quarto render
+```
+
+That will update both the launch button and the embedded preview to the deployed app.
+
 ## Notes For Local Testing
 
-1. Keep the browser window at a normal desktop width when checking layout quality.
-2. If the embedded frame is blank, start the app first and refresh this page.
-3. Use the standalone launch link above if your browser blocks the embedded frame.
+1. Start the app first if the preview frame is blank.
+2. Use the standalone launch link if your browser blocks the embedded frame.
+3. Keep the browser window at a normal desktop width when checking layout quality.
