@@ -216,19 +216,19 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview-motivation" class="level2">
 <h2 class="anchored" data-anchor-id="overview-motivation">1. Overview &amp; Motivation</h2>
-<p>Singapore’s tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery stages. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series dataset.</p>
+<p>Singapore’s tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery paths across source markets. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series backbone.</p>
 </section>
 <section id="problem-statement" class="level2">
 <h2 class="anchored" data-anchor-id="problem-statement">2. Problem Statement</h2>
-<p>Current discussions on tourism recovery often focus narrowly on whether visitor numbers have returned, without adequately examining seasonality, source-market differences, or the way recovery paths vary across tourism series. In particular, there is a lack of an interactive time-series framework that allows users to compare country-level arrivals, detect recovery regimes, and assess how future demand may evolve.</p>
+<p>Current discussions on tourism recovery often focus narrowly on whether visitor numbers have returned, without adequately examining seasonality, source-market differences, or the way recovery paths vary across country-level arrivals trajectories. In particular, there is a lack of an interactive time-series framework that allows users to compare country-level arrivals, detect shared recovery patterns, and assess how future demand may evolve.</p>
 </section>
 <section id="project-aim" class="level2">
 <h2 class="anchored" data-anchor-id="project-aim">3. Project Aim</h2>
-<p>The project aims to develop a visual analytics prototype based on monthly tourism time series, enabling users to understand tourism recovery at descriptive, structural, and forecasting levels. The prototype will integrate time-series exploration, time-series clustering, and forecasting analysis to explain how tourism recovery trajectories evolve and how selected demand series may move in the near future.</p>
+<p>The project aims to develop a visual analytics prototype based on monthly tourism time series, enabling users to understand tourism recovery at descriptive, structural, and forecasting levels. The prototype will integrate time-series exploration, time-series clustering, and forecasting analysis to explain how country-level recovery trajectories evolve and how selected demand series may move in the near future.</p>
 </section>
 <section id="the-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-data">4. The Data</h2>
-<p>The project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The selected workbook contains monthly tourism indicators such as:</p>
+<p>The project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The shared backbone uses a compiled visitor-arrivals workbook by country, while a second tourism workbook contributes supporting hotel-performance indicators. Together they provide monthly indicators such as:</p>
 <ul>
 <li>Visitor Arrivals</li>
 <li>Visitor Arrivals by selected countries and regions</li>
@@ -237,7 +237,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Number of Hotels</li>
 <li>Total Room Revenue</li>
 </ul>
-<p>The project uses a compiled tourism time-series workbook spanning <strong>December 2015 onward</strong>, with the main analytical focus on monthly series. Core variables include total visitor arrivals, arrivals from selected countries and regions such as China, hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue. The app will use one common monthly dataset across all modules so that exploration, clustering, and forecasting remain consistent. Within that shared dataset, the forecasting module will treat <strong>country-level monthly visitor arrivals</strong> as the primary target series, while hotel occupancy, stay length, and room revenue will be used as supporting indicators for interpretation.</p>
+<p>The project uses a compiled monthly arrivals workbook spanning <strong>December 2015 onward</strong>, with the main analytical focus on country-level visitor-arrivals series. Core analytical variables include total visitor arrivals and arrivals from selected countries and regions such as China. To interpret how demand recovery translates into tourism performance, the app can also layer in hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue from a supporting tourism workbook when that context file is available. The app keeps one shared arrivals backbone across all modules so that exploration, clustering, and forecasting remain consistent. Within that shared backbone, the forecasting module treats <strong>country-level monthly visitor arrivals</strong> as the primary target series, while hotel occupancy, stay length, and room revenue are used as supporting indicators for interpretation.</p>
 </section>
 <section id="research-questions" class="level2">
 <h2 class="anchored" data-anchor-id="research-questions">5. Research Questions</h2>
@@ -245,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li>How did Singapore’s tourism market differ across the pre-COVID, shock, and recovery periods?</li>
 <li>Did the recovery of selected source markets move in tandem with the broader tourism market?</li>
-<li>Can monthly tourism observations be grouped into meaningful recovery-state clusters?</li>
+<li>Can country-level arrivals trajectories be grouped into meaningful recovery-pattern clusters?</li>
 <li>How well can selected country-level visitor-arrivals series be forecast using a baseline method and a model-based approach?</li>
 </ol>
 </section>
@@ -273,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="data-visualisation-methods" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualisation-methods">8. Data Visualisation Methods</h2>
-<p>The prototype will include time-series line charts, target-series comparison views, cluster scatter plots, cluster profile tables, forecast plots, and forecast accuracy tables. These visualizations are designed not merely to display results, but to reveal seasonal structure, regime shifts, recovery-state similarities, and the relative performance of competing forecasting methods.</p>
+<p>The prototype will include time-series line charts, target-series comparison views, cluster profile plots, recovery position maps, forecast plots, and forecast accuracy tables. These visualizations are designed not merely to display results, but to reveal seasonal structure, regime shifts, cross-market recovery similarities, and the relative performance of competing forecasting methods.</p>
 </section>
 <section id="r-packages" class="level2">
 <h2 class="anchored" data-anchor-id="r-packages">9. R Packages</h2>

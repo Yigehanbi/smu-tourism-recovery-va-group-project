@@ -17,11 +17,11 @@ Shared arrivals backbone:
 - `data/processed/clustering_country_long.csv`
 - `data/processed/clustering_series_metadata.csv`
 
-Supporting tourism context:
+Optional supporting tourism context:
 
 - `data/raw/Name your insight (4).xlsx`
 
-Country-level visitor arrivals remain the common analytical target across explorer, clustering, and forecasting. Hotel occupancy, average length of stay, number of hotels, and total room revenue are used only as supporting context for interpretation.
+Country-level visitor arrivals remain the common analytical target across explorer, clustering, and forecasting. Hotel occupancy, average length of stay, number of hotels, and total room revenue are used only as optional supporting context for interpretation when that workbook is present.
 
 ## Folder Structure
 

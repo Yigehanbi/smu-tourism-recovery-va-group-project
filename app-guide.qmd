@@ -91,11 +91,11 @@ The shared project backbone for country-level arrivals uses:
 - `data/processed/clustering_country_long.csv`
 - `data/processed/clustering_series_metadata.csv`
 
-The forecasting layer keeps the same country-arrivals backbone, then supplements interpretation with supporting tourism indicators from:
+The forecasting layer keeps the same country-arrivals backbone, then can supplement interpretation with supporting tourism indicators from:
 
 - `data/raw/Name your insight (4).xlsx`
 
-Those supporting indicators are limited to:
+When that context workbook is present, the supporting indicators are limited to:
 
 - `Hotel Room Occupancy Rate`
 - `Average Length of Stay`

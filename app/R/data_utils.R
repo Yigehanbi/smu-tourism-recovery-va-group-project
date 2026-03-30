@@ -43,7 +43,7 @@ resolve_processed_path <- function(filename) {
   file.path(find_project_root(), "data", "processed", filename)
 }
 
-resolve_context_workbook <- function() {
+resolve_context_workbook <- function(required = FALSE) {
   candidates <- c(
     file.path("..", "data", "raw", "Name your insight (4).xlsx"),
     file.path("data", "raw", "Name your insight (4).xlsx"),
@@ -53,8 +53,12 @@ resolve_context_workbook <- function() {
 
   path <- candidates[file.exists(candidates)][1]
 
-  if (is.na(path) || !nzchar(path)) {
+  if ((is.na(path) || !nzchar(path)) && isTRUE(required)) {
     stop("Context workbook not found. Expected data/raw/Name your insight (4).xlsx")
+  }
+
+  if (is.na(path) || !nzchar(path)) {
+    return(NA_character_)
   }
 
   path
@@ -628,11 +632,24 @@ is_country_arrival_label <- function(label) {
     !label %in% paste("Visitor Arrivals:", excluded_suffixes)
 }
 
-resolve_data_path <- function() {
-  resolve_context_workbook()
+resolve_data_path <- function(required = FALSE) {
+  resolve_context_workbook(required = required)
 }
 
 read_tourism_metadata <- function(path = resolve_context_workbook()) {
+  if (is.na(path) || !nzchar(path)) {
+    return(tibble(
+      col_id = integer(),
+      label = character(),
+      region = character(),
+      frequency = character(),
+      unit = character(),
+      source = character(),
+      series_id = character(),
+      series_key = character()
+    ))
+  }
+
   meta_raw <- read_excel(
     path,
     sheet = "My Series",
@@ -660,6 +677,19 @@ read_tourism_metadata <- function(path = resolve_context_workbook()) {
 }
 
 load_tourism_long_data <- function(path = resolve_context_workbook(), only_monthly = FALSE) {
+  if (is.na(path) || !nzchar(path)) {
+    return(tibble(
+      date = as.Date(character()),
+      label = character(),
+      series_key = character(),
+      frequency = character(),
+      unit = character(),
+      source = character(),
+      series_id = character(),
+      value = numeric()
+    ))
+  }
+
   metadata <- read_tourism_metadata(path)
   max_cols <- max(metadata$col_id)
 
