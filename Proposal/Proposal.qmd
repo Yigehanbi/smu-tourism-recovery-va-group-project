@@ -7,19 +7,19 @@ date: "2026-03-29"
 
 ## 1. Overview & Motivation
 
-Singapore's tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery stages. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series dataset.
+Singapore's tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery paths across source markets. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series backbone.
 
 ## 2. Problem Statement
 
-Current discussions on tourism recovery often focus narrowly on whether visitor numbers have returned, without adequately examining seasonality, source-market differences, or the way recovery paths vary across tourism series. In particular, there is a lack of an interactive time-series framework that allows users to compare country-level arrivals, detect recovery regimes, and assess how future demand may evolve.
+Current discussions on tourism recovery often focus narrowly on whether visitor numbers have returned, without adequately examining seasonality, source-market differences, or the way recovery paths vary across country-level arrivals trajectories. In particular, there is a lack of an interactive time-series framework that allows users to compare country-level arrivals, detect shared recovery patterns, and assess how future demand may evolve.
 
 ## 3. Project Aim
 
-The project aims to develop a visual analytics prototype based on monthly tourism time series, enabling users to understand tourism recovery at descriptive, structural, and forecasting levels. The prototype will integrate time-series exploration, time-series clustering, and forecasting analysis to explain how tourism recovery trajectories evolve and how selected demand series may move in the near future.
+The project aims to develop a visual analytics prototype based on monthly tourism time series, enabling users to understand tourism recovery at descriptive, structural, and forecasting levels. The prototype will integrate time-series exploration, time-series clustering, and forecasting analysis to explain how country-level recovery trajectories evolve and how selected demand series may move in the near future.
 
 ## 4. The Data
 
-The project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The selected workbook contains monthly tourism indicators such as:
+The project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The shared backbone uses a compiled visitor-arrivals workbook by country, while a second tourism workbook contributes supporting hotel-performance indicators. Together they provide monthly indicators such as:
 
 - Visitor Arrivals
 - Visitor Arrivals by selected countries and regions
@@ -28,7 +28,7 @@ The project data is sourced from CEIC and Singapore Tourism Board related series
 - Number of Hotels
 - Total Room Revenue
 
-The project uses a compiled tourism time-series workbook spanning **December 2015 onward**, with the main analytical focus on monthly series. Core variables include total visitor arrivals, arrivals from selected countries and regions such as China, hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue. The app will use one common monthly dataset across all modules so that exploration, clustering, and forecasting remain consistent. Within that shared dataset, the forecasting module will treat **country-level monthly visitor arrivals** as the primary target series, while hotel occupancy, stay length, and room revenue will be used as supporting indicators for interpretation.
+The project uses a compiled monthly arrivals workbook spanning **December 2015 onward**, with the main analytical focus on country-level visitor-arrivals series. Core analytical variables include total visitor arrivals and arrivals from selected countries and regions such as China. To interpret how demand recovery translates into tourism performance, the app also layers in hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue from a supporting tourism workbook. The app keeps one shared arrivals backbone across all modules so that exploration, clustering, and forecasting remain consistent. Within that shared backbone, the forecasting module treats **country-level monthly visitor arrivals** as the primary target series, while hotel occupancy, stay length, and room revenue are used as supporting indicators for interpretation.
 
 ## 5. Research Questions
 
@@ -36,7 +36,7 @@ The project focuses on the following questions:
 
 1. How did Singapore's tourism market differ across the pre-COVID, shock, and recovery periods?
 2. Did the recovery of selected source markets move in tandem with the broader tourism market?
-3. Can monthly tourism observations be grouped into meaningful recovery-state clusters?
+3. Can country-level arrivals trajectories be grouped into meaningful recovery-pattern clusters?
 4. How well can selected country-level visitor-arrivals series be forecast using a baseline method and a model-based approach?
 
 ## 6. Methodology and Analytical Approach
@@ -63,7 +63,7 @@ The expected outputs are:
 
 ## 8. Data Visualisation Methods
 
-The prototype will include time-series line charts, target-series comparison views, cluster scatter plots, cluster profile tables, forecast plots, and forecast accuracy tables. These visualizations are designed not merely to display results, but to reveal seasonal structure, regime shifts, recovery-state similarities, and the relative performance of competing forecasting methods.
+The prototype will include time-series line charts, target-series comparison views, cluster profile plots, recovery position maps, forecast plots, and forecast accuracy tables. These visualizations are designed not merely to display results, but to reveal seasonal structure, regime shifts, cross-market recovery similarities, and the relative performance of competing forecasting methods.
 
 ## 9. R Packages
 

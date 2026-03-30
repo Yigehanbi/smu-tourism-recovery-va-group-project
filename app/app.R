@@ -2,6 +2,7 @@ library(shiny)
 library(bslib)
 library(ggplot2)
 library(dplyr)
+library(lubridate)
 
 resolve_app_file <- function(...) {
   local_path <- file.path(...)
@@ -18,11 +19,28 @@ resolve_app_file <- function(...) {
   stop("Cannot locate app dependency: ", paste(..., collapse = "/"))
 }
 
+resolve_app_dir <- function(...) {
+  local_path <- file.path(...)
+  repo_path <- file.path("app", ...)
+
+  if (dir.exists(local_path)) {
+    return(normalizePath(local_path, winslash = "/", mustWork = TRUE))
+  }
+
+  if (dir.exists(repo_path)) {
+    return(normalizePath(repo_path, winslash = "/", mustWork = TRUE))
+  }
+
+  stop("Cannot locate app directory: ", paste(..., collapse = "/"))
+}
+
 source(resolve_app_file("R", "data_utils.R"))
 source(resolve_app_file("R", "mod_cluster_ui.R"))
 source(resolve_app_file("R", "mod_cluster_server.R"))
 source(resolve_app_file("R", "mod_forecast_ui.R"))
 source(resolve_app_file("R", "mod_forecast_server.R"))
+
+addResourcePath("app-assets", resolve_app_dir("www"))
 
 series_explorer_ui <- function(id) {
   ns <- NS(id)
@@ -150,14 +168,24 @@ ui <- page_navbar(
   )
 )
 
+ui <- tagList(
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "app-assets/app-theme.css")
+  ),
+  ui
+)
+
 server <- function(input, output, session) {
-  data <- reactive({
+  tourism_data <- reactive({
     load_tourism_data()
   })
+  cluster_data <- reactive({
+    load_clustering_country_wide()
+  })
 
-  series_explorer_server("series_module", data = data)
-  mod_cluster_server("cluster_module", data = data)
-  mod_forecast_server("forecast_module", data = data)
+  series_explorer_server("series_module", data = tourism_data)
+  mod_cluster_server("cluster_module", data = cluster_data)
+  mod_forecast_server("forecast_module", data = tourism_data)
 }
 
 shinyApp(ui, server)

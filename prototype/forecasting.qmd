@@ -25,9 +25,15 @@ This prototype follows the Chapter 19 and 20 workflow from *R for Visual Analyti
 
 ## Data Contract
 
-Input dataset: `data/raw/Name your insight (4).xlsx`
+Shared arrivals backbone:
 
-For this revised forecasting prototype, the analytical scope is intentionally narrowed to **monthly visitor-arrival series by country**. This matches the instructor guidance and the Chapter 19/20 forecasting workflow more closely than mixing arrivals with hotel or revenue indicators.
+- `data/raw/visitor_arrivals_full_dataset.xlsx`
+
+Supporting tourism context:
+
+- `data/raw/Name your insight (4).xlsx`
+
+For this revised forecasting prototype, the analytical scope is intentionally narrowed to **monthly visitor-arrival series by country**. This matches the instructor guidance and the Chapter 19/20 forecasting workflow more closely than mixing arrivals with hotel or revenue indicators. Hotel occupancy, stay length, number of hotels, and room revenue remain supporting context only.
 
 Examples of eligible target series are:
 
@@ -284,5 +290,5 @@ In presentation terms, the recommended narrative is:
 1. The selected series must have at least 24 non-missing monthly observations.
 2. The holdout horizon must leave at least 12 points for model fitting.
 3. A baseline and at least one model-based forecast must be scored on the same testing window.
-4. The forecasting module must use the same source workbook while restricting the target catalog to country-level arrival series.
+4. The forecasting module must keep the shared arrivals workbook as the target backbone while using the tourism workbook only for supporting context indicators.
 5. The workflow must include contextual comparison and visual diagnostics before model comparison.
