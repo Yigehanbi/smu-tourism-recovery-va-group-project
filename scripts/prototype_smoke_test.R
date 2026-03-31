@@ -57,25 +57,40 @@ ggsave(
 
 # Forecast smoke check
 tourism_data <- load_tourism_data()
+forecast_status <- forecast_stack_status()
 
 forecast_series <- prepare_forecast_series(
   tourism_data$long_monthly,
   "Visitor Arrivals: China"
 )
 
-forecast_results <- run_modeltime_forecast_workflow(
+forecast_results <- run_forecast_workflow(
   series_df = forecast_series,
-  horizon = 12
+  horizon = 12,
+  engine = "auto"
 )
 
-forecast_plot <- forecast_results$calibration_forecast_tbl |>
-  modeltime::plot_modeltime_forecast(
-    .interactive = FALSE,
-    .legend_max_width = 25
-  ) +
+fallback_results <- run_forecast_workflow(
+  series_df = forecast_series,
+  horizon = 12,
+  engine = "fallback"
+)
+
+if (forecast_status$modeltime_ready) {
+  modeltime_results <- run_forecast_workflow(
+    series_df = forecast_series,
+    horizon = 12,
+    engine = "modeltime"
+  )
+}
+
+forecast_plot <- plot_forecast_results(forecast_results, type = "holdout") +
   labs(
     title = "Forecast Smoke Test",
-    subtitle = "Seasonal Naive benchmark with ETS and ARIMA holdout comparison"
+    subtitle = paste(
+      "Seasonal Naive benchmark with ETS and ARIMA holdout comparison | Engine:",
+      forecast_results$engine_label
+    )
   )
 
 ggsave(
@@ -95,6 +110,10 @@ summary_lines <- c(
   paste("cluster_selected_k:", 3),
   paste("cluster_silhouette_mean:", round(cluster_solution$silhouette, 4)),
   paste("forecast_series:", "Visitor Arrivals: China"),
+  paste("forecast_auto_engine:", forecast_results$engine_label),
+  paste("forecast_fallback_engine:", fallback_results$engine_label),
+  paste("forecast_modeltime_ready:", forecast_status$modeltime_ready),
+  if (forecast_status$modeltime_ready) paste("forecast_modeltime_engine:", modeltime_results$engine_label),
   paste("forecast_models:", paste(forecast_results$accuracy_tbl$.model_desc, collapse = ", "))
 )
 

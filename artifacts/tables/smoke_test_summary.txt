@@ -1,7 +1,11 @@
-timestamp: 2026-03-31 05:07:33
+timestamp: 2026-03-31 17:08:29
 cluster_series_count: 6
 cluster_window_months: 108
 cluster_selected_k: 3
 cluster_silhouette_mean: 0.26
 forecast_series: Visitor Arrivals: China
-forecast_models: Seasonal Naive, ETS(M,AD,M), ARIMA(0,1,2)(0,0,1)[12]
+forecast_auto_engine: modeltime workflow
+forecast_fallback_engine: forecast fallback
+forecast_modeltime_ready: TRUE
+forecast_modeltime_engine: modeltime workflow
+forecast_models: Seasonal Naive, ETS (Modeltime), ARIMA

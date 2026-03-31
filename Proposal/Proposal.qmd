@@ -51,7 +51,7 @@ These modules are designed to use the same monthly dataset so that users can mov
 
 ## 7. Forecasting Module
 
-The forecasting module will follow the Chapter 19 and 20 time-series workflow used in *R for Visual Analytics*. Users will first inspect the selected country-level monthly arrivals series through trend, seasonal, decomposition, and supporting-indicator views, then create a time-aware train/test split, and finally compare a baseline method with model-based forecasts on the same holdout window. A seasonal-naive forecast will act as the baseline, while ETS and ARIMA will provide the main model-based benchmarks through the modeltime workflow. Hotel occupancy, average length of stay, and room revenue will not be treated as separate forecasting targets in the final module; instead, they will help interpret whether forecast demand recovery aligns with broader tourism performance.
+The forecasting module will follow the Chapter 19 and 20 time-series workflow used in *R for Visual Analytics*. Users will first inspect the selected country-level monthly arrivals series through trend, seasonal, decomposition, and supporting-indicator views, then create a time-aware train/test split, and finally compare a baseline method with model-based forecasts on the same holdout window. A seasonal-naive forecast will act as the baseline, while ETS and ARIMA will provide the main model-based benchmarks. The implementation will prefer the full `modeltime` workflow when that stack is available, but it will keep a lighter `forecast` fallback so that the prototype, app, and validation scripts remain runnable in shared environments. Hotel occupancy, average length of stay, and room revenue will not be treated as separate forecasting targets in the final module; instead, they will help interpret whether forecast demand recovery aligns with broader tourism performance.
 
 The expected outputs are:
 
@@ -79,8 +79,8 @@ The prototype will include time-series line charts, target-series comparison vie
 | factoextra | Used to visualise clustering results, elbow plots, and cluster profiles. |
 | forecast | Used to fit baseline and model-based time-series forecasts such as seasonal naive, ETS, and ARIMA. |
 | tidymodels | Used to support time-aware train/test splitting and the forecasting modelling workflow. |
-| timetk | Used to support time-series exploration and modeltime-friendly forecasting workflows. |
-| modeltime | Used to calibrate, compare, refit, and forecast time-series models in a unified workflow. |
+| timetk | Used to support time-series exploration and the full forecasting workflow when the modeltime stack is available. |
+| modeltime | Used to calibrate, compare, refit, and forecast time-series models in the full forecasting path. |
 | tsibble | Used to represent time-indexed series for decomposition and temporal analysis. |
 | feasts | Used to derive decomposition and seasonal diagnostics before model fitting. |
 | patchwork | Used to combine multiple ggplot charts into one display layout. |

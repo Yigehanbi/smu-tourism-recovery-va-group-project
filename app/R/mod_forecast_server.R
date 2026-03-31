@@ -27,11 +27,12 @@ mod_forecast_server <- function(id, data) {
         need(nrow(series_df) > input$horizon + 12, "Series is too short for the current horizon.")
       )
 
-      run_modeltime_forecast_workflow(
+      run_forecast_workflow(
         series_df = series_df,
-        horizon = input$horizon
+        horizon = input$horizon,
+        engine = "auto"
       )
-    }, ignoreNULL = FALSE)
+    }, ignoreNULL = TRUE)
 
     output$series_summary <- renderText({
       series_df <- selected_series()
@@ -44,6 +45,7 @@ mod_forecast_server <- function(id, data) {
     })
 
     output$split_table <- DT::renderDT({
+      req(input$run_forecast > 0)
       res <- forecast_results()
       split_tbl <- tibble(
         segment = c("Training", "Testing"),
@@ -60,20 +62,14 @@ mod_forecast_server <- function(id, data) {
     })
 
     output$forecast_plot <- renderPlot({
+      req(input$run_forecast > 0)
       res <- forecast_results()
 
-      modeltime::plot_modeltime_forecast(
-        res$calibration_forecast_tbl,
-        .interactive = FALSE,
-        .legend_max_width = 25
-      ) +
+      plot_forecast_results(res, type = "holdout") +
         labs(
           title = input$series_label,
-          subtitle = paste("Holdout horizon:", input$horizon, "months"),
-          x = NULL,
-          y = NULL
-        ) +
-        scale_y_continuous(labels = scales::label_comma())
+          subtitle = paste("Holdout horizon:", input$horizon, "months | Engine:", res$engine_label)
+        )
     })
 
     output$context_plot <- renderPlot({
@@ -140,6 +136,7 @@ mod_forecast_server <- function(id, data) {
     })
 
     output$decomposition_plot <- renderPlot({
+      req(input$run_forecast > 0)
       series_df <- selected_series()
 
       validate(
@@ -161,6 +158,7 @@ mod_forecast_server <- function(id, data) {
     })
 
     output$accuracy_table <- DT::renderDT({
+      req(input$run_forecast > 0)
       res <- forecast_results()
       accuracy_tbl <- res$accuracy_tbl |>
         mutate(across(where(is.numeric), ~ round(.x, 3)))

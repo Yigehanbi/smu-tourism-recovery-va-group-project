@@ -261,7 +261,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="forecasting-module" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-module">7. Forecasting Module</h2>
-<p>The forecasting module will follow the Chapter 19 and 20 time-series workflow used in <em>R for Visual Analytics</em>. Users will first inspect the selected country-level monthly arrivals series through trend, seasonal, decomposition, and supporting-indicator views, then create a time-aware train/test split, and finally compare a baseline method with model-based forecasts on the same holdout window. A seasonal-naive forecast will act as the baseline, while ETS and ARIMA will provide the main model-based benchmarks through the modeltime workflow. Hotel occupancy, average length of stay, and room revenue will not be treated as separate forecasting targets in the final module; instead, they will help interpret whether forecast demand recovery aligns with broader tourism performance.</p>
+<p>The forecasting module will follow the Chapter 19 and 20 time-series workflow used in <em>R for Visual Analytics</em>. Users will first inspect the selected country-level monthly arrivals series through trend, seasonal, decomposition, and supporting-indicator views, then create a time-aware train/test split, and finally compare a baseline method with model-based forecasts on the same holdout window. A seasonal-naive forecast will act as the baseline, while ETS and ARIMA will provide the main model-based benchmarks. The implementation will prefer the full <code>modeltime</code> workflow when that stack is available, but it will keep a lighter <code>forecast</code> fallback so that the prototype, app, and validation scripts remain runnable in shared environments. Hotel occupancy, average length of stay, and room revenue will not be treated as separate forecasting targets in the final module; instead, they will help interpret whether forecast demand recovery aligns with broader tourism performance.</p>
 <p>The expected outputs are:</p>
 <ol type="1">
 <li>a selectable target series</li>
@@ -331,11 +331,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">timetk</td>
-<td style="text-align: left;">Used to support time-series exploration and modeltime-friendly forecasting workflows.</td>
+<td style="text-align: left;">Used to support time-series exploration and the full forecasting workflow when the modeltime stack is available.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">modeltime</td>
-<td style="text-align: left;">Used to calibrate, compare, refit, and forecast time-series models in a unified workflow.</td>
+<td style="text-align: left;">Used to calibrate, compare, refit, and forecast time-series models in the full forecasting path.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">tsibble</td>

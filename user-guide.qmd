@@ -31,9 +31,11 @@ Open the **Forecasting Prototype** tab to:
 
 1. Select a country-level visitor-arrivals series.
 2. Compare that arrivals series with hotel occupancy, average length of stay, and room revenue in the context chart.
-3. Set the holdout horizon.
+3. Set the holdout horizon and click `Run Forecasting`.
 4. Compare the seasonal-naive baseline with ETS and ARIMA.
-5. Review the forecast plot, decomposition views, and accuracy table.
+5. Review the forecast plot, decomposition views, split summary, and accuracy table.
+
+The forecasting module prefers the full `modeltime` workflow, but it can fall back to a lighter `forecast` implementation when that dependency chain is unavailable. The model labels and interpretation stay consistent across both paths.
 
 ## Interpretation Tips
 

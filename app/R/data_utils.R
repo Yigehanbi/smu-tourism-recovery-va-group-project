@@ -975,6 +975,252 @@ prepare_forecast_series <- function(long_monthly, series_label) {
     mutate(value = as.numeric(value))
 }
 
+forecast_stack_status <- function() {
+  required_pkgs <- c("rsample", "parsnip", "modeltime", "timetk", "yardstick")
+  missing_pkgs <- required_pkgs[!vapply(required_pkgs, requireNamespace, logical(1), quietly = TRUE)]
+
+  list(
+    fallback_ready = requireNamespace("forecast", quietly = TRUE),
+    modeltime_ready = length(missing_pkgs) == 0,
+    missing_modeltime_packages = missing_pkgs,
+    preferred_engine = if (length(missing_pkgs) == 0) "modeltime" else "fallback"
+  )
+}
+
+compute_forecast_metrics <- function(actual, predicted) {
+  actual <- as.numeric(actual)
+  predicted <- as.numeric(predicted)
+  residuals <- actual - predicted
+  valid <- !(is.na(actual) | is.na(predicted))
+
+  actual <- actual[valid]
+  predicted <- predicted[valid]
+  residuals <- residuals[valid]
+
+  if (length(actual) == 0) {
+    return(
+      tibble(
+        mae = NA_real_,
+        mape = NA_real_,
+        mase = NA_real_,
+        smape = NA_real_,
+        rmse = NA_real_,
+        rsq = NA_real_
+      )
+    )
+  }
+
+  nonzero_actual <- actual[actual != 0]
+  mape <- if (length(nonzero_actual) == 0) {
+    NA_real_
+  } else {
+    mean(abs((actual[actual != 0] - predicted[actual != 0]) / actual[actual != 0])) * 100
+  }
+
+  denominator <- abs(actual) + abs(predicted)
+  smape <- if (all(denominator == 0)) {
+    NA_real_
+  } else {
+    mean((2 * abs(actual - predicted)) / ifelse(denominator == 0, NA_real_, denominator), na.rm = TRUE) * 100
+  }
+
+  rsq <- if (length(actual) < 2 || stats::sd(actual) == 0 || stats::sd(predicted) == 0) {
+    NA_real_
+  } else {
+    stats::cor(actual, predicted)^2
+  }
+
+  tibble(
+    mae = mean(abs(residuals)),
+    mape = mape,
+    mase = NA_real_,
+    smape = smape,
+    rmse = sqrt(mean(residuals^2)),
+    rsq = rsq
+  )
+}
+
+build_forecast_split <- function(series_df, horizon = 12) {
+  if (nrow(series_df) <= horizon + 12) {
+    stop("Selected series is too short for the requested forecast horizon.")
+  }
+
+  split_idx <- nrow(series_df) - horizon
+
+  list(
+    training = series_df[seq_len(split_idx), , drop = FALSE],
+    testing = series_df[seq.int(split_idx + 1, nrow(series_df)), , drop = FALSE]
+  )
+}
+
+make_future_data <- function(series_df, horizon = 12) {
+  tibble(
+    date = seq.Date(from = max(series_df$date) %m+% months(1), by = "month", length.out = horizon)
+  )
+}
+
+build_holdout_forecast_tbl <- function(actual_df, prediction_map) {
+  bind_rows(lapply(names(prediction_map), function(model_name) {
+    tibble(
+      date = actual_df$date,
+      actual = actual_df$value,
+      prediction = as.numeric(prediction_map[[model_name]]),
+      .model_desc = model_name
+    )
+  }))
+}
+
+build_future_forecast_tbl <- function(future_dates, prediction_map, best_model) {
+  tibble(
+    date = future_dates$date,
+    prediction = as.numeric(prediction_map[[best_model]]),
+    .model_desc = best_model
+  )
+}
+
+plot_forecast_results <- function(results, type = c("holdout", "future")) {
+  type <- match.arg(type)
+
+  if (type == "holdout") {
+    predictions <- results$holdout_forecast_tbl
+
+    ggplot() +
+      geom_line(
+        data = results$series_df,
+        aes(x = date, y = value),
+        color = "#b8c0c8",
+        linewidth = 0.8
+      ) +
+      geom_line(
+        data = results$testing,
+        aes(x = date, y = value),
+        color = "#1f2933",
+        linewidth = 1
+      ) +
+      geom_line(
+        data = predictions,
+        aes(x = date, y = prediction, color = .model_desc),
+        linewidth = 1
+      ) +
+      scale_color_manual(
+        values = c(
+          "Seasonal Naive" = "#d86f45",
+          "ETS (Modeltime)" = "#0f6b6f",
+          "ETS" = "#0f6b6f",
+          "ARIMA" = "#6b4eff"
+        )
+      ) +
+      labs(
+        x = NULL,
+        y = "Visitor arrivals (person)",
+        color = "Model"
+      ) +
+      scale_y_continuous(labels = scales::label_comma()) +
+      theme_minimal(base_size = 13)
+  } else {
+    predictions <- results$future_forecast_tbl
+
+    ggplot() +
+      geom_line(
+        data = results$series_df,
+        aes(x = date, y = value),
+        color = "#b8c0c8",
+        linewidth = 0.8
+      ) +
+      geom_line(
+        data = predictions,
+        aes(x = date, y = prediction, color = .model_desc),
+        linewidth = 1.1
+      ) +
+      scale_color_manual(
+        values = c(
+          "Seasonal Naive" = "#d86f45",
+          "ETS (Modeltime)" = "#0f6b6f",
+          "ETS" = "#0f6b6f",
+          "ARIMA" = "#6b4eff"
+        )
+      ) +
+      labs(
+        x = NULL,
+        y = "Visitor arrivals (person)",
+        color = "Refit model"
+      ) +
+      scale_y_continuous(labels = scales::label_comma()) +
+      theme_minimal(base_size = 13)
+  }
+}
+
+run_fallback_forecast_workflow <- function(series_df, horizon = 12) {
+  split <- build_forecast_split(series_df, horizon = horizon)
+  training_df <- split$training
+  testing_df <- split$testing
+
+  training_ts <- ts(
+    training_df$value,
+    start = c(lubridate::year(min(training_df$date)), lubridate::month(min(training_df$date))),
+    frequency = 12
+  )
+  full_ts <- ts(
+    series_df$value,
+    start = c(lubridate::year(min(series_df$date)), lubridate::month(min(series_df$date))),
+    frequency = 12
+  )
+
+  snaive_fit <- forecast::snaive(training_ts, h = nrow(testing_df))
+  ets_model <- forecast::ets(training_ts)
+  ets_fit <- forecast::forecast(ets_model, h = nrow(testing_df))
+  arima_model <- forecast::auto.arima(training_ts)
+  arima_fit <- forecast::forecast(arima_model, h = nrow(testing_df))
+
+  prediction_map <- list(
+    "Seasonal Naive" = as.numeric(snaive_fit$mean),
+    "ETS" = as.numeric(ets_fit$mean),
+    "ARIMA" = as.numeric(arima_fit$mean)
+  )
+
+  accuracy_tbl <- bind_rows(lapply(names(prediction_map), function(model_name) {
+    compute_forecast_metrics(testing_df$value, prediction_map[[model_name]]) |>
+      mutate(
+        .model_id = match(model_name, names(prediction_map)) - 1L,
+        .model_desc = model_name,
+        .type = "Test",
+        .before = 1
+      )
+  })) |>
+    select(.model_id, .model_desc, .type, mae, mape, mase, smape, rmse, rsq) |>
+    mutate(across(where(is.numeric), ~ round(.x, 3)))
+
+  best_model <- accuracy_tbl |>
+    arrange(rmse) |>
+    slice(1) |>
+    pull(.model_desc)
+
+  future_dates <- make_future_data(series_df, horizon = horizon)
+  future_prediction_map <- switch(
+    best_model,
+    "Seasonal Naive" = list("Seasonal Naive" = as.numeric(forecast::snaive(full_ts, h = horizon)$mean)),
+    "ETS" = list("ETS" = as.numeric(forecast::forecast(forecast::ets(full_ts), h = horizon)$mean)),
+    "ARIMA" = list("ARIMA" = as.numeric(forecast::forecast(forecast::auto.arima(full_ts), h = horizon)$mean))
+  )
+
+  list(
+    engine = "fallback",
+    engine_label = "forecast fallback",
+    series_df = series_df,
+    training = training_df,
+    testing = testing_df,
+    models_tbl = tibble(
+      .model_id = 0:2,
+      .model_desc = c("Seasonal Naive", "ETS", "ARIMA"),
+      engine = "forecast"
+    ),
+    accuracy_tbl = accuracy_tbl,
+    holdout_forecast_tbl = build_holdout_forecast_tbl(testing_df, prediction_map),
+    future_forecast_tbl = build_future_forecast_tbl(future_dates, future_prediction_map, best_model),
+    best_model_desc = best_model
+  )
+}
+
 run_modeltime_forecast_workflow <- function(series_df, horizon = 12) {
   required_pkgs <- c("rsample", "parsnip", "modeltime", "timetk", "yardstick")
   missing_pkgs <- required_pkgs[!vapply(required_pkgs, requireNamespace, logical(1), quietly = TRUE)]
@@ -991,13 +1237,7 @@ run_modeltime_forecast_workflow <- function(series_df, horizon = 12) {
     library(modeltime)
     library(parsnip)
     library(rsample)
-    library(yardstick)
   })
-
-  validate_series <- nrow(series_df) > horizon + 12
-  if (!validate_series) {
-    stop("Selected series is too short for the requested forecast horizon.")
-  }
 
   split_prop <- (nrow(series_df) - horizon) / nrow(series_df)
   splits <- rsample::initial_time_split(series_df, prop = split_prop)
@@ -1017,75 +1257,109 @@ run_modeltime_forecast_workflow <- function(series_df, horizon = 12) {
     model_fit_arima
   )
 
-  calibration_tbl <- models_tbl |>
-    modeltime::modeltime_calibrate(new_data = testing_df)
+  training_ts <- ts(
+    training_df$value,
+    start = c(lubridate::year(min(training_df$date)), lubridate::month(min(training_df$date))),
+    frequency = 12
+  )
 
-  accuracy_tbl <- calibration_tbl |>
-    modeltime::modeltime_accuracy() |>
-    mutate(
-      .model_desc = dplyr::recode(
-        .model_desc,
-        "ETS" = "ETS (Modeltime)",
-        .default = .model_desc
+  baseline_fit <- forecast::snaive(training_ts, h = nrow(testing_df))
+  ets_test_pred <- predict(model_fit_ets, new_data = testing_df)$.pred
+  arima_test_pred <- predict(model_fit_arima, new_data = testing_df)$.pred
+
+  prediction_map <- list(
+    "Seasonal Naive" = as.numeric(baseline_fit$mean),
+    "ETS (Modeltime)" = as.numeric(ets_test_pred),
+    "ARIMA" = as.numeric(arima_test_pred)
+  )
+
+  accuracy_tbl <- bind_rows(lapply(names(prediction_map), function(model_name) {
+    compute_forecast_metrics(testing_df$value, prediction_map[[model_name]]) |>
+      mutate(
+        .model_id = c("Seasonal Naive" = 0L, "ETS (Modeltime)" = 1L, "ARIMA" = 2L)[[model_name]],
+        .model_desc = model_name,
+        .type = "Test",
+        .before = 1
       )
-    )
-
-  baseline_fit <- forecast::snaive(
-    ts(
-      training_df$value,
-      start = c(lubridate::year(min(training_df$date)), lubridate::month(min(training_df$date))),
-      frequency = 12
-    ),
-    h = nrow(testing_df)
-  )
-
-  baseline_metrics <- tibble(
-    .model_id = 0L,
-    .model_desc = "Seasonal Naive",
-    .type = "Test",
-    mae = yardstick::mae_vec(testing_df$value, as.numeric(baseline_fit$mean)),
-    mape = yardstick::mape_vec(testing_df$value, as.numeric(baseline_fit$mean)),
-    mase = NA_real_,
-    smape = yardstick::smape_vec(testing_df$value, as.numeric(baseline_fit$mean)),
-    rmse = yardstick::rmse_vec(testing_df$value, as.numeric(baseline_fit$mean)),
-    rsq = yardstick::rsq_vec(testing_df$value, as.numeric(baseline_fit$mean))
-  )
-
-  full_accuracy_tbl <- bind_rows(baseline_metrics, accuracy_tbl) |>
+  })) |>
+    select(.model_id, .model_desc, .type, mae, mape, mase, smape, rmse, rsq) |>
     mutate(across(where(is.numeric), ~ round(.x, 3)))
 
-  calibration_forecast_tbl <- calibration_tbl |>
-    modeltime::modeltime_forecast(
-      new_data = testing_df,
-      actual_data = series_df,
-      keep_data = TRUE
-    )
-
-  best_model_id <- accuracy_tbl |>
+  best_model <- accuracy_tbl |>
     arrange(rmse) |>
     slice(1) |>
-    pull(.model_id)
+    pull(.model_desc)
 
-  refit_tbl <- models_tbl |>
-    filter(.model_id == best_model_id) |>
-    modeltime::modeltime_refit(data = series_df)
-
-  future_forecast_tbl <- refit_tbl |>
-    modeltime::modeltime_forecast(
-      h = horizon,
-      actual_data = series_df,
-      keep_data = TRUE
-    )
+  future_dates <- make_future_data(series_df, horizon = horizon)
+  future_prediction_map <- switch(
+    best_model,
+    "Seasonal Naive" = list("Seasonal Naive" = as.numeric(forecast::snaive(
+      ts(
+        series_df$value,
+        start = c(lubridate::year(min(series_df$date)), lubridate::month(min(series_df$date))),
+        frequency = 12
+      ),
+      h = horizon
+    )$mean)),
+    "ETS (Modeltime)" = {
+      refit <- modeltime::exp_smoothing() |>
+        parsnip::set_engine("ets") |>
+        parsnip::fit(value ~ date, data = series_df)
+      list("ETS (Modeltime)" = as.numeric(predict(refit, new_data = future_dates)$.pred))
+    },
+    "ARIMA" = {
+      refit <- modeltime::arima_reg() |>
+        parsnip::set_engine("auto_arima") |>
+        parsnip::fit(value ~ date, data = series_df)
+      list("ARIMA" = as.numeric(predict(refit, new_data = future_dates)$.pred))
+    }
+  )
 
   list(
+    engine = "modeltime",
+    engine_label = "modeltime workflow",
     splits = splits,
+    series_df = series_df,
     training = training_df,
     testing = testing_df,
-    models_tbl = models_tbl,
-    calibration_tbl = calibration_tbl,
-    accuracy_tbl = full_accuracy_tbl,
-    calibration_forecast_tbl = calibration_forecast_tbl,
-    refit_tbl = refit_tbl,
-    future_forecast_tbl = future_forecast_tbl
+    models_tbl = tibble(
+      .model_id = 0:2,
+      .model_desc = c("Seasonal Naive", "ETS (Modeltime)", "ARIMA"),
+      engine = c("forecast", "modeltime", "modeltime")
+    ),
+    accuracy_tbl = accuracy_tbl,
+    holdout_forecast_tbl = build_holdout_forecast_tbl(testing_df, prediction_map),
+    future_forecast_tbl = build_future_forecast_tbl(future_dates, future_prediction_map, best_model),
+    best_model_desc = best_model
   )
+}
+
+run_forecast_workflow <- function(series_df, horizon = 12, engine = c("auto", "modeltime", "fallback")) {
+  engine <- match.arg(engine)
+  stack_status <- forecast_stack_status()
+
+  if (!stack_status$fallback_ready) {
+    stop("Missing required package 'forecast'. Install it before running the forecasting workflow.")
+  }
+
+  selected_engine <- switch(
+    engine,
+    auto = stack_status$preferred_engine,
+    modeltime = "modeltime",
+    fallback = "fallback"
+  )
+
+  if (selected_engine == "modeltime" && !stack_status$modeltime_ready) {
+    stop(
+      "Modeltime forecasting is unavailable because these packages are missing: ",
+      paste(stack_status$missing_modeltime_packages, collapse = ", "),
+      "."
+    )
+  }
+
+  if (selected_engine == "modeltime") {
+    run_modeltime_forecast_workflow(series_df = series_df, horizon = horizon)
+  } else {
+    run_fallback_forecast_workflow(series_df = series_df, horizon = horizon)
+  }
 }

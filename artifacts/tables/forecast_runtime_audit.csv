@@ -1,0 +1,6 @@
+"check","value"
+"fallback_ready","TRUE"
+"modeltime_ready","TRUE"
+"preferred_engine","modeltime"
+"missing_modeltime_packages","None"
+"note","Package audit records installation and CRAN availability only. Prototype render and smoke tests remain the runtime proof."

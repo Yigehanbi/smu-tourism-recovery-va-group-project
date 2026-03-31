@@ -11,7 +11,8 @@ mod_forecast_ui <- function(id) {
       sliderInput(ns("horizon"), "Test / Forecast Horizon", min = 6, max = 18, value = 12, step = 1),
       actionButton(ns("run_forecast"), "Run Forecasting", class = "btn-primary"),
       hr(),
-      p("Forecast stack: Seasonal Naive + ETS + ARIMA (modeltime workflow)"),
+      p("Click Run Forecasting to generate the outputs below."),
+      p("Forecast stack: modeltime workflow when available, otherwise a forecast-package fallback using the same model labels."),
       p("Scope: country-level visitor arrivals on the shared arrivals backbone"),
       p("Hotel occupancy, stay length, and room revenue are used only as supporting context")
     ),

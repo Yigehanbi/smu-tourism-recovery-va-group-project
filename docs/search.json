@@ -186,42 +186,42 @@
     "href": "Proposal/Proposal.html",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "",
-    "text": "Singapore’s tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery stages. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series dataset."
+    "text": "Singapore’s tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery paths across source markets. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series backbone."
   },
   {
     "objectID": "Proposal/Proposal.html#overview-motivation",
     "href": "Proposal/Proposal.html#overview-motivation",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "",
-    "text": "Singapore’s tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery stages. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series dataset."
+    "text": "Singapore’s tourism sector experienced a severe shock during the pandemic and entered an uneven recovery phase in the years that followed. Monthly patterns in visitor arrivals, hotel occupancy, length of stay, and hotel performance indicators all suggest distinct recovery paths across source markets. Static charts alone are insufficient for users who need to compare series, detect structural shifts, and assess what may happen next. This project therefore proposes an interactive visual analytics prototype to support exploration, clustering, and forecasting on one shared tourism time-series backbone."
   },
   {
     "objectID": "Proposal/Proposal.html#problem-statement",
     "href": "Proposal/Proposal.html#problem-statement",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "2. Problem Statement",
-    "text": "2. Problem Statement\nCurrent discussions on tourism recovery often focus narrowly on whether visitor numbers have returned, without adequately examining seasonality, source-market differences, or the way recovery paths vary across tourism series. In particular, there is a lack of an interactive time-series framework that allows users to compare country-level arrivals, detect recovery regimes, and assess how future demand may evolve."
+    "text": "2. Problem Statement\nCurrent discussions on tourism recovery often focus narrowly on whether visitor numbers have returned, without adequately examining seasonality, source-market differences, or the way recovery paths vary across country-level arrivals trajectories. In particular, there is a lack of an interactive time-series framework that allows users to compare country-level arrivals, detect shared recovery patterns, and assess how future demand may evolve."
   },
   {
     "objectID": "Proposal/Proposal.html#project-aim",
     "href": "Proposal/Proposal.html#project-aim",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "3. Project Aim",
-    "text": "3. Project Aim\nThe project aims to develop a visual analytics prototype based on monthly tourism time series, enabling users to understand tourism recovery at descriptive, structural, and forecasting levels. The prototype will integrate time-series exploration, time-series clustering, and forecasting analysis to explain how tourism recovery trajectories evolve and how selected demand series may move in the near future."
+    "text": "3. Project Aim\nThe project aims to develop a visual analytics prototype based on monthly tourism time series, enabling users to understand tourism recovery at descriptive, structural, and forecasting levels. The prototype will integrate time-series exploration, time-series clustering, and forecasting analysis to explain how country-level recovery trajectories evolve and how selected demand series may move in the near future."
   },
   {
     "objectID": "Proposal/Proposal.html#the-data",
     "href": "Proposal/Proposal.html#the-data",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "4. The Data",
-    "text": "4. The Data\nThe project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The selected workbook contains monthly tourism indicators such as:\n\nVisitor Arrivals\nVisitor Arrivals by selected countries and regions\nHotel Room Occupancy Rate\nAverage Length of Stay\nNumber of Hotels\nTotal Room Revenue\n\nThe project uses a compiled tourism time-series workbook spanning December 2015 onward, with the main analytical focus on monthly series. Core variables include total visitor arrivals, arrivals from selected countries and regions such as China, hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue. The app will use one common monthly dataset across all modules so that exploration, clustering, and forecasting remain consistent. Within that shared dataset, the forecasting module will treat country-level monthly visitor arrivals as the primary target series, while hotel occupancy, stay length, and room revenue will be used as supporting indicators for interpretation."
+    "text": "4. The Data\nThe project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The shared backbone uses a compiled visitor-arrivals workbook by country, while a second tourism workbook contributes supporting hotel-performance indicators. Together they provide monthly indicators such as:\n\nVisitor Arrivals\nVisitor Arrivals by selected countries and regions\nHotel Room Occupancy Rate\nAverage Length of Stay\nNumber of Hotels\nTotal Room Revenue\n\nThe project uses a compiled monthly arrivals workbook spanning December 2015 onward, with the main analytical focus on country-level visitor-arrivals series. Core analytical variables include total visitor arrivals and arrivals from selected countries and regions such as China. To interpret how demand recovery translates into tourism performance, the app can also layer in hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue from a supporting tourism workbook when that context file is available. The app keeps one shared arrivals backbone across all modules so that exploration, clustering, and forecasting remain consistent. Within that shared backbone, the forecasting module treats country-level monthly visitor arrivals as the primary target series, while hotel occupancy, stay length, and room revenue are used as supporting indicators for interpretation."
   },
   {
     "objectID": "Proposal/Proposal.html#research-questions",
     "href": "Proposal/Proposal.html#research-questions",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "5. Research Questions",
-    "text": "5. Research Questions\nThe project focuses on the following questions:\n\nHow did Singapore’s tourism market differ across the pre-COVID, shock, and recovery periods?\nDid the recovery of selected source markets move in tandem with the broader tourism market?\nCan monthly tourism observations be grouped into meaningful recovery-state clusters?\nHow well can selected country-level visitor-arrivals series be forecast using a baseline method and a model-based approach?"
+    "text": "5. Research Questions\nThe project focuses on the following questions:\n\nHow did Singapore’s tourism market differ across the pre-COVID, shock, and recovery periods?\nDid the recovery of selected source markets move in tandem with the broader tourism market?\nCan country-level arrivals trajectories be grouped into meaningful recovery-pattern clusters?\nHow well can selected country-level visitor-arrivals series be forecast using a baseline method and a model-based approach?"
   },
   {
     "objectID": "Proposal/Proposal.html#methodology-and-analytical-approach",
@@ -242,14 +242,14 @@
     "href": "Proposal/Proposal.html#data-visualisation-methods",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "8. Data Visualisation Methods",
-    "text": "8. Data Visualisation Methods\nThe prototype will include time-series line charts, target-series comparison views, cluster scatter plots, cluster profile tables, forecast plots, and forecast accuracy tables. These visualizations are designed not merely to display results, but to reveal seasonal structure, regime shifts, recovery-state similarities, and the relative performance of competing forecasting methods."
+    "text": "8. Data Visualisation Methods\nThe prototype will include time-series line charts, target-series comparison views, cluster profile plots, recovery position maps, forecast plots, and forecast accuracy tables. These visualizations are designed not merely to display results, but to reveal seasonal structure, regime shifts, cross-market recovery similarities, and the relative performance of competing forecasting methods."
   },
   {
     "objectID": "Proposal/Proposal.html#r-packages",
     "href": "Proposal/Proposal.html#r-packages",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "9. R Packages",
-    "text": "9. R Packages\n\n\n\n\n\n\n\nPackage\nDescription\n\n\n\n\ntidyverse\nUsed for data cleaning, transformation, filtering, summarisation, and general data manipulation.\n\n\nreadxl\nUsed to import the original Excel dataset into R.\n\n\nlubridate\nUsed to process date variables and create time-based fields.\n\n\nggplot2\nUsed to create line charts, clustering plots, and forecast visualisations.\n\n\nplotly\nUsed to add interactivity to selected visualisations where needed.\n\n\nDT\nUsed to display interactive data tables in the prototype.\n\n\ncluster\nUsed for clustering analysis and cluster quality assessment such as silhouette scores.\n\n\nfactoextra\nUsed to visualise clustering results, elbow plots, and cluster profiles.\n\n\nforecast\nUsed to fit baseline and model-based time-series forecasts such as seasonal naive, ETS, and ARIMA.\n\n\ntidymodels\nUsed to support time-aware train/test splitting and the forecasting modelling workflow.\n\n\ntimetk\nUsed to support time-series exploration and modeltime-friendly forecasting workflows.\n\n\nmodeltime\nUsed to calibrate, compare, refit, and forecast time-series models in a unified workflow.\n\n\ntsibble\nUsed to represent time-indexed series for decomposition and temporal analysis.\n\n\nfeasts\nUsed to derive decomposition and seasonal diagnostics before model fitting.\n\n\npatchwork\nUsed to combine multiple ggplot charts into one display layout."
+    "text": "9. R Packages\n\n\n\n\n\n\n\nPackage\nDescription\n\n\n\n\ntidyverse\nUsed for data cleaning, transformation, filtering, summarisation, and general data manipulation.\n\n\nreadxl\nUsed to import the original Excel dataset into R.\n\n\nlubridate\nUsed to process date variables and create time-based fields.\n\n\nggplot2\nUsed to create line charts, clustering plots, and forecast visualisations.\n\n\nplotly\nUsed to add interactivity to selected visualisations where needed.\n\n\nDT\nUsed to display interactive data tables in the prototype.\n\n\ncluster\nUsed for clustering analysis and cluster quality assessment such as silhouette scores.\n\n\nfactoextra\nUsed to visualise clustering results, elbow plots, and cluster profiles.\n\n\nforecast\nUsed to fit baseline and model-based time-series forecasts such as seasonal naive, ETS, and ARIMA.\n\n\ntidymodels\nUsed to support time-aware train/test splitting and the forecasting modelling workflow.\n\n\ntimetk\nUsed to support time-series exploration and the full forecasting workflow when the modeltime stack is available.\n\n\nmodeltime\nUsed to calibrate, compare, refit, and forecast time-series models in the full forecasting path.\n\n\ntsibble\nUsed to represent time-indexed series for decomposition and temporal analysis.\n\n\nfeasts\nUsed to derive decomposition and seasonal diagnostics before model fitting.\n\n\npatchwork\nUsed to combine multiple ggplot charts into one display layout."
   },
   {
     "objectID": "app-guide.html",
@@ -599,7 +599,7 @@
     "href": "prototype/forecasting.html",
     "title": "Module Prototype: Forecasting",
     "section": "",
-    "text": "source(\"../app/R/data_utils.R\")\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(DT)\nlibrary(lubridate)\nlibrary(timetk)\nlibrary(modeltime)\nlibrary(tidymodels)\nlibrary(tsibble)\nlibrary(feasts)\noptions(scipen = 999)"
+    "text": "source(\"../app/R/data_utils.R\")\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(DT)\nlibrary(lubridate)\noptions(scipen = 999)"
   },
   {
     "objectID": "prototype/forecasting.html#objective",
@@ -627,7 +627,7 @@
     "href": "prototype/forecasting.html#example-target-series",
     "title": "Module Prototype: Forecasting",
     "section": "Example Target Series",
-    "text": "Example Target Series\nVisitor Arrivals: China is used here because it is one of the clearest country-level recovery indicators in the dataset and it shows strong shock, rebound, and seasonal dynamics.\n\nexample_label &lt;- \"Visitor Arrivals: China\"\n\nexample_series &lt;- prepare_forecast_series(\n  tourism_data$long_monthly,\n  example_label\n)\n\nforecast_results &lt;- run_modeltime_forecast_workflow(\n  series_df = example_series,\n  horizon = 12\n)\n\ncontext_series &lt;- prepare_country_context_panel(\n  tourism_data$long_monthly,\n  country_label = example_label\n)"
+    "text": "Example Target Series\nVisitor Arrivals: China is used here because it is one of the clearest country-level recovery indicators in the dataset and it shows strong shock, rebound, and seasonal dynamics.\n\nexample_label &lt;- \"Visitor Arrivals: China\"\n\nexample_series &lt;- prepare_forecast_series(\n  tourism_data$long_monthly,\n  example_label\n)\n\nforecast_results &lt;- run_forecast_workflow(\n  series_df = example_series,\n  horizon = 12,\n  engine = \"auto\"\n)\n\ncontext_series &lt;- prepare_country_context_panel(\n  tourism_data$long_monthly,\n  country_label = example_label\n)\n\nFor this prototype run, the selected execution engine is modeltime workflow."
   },
   {
     "objectID": "prototype/forecasting.html#forecast-plot",
@@ -697,7 +697,7 @@
     "href": "user-guide.html#step-3-forecast-future-values",
     "title": "User Guide",
     "section": "Step 3: Forecast Future Values",
-    "text": "Step 3: Forecast Future Values\nOpen the Forecasting Prototype tab to:\n\nSelect a country-level visitor-arrivals series.\nCompare that arrivals series with hotel occupancy, average length of stay, and room revenue in the context chart.\nSet the holdout horizon.\nCompare the seasonal-naive baseline with ETS and ARIMA.\nReview the forecast plot, decomposition views, and accuracy table."
+    "text": "Step 3: Forecast Future Values\nOpen the Forecasting Prototype tab to:\n\nSelect a country-level visitor-arrivals series.\nCompare that arrivals series with hotel occupancy, average length of stay, and room revenue in the context chart.\nSet the holdout horizon and click Run Forecasting.\nCompare the seasonal-naive baseline with ETS and ARIMA.\nReview the forecast plot, decomposition views, split summary, and accuracy table.\n\nThe forecasting module prefers the full modeltime workflow, but it can fall back to a lighter forecast implementation when that dependency chain is unavailable. The model labels and interpretation stay consistent across both paths."
   },
   {
     "objectID": "user-guide.html#interpretation-tips",
@@ -802,7 +802,7 @@
     "href": "prototype/forecasting.html#step-3-check-seasonality-and-decomposition",
     "title": "Module Prototype: Forecasting",
     "section": "Step 3: Check Seasonality and Decomposition",
-    "text": "Step 3: Check Seasonality and Decomposition\nThe next step is to confirm whether the series contains strong seasonal cycles and how the trend changed around the shock-and-recovery period. This mirrors the Chapter 19 emphasis on seasonal pattern analysis and decomposition.\n\nSeasonal Pattern by Month\n\nexample_series |&gt;\n  mutate(\n    month_lab = month(date, label = TRUE, abbr = TRUE),\n    year_num = year(date)\n  ) |&gt;\n  ggplot(aes(x = month_lab, y = value, group = year_num, color = factor(year_num))) +\n  geom_line(linewidth = 0.8, alpha = 0.65) +\n  geom_point(size = 1.3, alpha = 0.8) +\n  labs(\n    title = \"Seasonal Comparison by Month\",\n    subtitle = \"Each coloured line represents one year\",\n    x = NULL,\n    y = \"Visitor arrivals (person)\",\n    color = \"Year\"\n  ) +\n  scale_y_continuous(labels = scales::label_comma()) +\n  theme_minimal(base_size = 13) +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\n\n\n\nSTL-style Decomposition\n\nexample_tsibble &lt;- example_series |&gt;\n  transmute(date = yearmonth(date), value = value) |&gt;\n  as_tsibble(index = date)\n\ndecomp_tbl &lt;- example_tsibble |&gt;\n  model(STL(value)) |&gt;\n  components()\n\nautoplot(decomp_tbl) +\n  labs(\n    title = \"Trend / Seasonal / Remainder Decomposition\",\n    subtitle = \"Used to explain the structural change before forecasting\"\n  )"
+    "text": "Step 3: Check Seasonality and Decomposition\nThe next step is to confirm whether the series contains strong seasonal cycles and how the trend changed around the shock-and-recovery period. This mirrors the Chapter 19 emphasis on seasonal pattern analysis and decomposition.\n\nSeasonal Pattern by Month\n\nexample_series |&gt;\n  mutate(\n    month_lab = month(date, label = TRUE, abbr = TRUE),\n    year_num = year(date)\n  ) |&gt;\n  ggplot(aes(x = month_lab, y = value, group = year_num, color = factor(year_num))) +\n  geom_line(linewidth = 0.8, alpha = 0.65) +\n  geom_point(size = 1.3, alpha = 0.8) +\n  labs(\n    title = \"Seasonal Comparison by Month\",\n    subtitle = \"Each coloured line represents one year\",\n    x = NULL,\n    y = \"Visitor arrivals (person)\",\n    color = \"Year\"\n  ) +\n  scale_y_continuous(labels = scales::label_comma()) +\n  theme_minimal(base_size = 13) +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\n\n\n\nSTL-style Decomposition\n\nexample_ts &lt;- ts(\n  example_series$value,\n  start = c(year(min(example_series$date)), month(min(example_series$date))),\n  frequency = 12\n)\n\ndecomp_tbl &lt;- stats::stl(example_ts, s.window = \"periodic\")\n\nforecast::autoplot(decomp_tbl) +\n  labs(\n    title = \"Trend / Seasonal / Remainder Decomposition\",\n    subtitle = \"Used to explain the structural change before forecasting\"\n  )"
   },
   {
     "objectID": "prototype/forecasting.html#step-4-create-the-training-and-testing-split",
@@ -816,28 +816,28 @@
     "href": "prototype/forecasting.html#step-5-fit-baseline-and-forecasting-models",
     "title": "Module Prototype: Forecasting",
     "section": "Step 5: Fit Baseline and Forecasting Models",
-    "text": "Step 5: Fit Baseline and Forecasting Models\nThis prototype includes:\n\nSeasonal Naive as the baseline benchmark.\nETS (Modeltime) using exponential smoothing.\nARIMA using auto_arima through the modeltime workflow.\n\nThese model choices match the Chapter 20 recommendation to compare exponential smoothing and ARIMA techniques after building a time-aware train/test split for one selected time series.\n\nforecast_results$models_tbl\n\n# Modeltime Table\n# A tibble: 2 × 3\n  .model_id .model   .model_desc            \n      &lt;int&gt; &lt;list&gt;   &lt;chr&gt;                  \n1         1 &lt;fit[+]&gt; ETS(M,AD,M)            \n2         2 &lt;fit[+]&gt; ARIMA(0,1,2)(0,0,1)[12]"
+    "text": "Step 5: Fit Baseline and Forecasting Models\nThis prototype includes:\n\nSeasonal Naive as the baseline benchmark.\nETS (Modeltime) using exponential smoothing.\nARIMA using auto_arima through the modeltime workflow.\n\nThese model choices match the Chapter 20 recommendation to compare exponential smoothing and ARIMA techniques after building a time-aware train/test split for one selected time series. When the full modeltime stack is unavailable, the fallback route keeps the same benchmark logic and model labels so the interpretation remains stable.\n\nforecast_results$models_tbl\n\n# A tibble: 3 × 3\n  .model_id .model_desc     engine   \n      &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;    \n1         0 Seasonal Naive  forecast \n2         1 ETS (Modeltime) modeltime\n3         2 ARIMA           modeltime"
   },
   {
     "objectID": "prototype/forecasting.html#step-6-testing-set-forecast-and-accuracy-comparison",
     "href": "prototype/forecasting.html#step-6-testing-set-forecast-and-accuracy-comparison",
     "title": "Module Prototype: Forecasting",
     "section": "Step 6: Testing-Set Forecast and Accuracy Comparison",
-    "text": "Step 6: Testing-Set Forecast and Accuracy Comparison\n\nAccuracy Table\n\nDT::datatable(\n  forecast_results$accuracy_tbl,\n  rownames = FALSE,\n  options = list(dom = \"t\", pageLength = 6, scrollX = TRUE)\n)\n\n\n\n\n\n\n\nTesting Window Forecast Plot\n\nforecast_results$calibration_forecast_tbl |&gt;\n  plot_modeltime_forecast(\n    .interactive = FALSE,\n    .legend_max_width = 25\n  ) +\n  labs(\n    title = \"Testing-Set Forecast Comparison\",\n    subtitle = \"Seasonal naive is the benchmark; ETS and ARIMA are model-based alternatives\"\n  ) +\n  scale_y_continuous(labels = scales::label_comma())"
+    "text": "Step 6: Testing-Set Forecast and Accuracy Comparison\n\nAccuracy Table\n\nDT::datatable(\n  forecast_results$accuracy_tbl,\n  rownames = FALSE,\n  options = list(dom = \"t\", pageLength = 6, scrollX = TRUE)\n)\n\n\n\n\n\n\n\nTesting Window Forecast Plot\n\nplot_forecast_results(forecast_results, type = \"holdout\") +\n  labs(\n    title = \"Testing-Set Forecast Comparison\",\n    subtitle = paste(\n      \"Seasonal naive is the benchmark; ETS and ARIMA are model-based alternatives | Engine:\",\n      forecast_results$engine_label\n    )\n  )"
   },
   {
     "objectID": "prototype/forecasting.html#step-7-refit-the-best-model-and-forecast-forward",
     "href": "prototype/forecasting.html#step-7-refit-the-best-model-and-forecast-forward",
     "title": "Module Prototype: Forecasting",
     "section": "Step 7: Refit the Best Model and Forecast Forward",
-    "text": "Step 7: Refit the Best Model and Forecast Forward\nAfter accuracy comparison, the best-performing model is refit on the full series and projected forward for the next 12 months. This is the final step highlighted in Chapter 20.\n\nforecast_results$future_forecast_tbl |&gt;\n  plot_modeltime_forecast(\n    .interactive = FALSE,\n    .legend_max_width = 25\n  ) +\n  labs(\n    title = \"Forward Forecast After Refit\",\n    subtitle = \"Best model refit on the full monthly series\"\n  ) +\n  scale_y_continuous(labels = scales::label_comma())"
+    "text": "Step 7: Refit the Best Model and Forecast Forward\nAfter accuracy comparison, the best-performing model is refit on the full series and projected forward for the next 12 months. This is the final step highlighted in Chapter 20.\n\nplot_forecast_results(forecast_results, type = \"future\") +\n  labs(\n    title = \"Forward Forecast After Refit\",\n    subtitle = paste(\"Best model refit on the full monthly series | Engine:\", forecast_results$engine_label)\n  )"
   },
   {
     "objectID": "Proposal/Proposal.html#forecasting-module",
     "href": "Proposal/Proposal.html#forecasting-module",
     "title": "Singapore Tourism Recovery Visual Analytics Prototype",
     "section": "7. Forecasting Module",
-    "text": "7. Forecasting Module\nThe forecasting module will follow the Chapter 19 and 20 time-series workflow used in R for Visual Analytics. Users will first inspect the selected country-level monthly arrivals series through trend, seasonal, decomposition, and supporting-indicator views, then create a time-aware train/test split, and finally compare a baseline method with model-based forecasts on the same holdout window. A seasonal-naive forecast will act as the baseline, while ETS and ARIMA will provide the main model-based benchmarks through the modeltime workflow. Hotel occupancy, average length of stay, and room revenue will not be treated as separate forecasting targets in the final module; instead, they will help interpret whether forecast demand recovery aligns with broader tourism performance.\nThe expected outputs are:\n\na selectable target series\na raw time-series view with seasonal and decomposition diagnostics\na forecast plot showing training, test, and forecast paths\nan accuracy table comparing RMSE, MAE, and MAPE\nexplanatory notes on the difference between the baseline and the forecasting model"
+    "text": "7. Forecasting Module\nThe forecasting module will follow the Chapter 19 and 20 time-series workflow used in R for Visual Analytics. Users will first inspect the selected country-level monthly arrivals series through trend, seasonal, decomposition, and supporting-indicator views, then create a time-aware train/test split, and finally compare a baseline method with model-based forecasts on the same holdout window. A seasonal-naive forecast will act as the baseline, while ETS and ARIMA will provide the main model-based benchmarks. The implementation will prefer the full modeltime workflow when that stack is available, but it will keep a lighter forecast fallback so that the prototype, app, and validation scripts remain runnable in shared environments. Hotel occupancy, average length of stay, and room revenue will not be treated as separate forecasting targets in the final module; instead, they will help interpret whether forecast demand recovery aligns with broader tourism performance.\nThe expected outputs are:\n\na selectable target series\na raw time-series view with seasonal and decomposition diagnostics\na forecast plot showing training, test, and forecast paths\nan accuracy table comparing RMSE, MAE, and MAPE\nexplanatory notes on the difference between the baseline and the forecasting model"
   },
   {
     "objectID": "team/onboarding.html#meeting-records",
@@ -1013,5 +1013,12 @@
     "title": "Shiny App",
     "section": "Notes For Local Testing",
     "text": "Notes For Local Testing\n\nStart the app first if the preview frame is blank.\nUse the standalone launch link if your browser blocks the embedded frame.\nKeep the browser window at a normal desktop width when checking layout quality."
+  },
+  {
+    "objectID": "prototype/forecasting.html#runtime-strategy",
+    "href": "prototype/forecasting.html#runtime-strategy",
+    "title": "Module Prototype: Forecasting",
+    "section": "Runtime Strategy",
+    "text": "Runtime Strategy\nThe forecasting module now supports two execution paths under one shared interface:\n\nmodeltime workflow when the full Chapter 20 stack is installed.\nforecast fallback when the shared environment is missing the modeltime dependency chain.\n\nThis keeps the app, prototype, and smoke test on one forecasting contract while still allowing the site to render on lighter environments.\n\nstack_status &lt;- forecast_stack_status()\n\ntibble(\n  fallback_ready = stack_status$fallback_ready,\n  modeltime_ready = stack_status$modeltime_ready,\n  preferred_engine = stack_status$preferred_engine,\n  missing_modeltime_packages = ifelse(\n    length(stack_status$missing_modeltime_packages) == 0,\n    \"None\",\n    paste(stack_status$missing_modeltime_packages, collapse = \", \")\n  )\n)\n\n# A tibble: 1 × 4\n  fallback_ready modeltime_ready preferred_engine missing_modeltime_packages\n  &lt;lgl&gt;          &lt;lgl&gt;           &lt;chr&gt;            &lt;chr&gt;                     \n1 TRUE           TRUE            modeltime        None"
   }
 ]

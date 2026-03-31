@@ -226,10 +226,11 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li>Select a country-level visitor-arrivals series.</li>
 <li>Compare that arrivals series with hotel occupancy, average length of stay, and room revenue in the context chart.</li>
-<li>Set the holdout horizon.</li>
+<li>Set the holdout horizon and click <code>Run Forecasting</code>.</li>
 <li>Compare the seasonal-naive baseline with ETS and ARIMA.</li>
-<li>Review the forecast plot, decomposition views, and accuracy table.</li>
+<li>Review the forecast plot, decomposition views, split summary, and accuracy table.</li>
 </ol>
+<p>The forecasting module prefers the full <code>modeltime</code> workflow, but it can fall back to a lighter <code>forecast</code> implementation when that dependency chain is unavailable. The model labels and interpretation stay consistent across both paths.</p>
 </section>
 <section id="interpretation-tips" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation-tips">Interpretation Tips</h2>

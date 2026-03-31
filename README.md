@@ -83,6 +83,7 @@ smu-tourism-recovery-va-group-project/
 - compare a seasonal-naive baseline with ETS and ARIMA
 - position the chosen country series against hotel occupancy, average stay, and room revenue
 - inspect holdout accuracy and projected future path
+- run the full `modeltime` workflow when available, otherwise fall back to a lighter `forecast` implementation with the same benchmark labels
 
 ## Quick Start
 
