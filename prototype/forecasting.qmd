@@ -26,7 +26,7 @@ Shared arrivals backbone:
 
 Optional supporting tourism context:
 
-- `data/raw/Name your insight (4).xlsx`
+- `data/raw/tourism_update.xlsx`
 
 For this revised forecasting prototype, the analytical scope is intentionally narrowed to **monthly visitor-arrival series by country**. This matches the instructor guidance and the Chapter 19/20 forecasting workflow more closely than mixing arrivals with hotel or revenue indicators. Hotel occupancy, stay length, number of hotels, and room revenue remain optional supporting context only.
 
@@ -52,7 +52,7 @@ The forecasting module now supports two execution paths under one shared interfa
 1. `modeltime workflow` when the full Chapter 20 stack is installed.
 2. `forecast fallback` when the shared environment is missing the `modeltime` dependency chain.
 
-This keeps the app, prototype, and smoke test on one forecasting contract while still allowing the site to render on lighter environments.
+This keeps the app, prototype, and smoke test on one forecasting contract while still allowing the site to render on lighter environments. In the deployed app, users can also choose whether to compare the baseline against ETS, ARIMA, or all three model lines together.
 
 ```{r}
 stack_status <- forecast_stack_status()

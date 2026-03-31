@@ -9,10 +9,16 @@ mod_forecast_ui <- function(id) {
       width = 320,
       selectInput(ns("series_label"), "Country Arrival Series", choices = NULL),
       sliderInput(ns("horizon"), "Test / Forecast Horizon", min = 6, max = 18, value = 12, step = 1),
+      checkboxGroupInput(
+        ns("model_choices"),
+        "Models to compare",
+        choices = c("Seasonal Naive", "ETS", "ARIMA"),
+        selected = c("Seasonal Naive", "ETS", "ARIMA")
+      ),
       actionButton(ns("run_forecast"), "Run Forecasting", class = "btn-primary"),
       hr(),
       p("Click Run Forecasting to generate the outputs below."),
-      p("Forecast stack: modeltime workflow when available, otherwise a forecast-package fallback using the same model labels."),
+      p("Forecast stack: modeltime workflow when available, otherwise a forecast-package fallback using the same benchmark labels."),
       p("Scope: country-level visitor arrivals on the shared arrivals backbone"),
       p("Hotel occupancy, stay length, and room revenue are used only as supporting context")
     ),

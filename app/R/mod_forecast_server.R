@@ -22,16 +22,45 @@ mod_forecast_server <- function(id, data) {
 
     forecast_results <- eventReactive(input$run_forecast, {
       series_df <- selected_series()
+      selected_models <- input$model_choices
 
       validate(
-        need(nrow(series_df) > input$horizon + 12, "Series is too short for the current horizon.")
+        need(nrow(series_df) > input$horizon + 12, "Series is too short for the current horizon."),
+        need(length(selected_models) > 0, "Select at least one forecasting model.")
       )
 
-      run_forecast_workflow(
+      res <- run_forecast_workflow(
         series_df = series_df,
         horizon = input$horizon,
         engine = "auto"
       )
+
+      normalize_model_choice <- function(model_name) {
+        dplyr::case_when(
+          grepl("^ETS", model_name) ~ "ETS",
+          grepl("^ARIMA", model_name) ~ "ARIMA",
+          TRUE ~ "Seasonal Naive"
+        )
+      }
+
+      selected_holdout <- res$holdout_forecast_tbl |>
+        filter(normalize_model_choice(.model_desc) %in% selected_models)
+
+      selected_accuracy <- res$accuracy_tbl |>
+        filter(normalize_model_choice(.model_desc) %in% selected_models)
+
+      selected_models_tbl <- res$models_tbl |>
+        filter(normalize_model_choice(.model_desc) %in% selected_models)
+
+      if (nrow(selected_accuracy) == 0 || nrow(selected_holdout) == 0) {
+        stop("No forecast results matched the selected model choices.")
+      }
+
+      res$holdout_forecast_tbl <- selected_holdout
+      res$accuracy_tbl <- selected_accuracy
+      res$models_tbl <- selected_models_tbl
+      res$selected_models <- selected_models
+      res
     }, ignoreNULL = TRUE)
 
     output$series_summary <- renderText({
@@ -40,7 +69,8 @@ mod_forecast_server <- function(id, data) {
         "Observations:", nrow(series_df),
         "| Start:", format(min(series_df$date), "%Y-%m"),
         "| End:", format(max(series_df$date), "%Y-%m"),
-        "| Scope: country-level arrivals"
+        "| Scope: country-level arrivals",
+        "| Models:", paste(input$model_choices, collapse = ", ")
       )
     })
 
@@ -68,7 +98,10 @@ mod_forecast_server <- function(id, data) {
       plot_forecast_results(res, type = "holdout") +
         labs(
           title = input$series_label,
-          subtitle = paste("Holdout horizon:", input$horizon, "months | Engine:", res$engine_label)
+          subtitle = paste(
+            "Holdout horizon:", input$horizon, "months | Engine:", res$engine_label,
+            "| Models:", paste(res$selected_models, collapse = ", ")
+          )
         )
     })
 

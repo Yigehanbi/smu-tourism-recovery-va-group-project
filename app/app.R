@@ -125,7 +125,7 @@ ui <- page_navbar(
     base_font = font_google("Space Grotesk"),
     heading_font = font_google("Space Grotesk")
   ),
-  nav_panel("Time Series Explorer", series_explorer_ui("series_module")),
+  nav_panel("Time Series Visual Analysis", series_explorer_ui("series_module")),
   nav_panel("Time Series Clustering", mod_cluster_ui("cluster_module")),
   nav_panel("Forecasting", mod_forecast_ui("forecast_module")),
   nav_panel(
@@ -141,7 +141,7 @@ ui <- page_navbar(
           card_body(
             p("This Shiny app now combines the latest clustering, forecasting, and series-explorer work on one tourism time-series backbone."),
             tags$ul(
-              tags$li("Explorer: inspect monthly series and metadata before deeper analysis."),
+              tags$li("Visual analysis: inspect monthly series and metadata before deeper analysis."),
               tags$li("Clustering: compare country trajectories with Wang's chart-first priority-market workflow."),
               tags$li("Forecasting: compare baseline and model-based forecasts with context indicators.")
             )

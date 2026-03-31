@@ -8,7 +8,7 @@ This guide explains how to use the final three-module tourism analytics app.
 
 ## Step 1: Explore the Series
 
-Open the **Time Series Explorer** tab to:
+Open the **Time Series Visual Analysis** tab to:
 
 1. Choose a monthly series such as `Visitor Arrivals: China` or `Hotel Room Occupancy Rate`.
 2. Inspect the recent trend with a line chart.
@@ -16,7 +16,7 @@ Open the **Time Series Explorer** tab to:
 
 ## Step 2: Compare Country Recovery Patterns
 
-Open the **Cluster Prototype** tab to:
+Open the **Time Series Clustering** tab to:
 
 1. Select a focused set of country-level visitor-arrivals series.
 2. Set the year window and choose the normalization mode.
@@ -27,12 +27,12 @@ The clustering unit is a **country trajectory**, not an individual month. The mo
 
 ## Step 3: Forecast Future Values
 
-Open the **Forecasting Prototype** tab to:
+Open the **Forecasting** tab to:
 
 1. Select a country-level visitor-arrivals series.
 2. Compare that arrivals series with hotel occupancy, average length of stay, and room revenue in the context chart.
-3. Set the holdout horizon and click `Run Forecasting`.
-4. Compare the seasonal-naive baseline with ETS and ARIMA.
+3. Set the holdout horizon, choose the model set, and click `Run Forecasting`.
+4. Compare the seasonal-naive baseline with ETS, ARIMA, or both.
 5. Review the forecast plot, decomposition views, split summary, and accuracy table.
 
 The forecasting module prefers the full `modeltime` workflow, but it can fall back to a lighter `forecast` implementation when that dependency chain is unavailable. The model labels and interpretation stay consistent across both paths.

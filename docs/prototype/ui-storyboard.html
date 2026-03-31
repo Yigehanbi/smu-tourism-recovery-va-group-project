@@ -102,8 +102,8 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../take-home-ex2.html"> 
-<span class="menu-text">Take-home 2</span></a>
+    <a class="nav-link" href="../app-guide.html"> 
+<span class="menu-text">Shiny App</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../user-guide.html"> 
@@ -127,35 +127,30 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Clustering Prototype</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../prototype/decision-tree.html">
- <span class="dropdown-text">Decision Tree Analysis</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../prototype/module-decision-tree.html">
- <span class="dropdown-text">Decision Tree Prototype</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../prototype/forecasting.html">
- <span class="dropdown-text">Forecasting Prototype</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../prototype/package-audit.html">
- <span class="dropdown-text">Package Audit</span></a>
+ <span class="dropdown-text">Forecasting</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../prototype/ui-storyboard.html">
  <span class="dropdown-text">UI Storyboard</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-documentation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Documentation</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-documentation">    
         <li>
-    <a class="dropdown-item" href="../prototype/wang-zhuoran-review-report.html">
- <span class="dropdown-text">Review Report</span></a>
+    <a class="dropdown-item" href="../Meeting Minutes/first-meeting-record.html">
+ <span class="dropdown-text">First Meeting Record</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../Meeting Minutes/second-meeting-record.html">
+ <span class="dropdown-text">Pivot Meeting Record</span></a>
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../app-guide.html"> 
-<span class="menu-text">Shiny App</span></a>
-  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../team/onboarding.html"> 
 <span class="menu-text">Team</span></a>
@@ -248,10 +243,10 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    A["Select countries or transport series"] --&gt; B["Choose a time window"]
-    B --&gt; C["Toggle raw, indexed, or share view"]
-    C --&gt; D["Render comparison charts"]
-    D --&gt; E["Inspect summary table"]
+    A["Select a tourism series"] --&gt; B["Choose the lookback window"]
+    B --&gt; C["Toggle monthly points"]
+    C --&gt; D["Render the comparison chart"]
+    D --&gt; E["Inspect the metadata table"]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -264,19 +259,17 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Left Panel</strong></p>
 <ol type="1">
 <li>Country or mode selector</li>
-<li>Time window selector</li>
-<li>View mode toggle</li>
-<li>Period highlight switch</li>
-<li>Update button</li>
+<li>Lookback-year selector</li>
+<li>Show-points toggle</li>
+<li>Module guidance text</li>
 </ol>
 </div>
 <div class="storyboard-box">
 <p><strong>Right Panel</strong></p>
 <ol type="1">
-<li>Multi-series line chart</li>
-<li>Indexed comparison chart</li>
-<li>Share or growth chart</li>
-<li>Summary table</li>
+<li>Time-series view</li>
+<li>Metadata table</li>
+<li>Read-this-first guidance card</li>
 </ol>
 </div>
 </section>
@@ -289,12 +282,13 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    A["Select a set of country series"] --&gt; B["Set normalization"]
-    B --&gt; C["Choose clustering method and k"]
-    C --&gt; D["Run clustering"]
-    D --&gt; E["Review membership table"]
-    D --&gt; F["Review representative patterns"]
-    D --&gt; G["Download assignments"]
+    A["Select a set of country series"] --&gt; B["Pick a focus market"]
+    B --&gt; C["Set the year window and normalization"]
+    C --&gt; D["Choose k and run clustering"]
+    D --&gt; E["Read the dashboard"]
+    E --&gt; F["Inspect pattern explorer"]
+    F --&gt; G["Check focus market placement"]
+    G --&gt; H["Download assignments"]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -308,21 +302,21 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li>Series family selector</li>
 <li>Country multi-select</li>
+<li>Focus market selector</li>
 <li>Time window selector</li>
 <li>Normalization mode</li>
-<li>Distance or linkage setting</li>
 <li>Cluster count slider</li>
 <li>Run clustering button</li>
-<li>Insight note describing what to look for</li>
+<li>Reading guide describing how to navigate the module</li>
 </ol>
 </div>
 <div class="storyboard-box">
 <p><strong>Right Panel</strong></p>
 <ol type="1">
-<li><code>Overview</code> tab: cluster quality strip, insight card, recovery position map, diagnostic table</li>
-<li><code>Patterns</code> tab: representative pattern plot shown at full readable height</li>
-<li><code>Assignments</code> tab: membership table, assignment download, and cluster summary table</li>
-<li><code>Series Metrics</code> tab: recovery metrics table</li>
+<li><code>Dashboard</code> tab: quality strip, insight card, pattern atlas, cluster profile, recovery position map, silhouette scan, focus comparison, and priority-market placement</li>
+<li><code>Pattern Explorer</code> tab: representative pattern plot plus pattern summary chips</li>
+<li><code>Focus Market in Context</code> tab: focused recovery position map, cluster explorer, and placement narrative</li>
+<li><code>Assignments</code> tab: membership table, assignment download, cluster summary, and series metrics</li>
 </ol>
 </div>
 </section>
@@ -335,12 +329,11 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    A["Select a target series"] --&gt; B["Set training cutoff and horizon"]
-    B --&gt; C["Choose a forecasting model"]
-    C --&gt; D["Run forecast"]
-    D --&gt; E["Review forecast plot"]
-    D --&gt; F["Review accuracy table"]
-    D --&gt; G["Download forecast output"]
+    A["Select a target series"] --&gt; B["Set the forecast horizon"]
+    B --&gt; C["Choose the model set"]
+    C --&gt; D["Run forecasting"]
+    D --&gt; E["Review the forecast plot and accuracy table"]
+    D --&gt; F["Inspect tourism context, seasonality, and decomposition"]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -353,20 +346,19 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Left Panel</strong></p>
 <ol type="1">
 <li>Target series selector</li>
-<li>Training cutoff input</li>
 <li>Forecast horizon slider</li>
-<li>Model selection</li>
-<li>Confidence interval setting</li>
+<li>Model selection checklist</li>
 <li>Run forecast button</li>
 </ol>
 </div>
 <div class="storyboard-box">
 <p><strong>Right Panel</strong></p>
 <ol type="1">
-<li>Forecast plot</li>
-<li>Accuracy table</li>
-<li>Residual diagnostics</li>
-<li>Forecast download button</li>
+<li><code>Forecast Plot</code> tab: holdout comparison, accuracy table, split summary</li>
+<li><code>Tourism Performance Context</code> tab: arrivals versus hotel/stay indicators</li>
+<li><code>Trend and Seasonal</code> tab: raw series and seasonal pattern</li>
+<li><code>Decomposition</code> tab: trend, seasonal, remainder view</li>
+<li><code>Forecast Notes</code> tab: interpretation guide</li>
 </ol>
 </div>
 </section>
@@ -840,7 +832,7 @@ ul.task-list li input[type="checkbox"] {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>SMU Visual Analytics Group Project | Updated 2026-03-31</p>
+<p>SMU Visual Analytics Group Project | Updated 2026-04-01</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

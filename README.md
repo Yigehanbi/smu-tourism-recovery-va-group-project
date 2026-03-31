@@ -13,6 +13,8 @@ The older decision-tree work under `team/jin-qinhao/Take-Home-Exercise2/` is kep
 Shared arrivals backbone:
 
 - `data/raw/visitor_arrivals_full_dataset.xlsx`
+- `data/processed/arrivals_country_long.csv`
+- `data/processed/arrivals_country_wide.csv`
 - `data/processed/clustering_country_wide.csv`
 - `data/processed/clustering_country_long.csv`
 - `data/processed/clustering_series_metadata.csv`
@@ -53,6 +55,7 @@ smu-tourism-recovery-va-group-project/
 ├─ scripts/
 │  ├─ check_cran_support.R
 │  ├─ prepare_clustering_country_data.R
+│  ├─ prepare_common_timeseries_data.R
 │  └─ prototype_smoke_test.R
 ├─ data/
 │  ├─ raw/
@@ -99,19 +102,25 @@ smu-tourism-recovery-va-group-project/
 "C:/Program Files/R/R-4.5.2/bin/Rscript.exe" scripts/prepare_clustering_country_data.R
 ```
 
-### 3. Run the smoke test
+### 3. Refresh the shared arrivals backbone if needed
+
+```bash
+"C:/Program Files/R/R-4.5.2/bin/Rscript.exe" scripts/prepare_common_timeseries_data.R
+```
+
+### 4. Run the smoke test
 
 ```bash
 "C:/Program Files/R/R-4.5.2/bin/Rscript.exe" scripts/prototype_smoke_test.R
 ```
 
-### 4. Preview the Quarto site
+### 5. Preview the Quarto site
 
 ```bash
 quarto preview
 ```
 
-### 5. Run the Shiny app
+### 6. Run the Shiny app
 
 ```bash
 Rscript run_app.R 3838

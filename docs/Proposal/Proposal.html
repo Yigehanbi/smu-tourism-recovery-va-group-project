@@ -101,8 +101,8 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../take-home-ex2.html"> 
-<span class="menu-text">Take-home 2</span></a>
+    <a class="nav-link" href="../app-guide.html"> 
+<span class="menu-text">Shiny App</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../user-guide.html"> 
@@ -126,35 +126,30 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Clustering Prototype</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../prototype/decision-tree.html">
- <span class="dropdown-text">Decision Tree Analysis</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../prototype/module-decision-tree.html">
- <span class="dropdown-text">Decision Tree Prototype</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../prototype/forecasting.html">
- <span class="dropdown-text">Forecasting Prototype</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../prototype/package-audit.html">
- <span class="dropdown-text">Package Audit</span></a>
+ <span class="dropdown-text">Forecasting</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../prototype/ui-storyboard.html">
  <span class="dropdown-text">UI Storyboard</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-documentation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Documentation</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-documentation">    
         <li>
-    <a class="dropdown-item" href="../prototype/wang-zhuoran-review-report.html">
- <span class="dropdown-text">Review Report</span></a>
+    <a class="dropdown-item" href="../Meeting Minutes/first-meeting-record.html">
+ <span class="dropdown-text">First Meeting Record</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../Meeting Minutes/second-meeting-record.html">
+ <span class="dropdown-text">Pivot Meeting Record</span></a>
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../app-guide.html"> 
-<span class="menu-text">Shiny App</span></a>
-  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../team/onboarding.html"> 
 <span class="menu-text">Team</span></a>
@@ -184,6 +179,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#forecasting-module" id="toc-forecasting-module" class="nav-link" data-scroll-target="#forecasting-module">7. Forecasting Module</a></li>
   <li><a href="#data-visualisation-methods" id="toc-data-visualisation-methods" class="nav-link" data-scroll-target="#data-visualisation-methods">8. Data Visualisation Methods</a></li>
   <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">9. R Packages</a></li>
+  <li><a href="#shared-ui-and-storyboard-direction" id="toc-shared-ui-and-storyboard-direction" class="nav-link" data-scroll-target="#shared-ui-and-storyboard-direction">10. Shared UI and Storyboard Direction</a></li>
   </ul>
 </nav>
     </div>
@@ -239,6 +235,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The current prototype uses two coordinated workbook layers built from the same tourism-arrivals backbone:</p>
 <ul>
 <li><code>visitor_arrivals_full_dataset.xlsx</code> for the shared country-arrivals backbone used in clustering and forecasting</li>
+<li><code>data/processed/arrivals_country_long.csv</code> and <code>data/processed/arrivals_country_wide.csv</code> as reproducible shared country-arrivals outputs for comparative analysis</li>
 <li><code>tourism_update.xlsx</code> for the EDA/CDA views that compare arrivals, China share, hotel occupancy, and stay indicators in one curated sheet</li>
 </ul>
 <p>Across these connected inputs, the analytical focus remains monthly visitor arrivals, arrivals from selected countries and regions such as China, hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue. The app uses one shared country-arrivals backbone for clustering and forecasting, while the EDA/CDA pages rely on a curated workbook derived from the same tourism context so that descriptive and confirmatory views still speak to the same recovery story.</p>
@@ -262,6 +259,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Forecasting</strong> to compare a baseline method against a model-based approach on selected country-arrivals series and evaluate holdout accuracy, while interpreting those forecasts against hotel and stay indicators.</li>
 </ol>
 <p>These modules are designed to use the same monthly dataset so that users can move from description to structure to prediction without changing data context.</p>
+<p>Within the clustering module, the app is designed to move beyond a simple membership table. Users first read a dashboard summarising cluster quality and the dominant trajectory patterns, then inspect the pattern atlas, focus-market placement, and final assignments. This ensures that the clustering output remains interpretable as a recovery story rather than as an isolated machine-learning result.</p>
 </section>
 <section id="forecasting-module" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-module">7. Forecasting Module</h2>
@@ -355,6 +353,16 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+</section>
+<section id="shared-ui-and-storyboard-direction" class="level2">
+<h2 class="anchored" data-anchor-id="shared-ui-and-storyboard-direction">10. Shared UI and Storyboard Direction</h2>
+<p>The final Shiny application is organised as one integrated workflow with three coordinated tabs:</p>
+<ol type="1">
+<li><strong>Time Series Visual Analysis</strong>: users choose a tourism series, inspect the recent window, and confirm metadata before switching to deeper analysis.</li>
+<li><strong>Time Series Clustering</strong>: users select a focused market set, choose the year window and normalization, run clustering, and then read the result through four pages: <code>Dashboard</code>, <code>Pattern Explorer</code>, <code>Focus Market in Context</code>, and <code>Assignments</code>.</li>
+<li><strong>Forecasting</strong>: users choose a country-level arrivals series, select the forecast horizon and the model set to compare, and then review forecast, context, seasonality, decomposition, and interpretation views.</li>
+</ol>
+<p>This storyboard direction keeps the interaction path consistent across the project website, the prototype pages, and the deployed Shiny application.</p>
 
 
 </section>
@@ -767,7 +775,7 @@ ul.task-list li input[type="checkbox"] {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>SMU Visual Analytics Group Project | Updated 2026-03-31</p>
+<p>SMU Visual Analytics Group Project | Updated 2026-04-01</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

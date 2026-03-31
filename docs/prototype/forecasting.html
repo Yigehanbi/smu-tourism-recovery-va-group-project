@@ -154,8 +154,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../take-home-ex2.html"> 
-<span class="menu-text">Take-home 2</span></a>
+    <a class="nav-link" href="../app-guide.html"> 
+<span class="menu-text">Shiny App</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../user-guide.html"> 
@@ -179,35 +179,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Clustering Prototype</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../prototype/decision-tree.html">
- <span class="dropdown-text">Decision Tree Analysis</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../prototype/module-decision-tree.html">
- <span class="dropdown-text">Decision Tree Prototype</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="../prototype/forecasting.html">
- <span class="dropdown-text">Forecasting Prototype</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../prototype/package-audit.html">
- <span class="dropdown-text">Package Audit</span></a>
+ <span class="dropdown-text">Forecasting</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../prototype/ui-storyboard.html">
  <span class="dropdown-text">UI Storyboard</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-documentation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Documentation</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-documentation">    
         <li>
-    <a class="dropdown-item" href="../prototype/wang-zhuoran-review-report.html">
- <span class="dropdown-text">Review Report</span></a>
+    <a class="dropdown-item" href="../Meeting Minutes/first-meeting-record.html">
+ <span class="dropdown-text">First Meeting Record</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../Meeting Minutes/second-meeting-record.html">
+ <span class="dropdown-text">Pivot Meeting Record</span></a>
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../app-guide.html"> 
-<span class="menu-text">Shiny App</span></a>
-  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../team/onboarding.html"> 
 <span class="menu-text">Team</span></a>
@@ -298,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Optional supporting tourism context:</p>
 <ul>
-<li><code>data/raw/Name your insight (4).xlsx</code></li>
+<li><code>data/raw/tourism_update.xlsx</code></li>
 </ul>
 <p>For this revised forecasting prototype, the analytical scope is intentionally narrowed to <strong>monthly visitor-arrival series by country</strong>. This matches the instructor guidance and the Chapter 19/20 forecasting workflow more closely than mixing arrivals with hotel or revenue indicators. Hotel occupancy, stay length, number of hotels, and room revenue remain optional supporting context only.</p>
 <p>Examples of eligible target series are:</p>
@@ -316,18 +311,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(series_catalog, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 5
-   label                                       unit  n_obs start_date end_date  
-   &lt;chr&gt;                                       &lt;chr&gt; &lt;int&gt; &lt;date&gt;     &lt;date&gt;    
- 1 Visitor Arrivals: Age: Males                Pers…   111 2016-12-01 2026-02-01
- 2 Visitor Arrivals: Air                       Pers…   111 2016-12-01 2026-02-01
- 3 Visitor Arrivals: Air: ASEAN                Pers…   111 2016-12-01 2026-02-01
- 4 Visitor Arrivals: Air: Africa               Pers…   111 2016-12-01 2026-02-01
- 5 Visitor Arrivals: Air: Americas             Pers…   111 2016-12-01 2026-02-01
- 6 Visitor Arrivals: Air: Asia                 Pers…   111 2016-12-01 2026-02-01
- 7 Visitor Arrivals: Air: Australia            Pers…   111 2016-12-01 2026-02-01
- 8 Visitor Arrivals: Air: Bangladesh           Pers…   111 2016-12-01 2026-02-01
- 9 Visitor Arrivals: Air: Belgium &amp; Luxembourg Pers…   111 2016-12-01 2026-02-01
-10 Visitor Arrivals: Air: Brunei               Pers…   111 2016-12-01 2026-02-01</code></pre>
+   label                                   unit   n_obs start_date end_date  
+   &lt;chr&gt;                                   &lt;chr&gt;  &lt;int&gt; &lt;date&gt;     &lt;date&gt;    
+ 1 Visitor Arrivals: Australia             Person   111 2016-12-01 2026-02-01
+ 2 Visitor Arrivals: Bangladesh            Person   111 2016-12-01 2026-02-01
+ 3 Visitor Arrivals: Brunei                Person   111 2016-12-01 2026-02-01
+ 4 Visitor Arrivals: Canada                Person   111 2016-12-01 2026-02-01
+ 5 Visitor Arrivals: China                 Person   111 2016-12-01 2026-02-01
+ 6 Visitor Arrivals: Egypt                 Person   111 2016-12-01 2026-02-01
+ 7 Visitor Arrivals: Finland               Person   111 2016-12-01 2026-02-01
+ 8 Visitor Arrivals: France                Person   111 2016-12-01 2026-02-01
+ 9 Visitor Arrivals: Germany               Person   111 2016-12-01 2026-02-01
+10 Visitor Arrivals: Hong Kong SAR (China) Person   111 2016-12-01 2026-02-01</code></pre>
 </div>
 </div>
 </section>
@@ -338,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>modeltime workflow</code> when the full Chapter 20 stack is installed.</li>
 <li><code>forecast fallback</code> when the shared environment is missing the <code>modeltime</code> dependency chain.</li>
 </ol>
-<p>This keeps the app, prototype, and smoke test on one forecasting contract while still allowing the site to render on lighter environments.</p>
+<p>This keeps the app, prototype, and smoke test on one forecasting contract while still allowing the site to render on lighter environments. In the deployed app, users can also choose whether to compare the baseline against ETS, ARIMA, or all three model lines together.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stack_status <span class="ot">&lt;-</span> <span class="fu">forecast_stack_status</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -565,8 +560,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">dom =</span> <span class="st">"t"</span>, <span class="at">pageLength =</span> <span class="dv">6</span>, <span class="at">scrollX =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-1ff06d8ab982574e8924" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1ff06d8ab982574e8924">{"x":{"filter":"none","vertical":false,"data":[[0,1,2],["Seasonal Naive","ETS","ARIMA"],["Test","Test","Test"],[38014,68132.069,56320.962],[14.119,28.729,18.965],[null,null,null],[13.964,25.009,19.949],[60551.507,81359.861,79180.067],[0.574,0.42,0.431]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>.model_id<\/th>\n      <th>.model_desc<\/th>\n      <th>.type<\/th>\n      <th>mae<\/th>\n      <th>mape<\/th>\n      <th>mase<\/th>\n      <th>smape<\/th>\n      <th>rmse<\/th>\n      <th>rsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":6,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,3,4,5,6,7,8]},{"name":".model_id","targets":0},{"name":".model_desc","targets":1},{"name":".type","targets":2},{"name":"mae","targets":3},{"name":"mape","targets":4},{"name":"mase","targets":5},{"name":"smape","targets":6},{"name":"rmse","targets":7},{"name":"rsq","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-bea206e1c081ff6a7480" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bea206e1c081ff6a7480">{"x":{"filter":"none","vertical":false,"data":[[0,1,2],["Seasonal Naive","ETS","ARIMA"],["Test","Test","Test"],[38014,68132.069,56320.962],[14.119,28.729,18.965],[null,null,null],[13.964,25.009,19.949],[60551.507,81359.861,79180.067],[0.574,0.42,0.431]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>.model_id<\/th>\n      <th>.model_desc<\/th>\n      <th>.type<\/th>\n      <th>mae<\/th>\n      <th>mape<\/th>\n      <th>mase<\/th>\n      <th>smape<\/th>\n      <th>rmse<\/th>\n      <th>rsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":6,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,3,4,5,6,7,8]},{"name":".model_id","targets":0},{"name":".model_desc","targets":1},{"name":".type","targets":2},{"name":"mae","targets":3},{"name":"mape","targets":4},{"name":"mase","targets":5},{"name":"smape","targets":6},{"name":"rmse","targets":7},{"name":"rsq","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1141,7 +1136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>SMU Visual Analytics Group Project | Updated 2026-03-31</p>
+<p>SMU Visual Analytics Group Project | Updated 2026-04-01</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

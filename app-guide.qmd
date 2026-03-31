@@ -97,7 +97,7 @@ if (!has_shiny_target) {
 |---|---|---|
 | Time Series Visual Analysis | lightweight explorer | compare monthly series and metadata before deeper analysis |
 | Time Series Clustering | active prototype | Wang branch interaction and visual refinement |
-| Forecasting | active prototype | Jin branch forecasting workflow with fallback runtime support |
+| Forecasting | active prototype | Jin branch forecasting workflow with selectable model comparison and fallback runtime support |
 
 ## Data Contract
 

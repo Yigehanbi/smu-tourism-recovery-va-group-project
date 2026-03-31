@@ -22,6 +22,7 @@ The project aims to develop a visual analytics prototype based on monthly touris
 The project data is sourced from CEIC and Singapore Tourism Board related series and is reliable in terms of data origin. The current prototype uses two coordinated workbook layers built from the same tourism-arrivals backbone:
 
 - `visitor_arrivals_full_dataset.xlsx` for the shared country-arrivals backbone used in clustering and forecasting
+- `data/processed/arrivals_country_long.csv` and `data/processed/arrivals_country_wide.csv` as reproducible shared country-arrivals outputs for comparative analysis
 - `tourism_update.xlsx` for the EDA/CDA views that compare arrivals, China share, hotel occupancy, and stay indicators in one curated sheet
 
 Across these connected inputs, the analytical focus remains monthly visitor arrivals, arrivals from selected countries and regions such as China, hotel room occupancy rate, monthly average length of stay, number of hotels, and total room revenue. The app uses one shared country-arrivals backbone for clustering and forecasting, while the EDA/CDA pages rely on a curated workbook derived from the same tourism context so that descriptive and confirmatory views still speak to the same recovery story.
@@ -44,6 +45,8 @@ The project adopts three main analytical modules:
 3. **Forecasting** to compare a baseline method against a model-based approach on selected country-arrivals series and evaluate holdout accuracy, while interpreting those forecasts against hotel and stay indicators.
 
 These modules are designed to use the same monthly dataset so that users can move from description to structure to prediction without changing data context.
+
+Within the clustering module, the app is designed to move beyond a simple membership table. Users first read a dashboard summarising cluster quality and the dominant trajectory patterns, then inspect the pattern atlas, focus-market placement, and final assignments. This ensures that the clustering output remains interpretable as a recovery story rather than as an isolated machine-learning result.
 
 ## 7. Forecasting Module
 
@@ -80,3 +83,13 @@ The prototype will include time-series line charts, target-series comparison vie
 | tsibble | Used to represent time-indexed series for decomposition and temporal analysis. |
 | feasts | Used to derive decomposition and seasonal diagnostics before model fitting. |
 | patchwork | Used to combine multiple ggplot charts into one display layout. |
+
+## 10. Shared UI and Storyboard Direction
+
+The final Shiny application is organised as one integrated workflow with three coordinated tabs:
+
+1. **Time Series Visual Analysis**: users choose a tourism series, inspect the recent window, and confirm metadata before switching to deeper analysis.
+2. **Time Series Clustering**: users select a focused market set, choose the year window and normalization, run clustering, and then read the result through four pages: `Dashboard`, `Pattern Explorer`, `Focus Market in Context`, and `Assignments`.
+3. **Forecasting**: users choose a country-level arrivals series, select the forecast horizon and the model set to compare, and then review forecast, context, seasonality, decomposition, and interpretation views.
+
+This storyboard direction keeps the interaction path consistent across the project website, the prototype pages, and the deployed Shiny application.

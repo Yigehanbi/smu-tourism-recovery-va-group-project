@@ -21,10 +21,10 @@ flowchart LR
 
 ```{mermaid}
 flowchart LR
-    A["Select countries or transport series"] --> B["Choose a time window"]
-    B --> C["Toggle raw, indexed, or share view"]
-    C --> D["Render comparison charts"]
-    D --> E["Inspect summary table"]
+    A["Select a tourism series"] --> B["Choose the lookback window"]
+    B --> C["Toggle monthly points"]
+    C --> D["Render the comparison chart"]
+    D --> E["Inspect the metadata table"]
 ```
 
 ### UI Layout
@@ -33,31 +33,30 @@ flowchart LR
 **Left Panel**
 
 1. Country or mode selector
-2. Time window selector
-3. View mode toggle
-4. Period highlight switch
-5. Update button
+2. Lookback-year selector
+3. Show-points toggle
+4. Module guidance text
 :::
 
 ::: {.storyboard-box}
 **Right Panel**
 
-1. Multi-series line chart
-2. Indexed comparison chart
-3. Share or growth chart
-4. Summary table
+1. Time-series view
+2. Metadata table
+3. Read-this-first guidance card
 :::
 
 ## Module 2: Time Series Clustering
 
 ```{mermaid}
 flowchart LR
-    A["Select a set of country series"] --> B["Set normalization"]
-    B --> C["Choose clustering method and k"]
-    C --> D["Run clustering"]
-    D --> E["Review membership table"]
-    D --> F["Review representative patterns"]
-    D --> G["Download assignments"]
+    A["Select a set of country series"] --> B["Pick a focus market"]
+    B --> C["Set the year window and normalization"]
+    C --> D["Choose k and run clustering"]
+    D --> E["Read the dashboard"]
+    E --> F["Inspect pattern explorer"]
+    F --> G["Check focus market placement"]
+    G --> H["Download assignments"]
 ```
 
 ### UI Layout
@@ -67,33 +66,32 @@ flowchart LR
 
 1. Series family selector
 2. Country multi-select
-3. Time window selector
-4. Normalization mode
-5. Distance or linkage setting
+3. Focus market selector
+4. Time window selector
+5. Normalization mode
 6. Cluster count slider
 7. Run clustering button
-8. Insight note describing what to look for
+8. Reading guide describing how to navigate the module
 :::
 
 ::: {.storyboard-box}
 **Right Panel**
 
-1. `Overview` tab: cluster quality strip, insight card, recovery position map, diagnostic table
-2. `Patterns` tab: representative pattern plot shown at full readable height
-3. `Assignments` tab: membership table, assignment download, and cluster summary table
-4. `Series Metrics` tab: recovery metrics table
+1. `Dashboard` tab: quality strip, insight card, pattern atlas, cluster profile, recovery position map, silhouette scan, focus comparison, and priority-market placement
+2. `Pattern Explorer` tab: representative pattern plot plus pattern summary chips
+3. `Focus Market in Context` tab: focused recovery position map, cluster explorer, and placement narrative
+4. `Assignments` tab: membership table, assignment download, cluster summary, and series metrics
 :::
 
 ## Module 3: Forecasting
 
 ```{mermaid}
 flowchart LR
-    A["Select a target series"] --> B["Set training cutoff and horizon"]
-    B --> C["Choose a forecasting model"]
-    C --> D["Run forecast"]
-    D --> E["Review forecast plot"]
-    D --> F["Review accuracy table"]
-    D --> G["Download forecast output"]
+    A["Select a target series"] --> B["Set the forecast horizon"]
+    B --> C["Choose the model set"]
+    C --> D["Run forecasting"]
+    D --> E["Review the forecast plot and accuracy table"]
+    D --> F["Inspect tourism context, seasonality, and decomposition"]
 ```
 
 ### UI Layout
@@ -102,20 +100,19 @@ flowchart LR
 **Left Panel**
 
 1. Target series selector
-2. Training cutoff input
-3. Forecast horizon slider
-4. Model selection
-5. Confidence interval setting
-6. Run forecast button
+2. Forecast horizon slider
+3. Model selection checklist
+4. Run forecast button
 :::
 
 ::: {.storyboard-box}
 **Right Panel**
 
-1. Forecast plot
-2. Accuracy table
-3. Residual diagnostics
-4. Forecast download button
+1. `Forecast Plot` tab: holdout comparison, accuracy table, split summary
+2. `Tourism Performance Context` tab: arrivals versus hotel/stay indicators
+3. `Trend and Seasonal` tab: raw series and seasonal pattern
+4. `Decomposition` tab: trend, seasonal, remainder view
+5. `Forecast Notes` tab: interpretation guide
 :::
 
 ## UI Component Mapping
