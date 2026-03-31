@@ -283,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="objective" class="level2">
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>This prototype follows the Chapter 19 and 20 workflow from <em>R for Visual Analytics</em>: first understand the monthly time-series pattern, then build and compare forecasting models on a holdout window, and finally refit the best model to generate forward forecasts. The common dataset is organised around <strong>monthly visitor arrivals by country</strong>, while hotel occupancy, average length of stay, and room revenue are used as supporting indicators to interpret whether demand recovery is reflected in tourism performance.</p>
+<p>This model first understands the monthly time series pattern, then builds and compares predictive models on the holdout window, and finally refits the best model to generate forward-looking predictions. The general dataset is organized around monthly visitor arrivals by country, while hotel occupancy rates, average length of stay, and room revenue are used as auxiliary indicators to interpret whether the demand recovery is reflected in tourism performance.</p>
 </section>
 <section id="data-contract" class="level2">
 <h2 class="anchored" data-anchor-id="data-contract">Data Contract</h2>
@@ -295,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><code>data/raw/tourism_update.xlsx</code></li>
 </ul>
-<p>For this revised forecasting prototype, the analytical scope is intentionally narrowed to <strong>monthly visitor-arrival series by country</strong>. This matches the instructor guidance and the Chapter 19/20 forecasting workflow more closely than mixing arrivals with hotel or revenue indicators. Hotel occupancy, stay length, number of hotels, and room revenue remain optional supporting context only.</p>
+<p>This prediction prototype narrows the scope of analysis to the monthly visitor arrival sequences by country. Meanwhile, hotel occupancy rates, length of stay, hotel numbers and room revenue will be available as optional supplementary background information.</p>
 <p>Examples of eligible target series are:</p>
 <ol type="1">
 <li><code>Visitor Arrivals: China</code></li>
@@ -328,12 +328,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="runtime-strategy" class="level2">
 <h2 class="anchored" data-anchor-id="runtime-strategy">Runtime Strategy</h2>
-<p>The forecasting module now supports two execution paths under one shared interface:</p>
-<ol type="1">
-<li><code>modeltime workflow</code> when the full Chapter 20 stack is installed.</li>
-<li><code>forecast fallback</code> when the shared environment is missing the <code>modeltime</code> dependency chain.</li>
-</ol>
-<p>This keeps the app, prototype, and smoke test on one forecasting contract while still allowing the site to render on lighter environments. In the deployed app, users can also choose whether to compare the baseline against ETS, ARIMA, or all three model lines together.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stack_status <span class="ot">&lt;-</span> <span class="fu">forecast_stack_status</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -349,9 +343,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
-  fallback_ready modeltime_ready preferred_engine missing_modeltime_packages    
-  &lt;lgl&gt;          &lt;lgl&gt;           &lt;chr&gt;            &lt;chr&gt;                         
-1 TRUE           FALSE           fallback         rsample, parsnip, modeltime, …</code></pre>
+  fallback_ready modeltime_ready preferred_engine missing_modeltime_packages
+  &lt;lgl&gt;          &lt;lgl&gt;           &lt;chr&gt;            &lt;chr&gt;                     
+1 TRUE           TRUE            modeltime        None                      </code></pre>
 </div>
 </div>
 </section>
@@ -362,11 +356,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Core forecasting series</strong>: country-level monthly visitor arrivals.</li>
 <li><strong>Supporting performance indicators</strong>: hotel room occupancy rate, average length of stay, and total room revenue.</li>
 </ol>
-<p>This means the forecasts answer the question <em>“how may demand from each source market evolve?”</em> while the supporting indicators help answer <em>“does that demand recovery translate into broader tourism performance?”</em></p>
+<p>This means the forecasts answer the question <em>“how may demand from each source market evolve”</em> while the supporting indicators help answer <em>“does that demand recovery translate into broader tourism performance”</em></p>
 </section>
 <section id="forecasting-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-workflow">Forecasting Workflow</h2>
-<p>Following the sequence highlighted in Chapter 20, the prototype is organised into seven steps:</p>
+<p>This model will be divided into seven steps：</p>
 <ol type="1">
 <li>Import and inspect the selected monthly country-arrivals series.</li>
 <li>Compare that country series with hotel and stay indicators.</li>
@@ -399,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">country_label =</span> example_label</span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>For this prototype run, the selected execution engine is <strong>forecast fallback</strong>.</p>
+<p>For this prototype run, the selected execution engine is <strong>modeltime workflow</strong>.</p>
 </section>
 <section id="step-1-position-the-country-series-within-tourism-performance" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-position-the-country-series-within-tourism-performance">Step 1: Position the Country Series Within Tourism Performance</h2>
@@ -426,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-2-visualise-the-raw-time-series" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-visualise-the-raw-time-series">Step 2: Visualise the Raw Time Series</h2>
-<p>Chapter 19 emphasises that time-series work should begin with a direct inspection of trend, turning points, and volatility. The chart below shows the full monthly path of the selected country-arrivals series.</p>
+<p>The chart below shows the full monthly path of the selected country-arrivals series.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(example_series, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> value)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"#0f6b6f"</span>) <span class="sc">+</span></span>
@@ -450,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-3-check-seasonality-and-decomposition" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-check-seasonality-and-decomposition">Step 3: Check Seasonality and Decomposition</h2>
-<p>The next step is to confirm whether the series contains strong seasonal cycles and how the trend changed around the shock-and-recovery period. This mirrors the Chapter 19 emphasis on seasonal pattern analysis and decomposition.</p>
+<p>The next step is to confirm whether the series contains strong seasonal cycles and how the trend changed around the shock-and-recovery period.</p>
 <section id="seasonal-pattern-by-month" class="level3">
 <h3 class="anchored" data-anchor-id="seasonal-pattern-by-month">Seasonal Pattern by Month</h3>
 <div class="cell">
@@ -509,7 +503,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-4-create-the-training-and-testing-split" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-create-the-training-and-testing-split">Step 4: Create the Training and Testing Split</h2>
-<p>Following Chapter 20, the final 12 months are reserved as a holdout set. This keeps the evaluation time-aware and avoids random sampling.</p>
+<p>The final 12 months are reserved as a holdout set. This keeps the evaluation time-aware and avoids random sampling.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>split_summary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">segment =</span> <span class="fu">c</span>(<span class="st">"Training"</span>, <span class="st">"Testing"</span>),</span>
@@ -536,16 +530,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>ETS (Modeltime)</code> using exponential smoothing.</li>
 <li><code>ARIMA</code> using <code>auto_arima</code> through the modeltime workflow.</li>
 </ol>
-<p>These model choices match the Chapter 20 recommendation to compare exponential smoothing and ARIMA techniques after building a time-aware train/test split for one selected time series. When the full <code>modeltime</code> stack is unavailable, the fallback route keeps the same benchmark logic and model labels so the interpretation remains stable.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>forecast_results<span class="sc">$</span>models_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
-  .model_id .model_desc    engine  
-      &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;   
-1         0 Seasonal Naive forecast
-2         1 ETS            forecast
-3         2 ARIMA          forecast</code></pre>
+  .model_id .model_desc     engine   
+      &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;    
+1         0 Seasonal Naive  forecast 
+2         1 ETS (Modeltime) modeltime
+3         2 ARIMA           modeltime</code></pre>
 </div>
 </div>
 </section>
@@ -560,8 +553,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(<span class="at">dom =</span> <span class="st">"t"</span>, <span class="at">pageLength =</span> <span class="dv">6</span>, <span class="at">scrollX =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-bea206e1c081ff6a7480" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bea206e1c081ff6a7480">{"x":{"filter":"none","vertical":false,"data":[[0,1,2],["Seasonal Naive","ETS","ARIMA"],["Test","Test","Test"],[38014,68132.069,56320.962],[14.119,28.729,18.965],[null,null,null],[13.964,25.009,19.949],[60551.507,81359.861,79180.067],[0.574,0.42,0.431]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>.model_id<\/th>\n      <th>.model_desc<\/th>\n      <th>.type<\/th>\n      <th>mae<\/th>\n      <th>mape<\/th>\n      <th>mase<\/th>\n      <th>smape<\/th>\n      <th>rmse<\/th>\n      <th>rsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":6,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,3,4,5,6,7,8]},{"name":".model_id","targets":0},{"name":".model_desc","targets":1},{"name":".type","targets":2},{"name":"mae","targets":3},{"name":"mape","targets":4},{"name":"mase","targets":5},{"name":"smape","targets":6},{"name":"rmse","targets":7},{"name":"rsq","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-c3e2f7c6b5aebad37fd0" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c3e2f7c6b5aebad37fd0">{"x":{"filter":"none","vertical":false,"data":[[0,1,2],["Seasonal Naive","ETS (Modeltime)","ARIMA"],["Test","Test","Test"],[38014,68132.069,56320.962],[14.119,28.729,18.965],[null,null,null],[13.964,25.009,19.949],[60551.507,81359.861,79180.067],[0.574,0.42,0.431]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>.model_id<\/th>\n      <th>.model_desc<\/th>\n      <th>.type<\/th>\n      <th>mae<\/th>\n      <th>mape<\/th>\n      <th>mase<\/th>\n      <th>smape<\/th>\n      <th>rmse<\/th>\n      <th>rsq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":6,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,3,4,5,6,7,8]},{"name":".model_id","targets":0},{"name":".model_desc","targets":1},{"name":".type","targets":2},{"name":"mae","targets":3},{"name":"mape","targets":4},{"name":"mase","targets":5},{"name":"smape","targets":6},{"name":"rmse","targets":7},{"name":"rsq","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -588,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-7-refit-the-best-model-and-forecast-forward" class="level2">
 <h2 class="anchored" data-anchor-id="step-7-refit-the-best-model-and-forecast-forward">Step 7: Refit the Best Model and Forecast Forward</h2>
-<p>After accuracy comparison, the best-performing model is refit on the full series and projected forward for the next 12 months. This is the final step highlighted in Chapter 20.</p>
+<p>After accuracy comparison, the best-performing model is refit on the full series and projected forward for the next 12 months.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_forecast_results</span>(forecast_results, <span class="at">type =</span> <span class="st">"future"</span>) <span class="sc">+</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
@@ -606,7 +599,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="interpretation-notes" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation-notes">Interpretation Notes</h2>
-<p>This forecasting prototype now aligns more closely with the course guidance:</p>
 <ol type="1">
 <li>It starts with time-series exploration rather than jumping straight to prediction.</li>
 <li>It treats the data as an ordered monthly sequence.</li>
@@ -614,13 +606,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>It compares a baseline with model-based approaches.</li>
 <li>It uses model refitting to produce a future forecast path.</li>
 </ol>
-<p>In presentation terms, the recommended narrative is:</p>
-<ol type="1">
-<li>Show the country-arrivals series together with hotel and stay indicators to position the source-market recovery in a broader tourism context.</li>
-<li>Use the raw trend, seasonal plot, and decomposition to justify a forecasting approach.</li>
-<li>Compare Seasonal Naive, ETS, and ARIMA on the same testing window.</li>
-<li>Conclude with the best model and the forward projection.</li>
-</ol>
+<p>Statement 1. Show the country-arrivals series together with hotel and stay indicators to position the source-market recovery in a broader tourism context. 2. Use the raw trend, seasonal plot, and decomposition to justify a forecasting approach. 3. Compare Seasonal Naive, ETS, and ARIMA on the same testing window. 4. Conclude with the best model and the forward projection.</p>
 </section>
 <section id="ui-control-mapping" class="level2">
 <h2 class="anchored" data-anchor-id="ui-control-mapping">UI Control Mapping</h2>

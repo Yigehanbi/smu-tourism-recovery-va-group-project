@@ -16,7 +16,7 @@ options(scipen = 999)
 
 ## Objective
 
-This prototype follows the Chapter 19 and 20 workflow from *R for Visual Analytics*: first understand the monthly time-series pattern, then build and compare forecasting models on a holdout window, and finally refit the best model to generate forward forecasts. The common dataset is organised around **monthly visitor arrivals by country**, while hotel occupancy, average length of stay, and room revenue are used as supporting indicators to interpret whether demand recovery is reflected in tourism performance.
+This model first understands the monthly time series pattern, then builds and compares predictive models on the holdout window, and finally refits the best model to generate forward-looking predictions. The general dataset is organized around monthly visitor arrivals by country, while hotel occupancy rates, average length of stay, and room revenue are used as auxiliary indicators to interpret whether the demand recovery is reflected in tourism performance.
 
 ## Data Contract
 
@@ -28,7 +28,7 @@ Optional supporting tourism context:
 
 - `data/raw/tourism_update.xlsx`
 
-For this revised forecasting prototype, the analytical scope is intentionally narrowed to **monthly visitor-arrival series by country**. This matches the instructor guidance and the Chapter 19/20 forecasting workflow more closely than mixing arrivals with hotel or revenue indicators. Hotel occupancy, stay length, number of hotels, and room revenue remain optional supporting context only.
+This prediction prototype narrows the scope of analysis to the monthly visitor arrival sequences by country. Meanwhile, hotel occupancy rates, length of stay, hotel numbers and room revenue will be available as optional supplementary background information.
 
 Examples of eligible target series are:
 
@@ -46,13 +46,6 @@ head(series_catalog, 10)
 ```
 
 ## Runtime Strategy
-
-The forecasting module now supports two execution paths under one shared interface:
-
-1. `modeltime workflow` when the full Chapter 20 stack is installed.
-2. `forecast fallback` when the shared environment is missing the `modeltime` dependency chain.
-
-This keeps the app, prototype, and smoke test on one forecasting contract while still allowing the site to render on lighter environments. In the deployed app, users can also choose whether to compare the baseline against ETS, ARIMA, or all three model lines together.
 
 ```{r}
 stack_status <- forecast_stack_status()
@@ -76,11 +69,11 @@ The forecasting module uses a two-layer logic:
 1. **Core forecasting series**: country-level monthly visitor arrivals.
 2. **Supporting performance indicators**: hotel room occupancy rate, average length of stay, and total room revenue.
 
-This means the forecasts answer the question *"how may demand from each source market evolve?"* while the supporting indicators help answer *"does that demand recovery translate into broader tourism performance?"*
+This means the forecasts answer the question *"how may demand from each source market evolve"* while the supporting indicators help answer *"does that demand recovery translate into broader tourism performance"*
 
 ## Forecasting Workflow
 
-Following the sequence highlighted in Chapter 20, the prototype is organised into seven steps:
+This model will be divided into seven steps：
 
 1. Import and inspect the selected monthly country-arrivals series.
 2. Compare that country series with hotel and stay indicators.
@@ -135,7 +128,7 @@ ggplot(context_series, aes(x = date, y = normalized_value, color = label)) +
 
 ## Step 2: Visualise the Raw Time Series
 
-Chapter 19 emphasises that time-series work should begin with a direct inspection of trend, turning points, and volatility. The chart below shows the full monthly path of the selected country-arrivals series.
+The chart below shows the full monthly path of the selected country-arrivals series.
 
 ```{r}
 ggplot(example_series, aes(x = date, y = value)) +
@@ -153,7 +146,7 @@ ggplot(example_series, aes(x = date, y = value)) +
 
 ## Step 3: Check Seasonality and Decomposition
 
-The next step is to confirm whether the series contains strong seasonal cycles and how the trend changed around the shock-and-recovery period. This mirrors the Chapter 19 emphasis on seasonal pattern analysis and decomposition.
+The next step is to confirm whether the series contains strong seasonal cycles and how the trend changed around the shock-and-recovery period. 
 
 ### Seasonal Pattern by Month
 
@@ -198,7 +191,7 @@ forecast::autoplot(decomp_tbl) +
 
 ## Step 4: Create the Training and Testing Split
 
-Following Chapter 20, the final 12 months are reserved as a holdout set. This keeps the evaluation time-aware and avoids random sampling.
+The final 12 months are reserved as a holdout set. This keeps the evaluation time-aware and avoids random sampling.
 
 ```{r}
 split_summary <- tibble(
@@ -219,7 +212,6 @@ This prototype includes:
 2. `ETS (Modeltime)` using exponential smoothing.
 3. `ARIMA` using `auto_arima` through the modeltime workflow.
 
-These model choices match the Chapter 20 recommendation to compare exponential smoothing and ARIMA techniques after building a time-aware train/test split for one selected time series. When the full `modeltime` stack is unavailable, the fallback route keeps the same benchmark logic and model labels so the interpretation remains stable.
 
 ```{r}
 forecast_results$models_tbl
@@ -252,7 +244,7 @@ plot_forecast_results(forecast_results, type = "holdout") +
 
 ## Step 7: Refit the Best Model and Forecast Forward
 
-After accuracy comparison, the best-performing model is refit on the full series and projected forward for the next 12 months. This is the final step highlighted in Chapter 20.
+After accuracy comparison, the best-performing model is refit on the full series and projected forward for the next 12 months. 
 
 ```{r}
 plot_forecast_results(forecast_results, type = "future") +
@@ -264,16 +256,14 @@ plot_forecast_results(forecast_results, type = "future") +
 
 ## Interpretation Notes
 
-This forecasting prototype now aligns more closely with the course guidance:
-
 1. It starts with time-series exploration rather than jumping straight to prediction.
 2. It treats the data as an ordered monthly sequence.
 3. It uses a proper holdout split based on time.
 4. It compares a baseline with model-based approaches.
 5. It uses model refitting to produce a future forecast path.
 
-In presentation terms, the recommended narrative is:
 
+Statement
 1. Show the country-arrivals series together with hotel and stay indicators to position the source-market recovery in a broader tourism context.
 2. Use the raw trend, seasonal plot, and decomposition to justify a forecasting approach.
 3. Compare Seasonal Naive, ETS, and ARIMA on the same testing window.
