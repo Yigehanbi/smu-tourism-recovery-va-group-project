@@ -82,6 +82,32 @@ The final solution uses one coordinated analytical design.
 - Shiny app for interactive analysis and comparison
 :::
 
+::: {.section-box .section-results}
+### Results: System Built
+
+The completed system is not only a report. It is a working visual analytics workflow delivered through:
+
+- Quarto project website
+- prototype pages
+- modular Shiny app
+
+This makes the results reviewable, repeatable, and interactive for end users rather than static-only.
+:::
+
+::: {.section-box .section-results}
+### Interpretation and Value
+
+The three modules are designed to answer different decision questions, but they also reinforce one another.
+
+- **Explorer** explains where the shock and rebound occurred.
+- **Clustering** shows which source markets behaved similarly through recovery.
+- **Forecasting** translates those patterns into short-term planning support.
+
+This layered design makes the poster stronger than a chart collection because each section contributes a different level of interpretation: description, grouping, and projection.
+
+For tourism planners, the most practical takeaway is that country-level arrivals are not only descriptive indicators. They are useful signals for monitoring recovery strength, identifying comparable markets, and anticipating near-term demand pressure on hotels and tourism services.
+:::
+
 :::
 
 ::: {.grid-center}
@@ -165,18 +191,6 @@ Forecasting follows the Chapter 19 and Chapter 20 workflow from *R for Visual An
 :::
 :::
 
-::: {.section-box .section-results}
-### Results: System Built
-
-The completed system is not only a report. It is a working visual analytics workflow delivered through:
-
-- Quarto project website
-- prototype pages
-- modular Shiny app
-
-This makes the results reviewable, repeatable, and interactive for end users rather than static-only.
-:::
-
 ::: {.section-box .section-future}
 ### Future Work
 
@@ -184,6 +198,19 @@ This makes the results reviewable, repeatable, and interactive for end users rat
 - deploy the Shiny app to a public host for wider access
 - translate cluster outputs into reusable market personas
 - add more business-side indicators for pricing and utilisation decisions
+:::
+
+::: {.section-box .section-results}
+### Poster Reading Guide
+
+This poster is intended to be read from left to right:
+
+1. **Problem and motivation** explain why aggregate totals are insufficient.
+2. **Approach** defines the shared data backbone and the three-module workflow.
+3. **Results** demonstrate how exploration, clustering, and forecasting each add a different layer of evidence.
+4. **Future work** shows how the current system can be extended into a fuller decision-support tool.
+
+By arranging the poster this way, the visual evidence and narrative evidence remain aligned, which helps the audience understand both the analytical process and the value of the final system.
 :::
 
 :::
