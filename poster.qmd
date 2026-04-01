@@ -35,77 +35,31 @@ Issues and Problems | Motivation | Approach | Results | Future Work
 ::: {.section-box .section-problem}
 ### Issues and Problems
 
-Singapore's tourism recovery cannot be understood well from total visitor counts alone. After the pandemic shock, different source markets returned at different speeds, while hotel occupancy and average stay length reacted with different timing and intensity.
-
-The project addresses three linked problems:
-
-- aggregate visitor totals hide uneven recovery across countries
-- decision-makers need clearer recovery patterns, not only raw charts
-- short-term planning requires forecasting rather than only descriptive reporting
-
-Because these issues are time-dependent, the project must analyse tourism as a **time-series system** instead of as a static snapshot.
+Aggregate visitor counts hide differences in source-market recovery because countries returned with different amplitudes, different seasonal rhythms, and different post-shock trajectories. The pandemic introduced a structural break into the monthly series, and the recovery that followed was uneven across countries. A useful decision system therefore needs to separate market structure, recovery pattern, and forward demand signal within one consistent time-series framework.
 :::
 
 ::: {.section-box .section-motivation}
 ### Motivation
 
-This problem is important because tourism recovery affects hotel utilisation, pricing pressure, and the broader service economy. It is also difficult because:
-
-- the pandemic created a structural break in the data
-- reopening did not happen uniformly across source markets
-- seasonal patterns resumed unevenly after the shock
-- business indicators such as hotel occupancy and stay length do not move in perfect lockstep with arrivals
-
-The motivation of the project is therefore to build a visual workflow that helps users understand **who returned, how they returned, and what that means for tourism performance**.
+Tourism recovery affects hotel utilisation, pricing pressure, and demand planning across the service economy. The analytical challenge comes from three sources at the same time: the structural break created by COVID, the unequal speed of reopening across major source markets, and the return of seasonality after the shock. Business indicators such as occupancy, stay length, and room revenue also respond with different timing, so the project needs a workflow that can connect arrivals, recovery strength, and near-term planning in one visual system.
 :::
 
 ::: {.section-box .section-approach}
 ### Approach
 
-The final solution uses one coordinated analytical design.
-
-#### Data backbone
-- Monthly visitor arrivals by country
-
-#### Supporting context
-- Hotel occupancy
-- Average length of stay
-- Room revenue
-
-#### Techniques used
-1. **Time Series Explorer** to inspect trend, shock, rebound, and seasonal structure
-2. **Trajectory Clustering** to group countries with similar recovery paths
-3. **Forecasting** to compare Seasonal Naive, ETS, and ARIMA on a time-aware holdout split
-
-#### Delivery
-- Quarto website for documentation and prototype pages
-- Shiny app for interactive analysis and comparison
+The final solution uses one coordinated analytical design built on monthly visitor arrivals by country. Supporting tourism indicators such as hotel occupancy, average length of stay, and room revenue remain available as contextual signals for operational interpretation. The analytical workflow begins with a time-series explorer that reveals trend, shock, rebound, and seasonality, then moves into trajectory clustering to group countries with similar recovery paths, and ends with forecasting to compare Seasonal Naive, ETS, and ARIMA under a time-aware holdout split. The full system is delivered through a Quarto website for documentation and prototype reporting, together with a Shiny application for interactive analysis.
 :::
 
 ::: {.section-box .section-results}
 ### Results: System Built
 
-The completed system is not only a report. It is a working visual analytics workflow delivered through:
-
-- Quarto project website
-- prototype pages
-- modular Shiny app
-
-This makes the results reviewable, repeatable, and interactive for end users rather than static-only.
+The completed system is a working visual analytics workflow delivered through a Quarto website, a set of prototype pages, and a modular Shiny application. This delivery format makes the analysis reviewable, repeatable, and interactive, while keeping the full methodological chain visible from source data to final interpretation.
 :::
 
 ::: {.section-box .section-results}
 ### Interpretation and Value
 
-The three modules are designed to answer different decision questions, but they also reinforce one another.
-
-- **Explorer** explains where the shock and rebound occurred.
-- **Clustering** shows which source markets behaved similarly through recovery.
-- **Forecasting** translates those patterns into short-term planning support.
-
-This layered design makes the poster stronger than a chart collection because each section contributes a different level of interpretation: description, grouping, and projection.
-
-For tourism planners, the most practical takeaway is that country-level arrivals are not only descriptive indicators. They are useful signals for monitoring recovery strength, identifying comparable markets, and anticipating near-term demand pressure on hotels and tourism services.
+The three modules answer different decision questions and reinforce one another through a common data backbone. The explorer reveals where the shock was deepest and how market structure changed. The clustering module identifies groups of countries with similar recovery trajectories. The forecasting module turns these recovery signals into short-term planning evidence. Country-level arrivals therefore function as operational indicators for recovery strength, market comparability, and near-term tourism demand.
 :::
 
 :::
@@ -117,19 +71,16 @@ For tourism planners, the most practical takeaway is that country-level arrivals
 
 The explorer establishes the main recovery narrative before modelling begins.
 
-#### Main findings
-- China and total arrivals collapse together during the pandemic shock.
-- Recovery is visible but not fully symmetric with the pre-2020 pattern.
-- Hotel occupancy remains positively linked to arrivals, so visitor recovery still matters operationally.
+The visual analysis shows that Singapore's visitor market remains concentrated in a small group of major source countries, with strong weight in the Asia-Pacific region. The pre-COVID ranking and the recovery-period ranking share a stable core, yet the relative size of these markets changes after the shock. This pattern indicates that the market portfolio recovered with structural persistence but incomplete volume recovery.
 
 ::: {.figure-frame}
 ![](poster-assets/eda-china-market.png)
-*Country-level demand and total arrivals recover at different speeds rather than following one shared rebound path.*
+*Visitor arrivals remain concentrated in Asia-Pacific markets, and the largest contributions come from a small set of source countries with a visibly uneven global distribution.*
 :::
 
 ::: {.figure-frame}
 ![](poster-assets/eda-hotel-utilisation.png)
-*Recovery in arrivals is reflected in accommodation utilisation, giving business meaning to the time-series signal.*
+*The leading source-market portfolio remains stable after COVID, while average monthly arrivals stay below the earlier baseline and the ranking among major countries changes.*
 :::
 :::
 
@@ -138,26 +89,23 @@ The explorer establishes the main recovery narrative before modelling begins.
 
 Clustering changes the question from "what happened overall" to "which countries behave similarly over time."
 
-#### Main findings
-- Countries naturally separate into interpretable recovery groups.
-- The cluster timeline shows a progression from shock-related patterns to recovery-oriented behaviour.
-- The elbow diagnostic supports a compact cluster structure that remains explainable to app users.
+The clustering module groups countries by normalized recovery trajectory, so the unit of analysis is a country time series. The resulting structure reveals three interpretable recovery profiles with different trough depths, rebound strength, and end-of-window levels. This grouping supports comparison by recovery shape, shock depth, and market size within one view.
 
 ::: {.two-up}
 ::: {.figure-frame}
 ![](poster-assets/cluster-scatter.png)
-*The reduced-space view reveals clear grouping among recovery trajectories.*
+*Representative trajectories reveal distinct recovery profiles with different seasonal rebound amplitudes and different end-of-window positions.*
 :::
 
 ::: {.figure-frame}
 ![](poster-assets/cluster-timeline.png)
-*The timeline view shows when the tourism system exits the shock regime and enters recovery phases.*
+*The recovery position map separates shock depth from final recovery level, which clarifies which markets remain delayed and which markets rebound more strongly.*
 :::
 :::
 
 ::: {.figure-frame .figure-compact}
 ![](poster-assets/cluster-elbow.png)
-*The cluster-count diagnostic keeps the grouping choice transparent instead of arbitrary.*
+*The silhouette diagnostic supports a compact three-cluster solution with interpretable separation.*
 :::
 :::
 
@@ -168,12 +116,7 @@ Clustering changes the question from "what happened overall" to "which countries
 ::: {.section-box .section-results}
 ### Results: Forecasting Source-Market Demand
 
-Forecasting follows the Chapter 19 and Chapter 20 workflow from *R for Visual Analytics*: inspect the series, check decomposition, make a time-aware split, benchmark models, and evaluate holdout performance.
-
-#### Main findings
-- The selected source market keeps strong seasonal structure after the shock period.
-- Decomposition makes the structural break explicit before forecasting starts.
-- Seasonal Naive, ETS, and ARIMA can be compared on one shared horizon for transparent evaluation.
+Forecasting follows the Chapter 19 and Chapter 20 workflow from *R for Visual Analytics*. The selected source-market series retains clear seasonality after the shock period, decomposition exposes the structural break before model fitting, and a shared holdout window allows Seasonal Naive, ETS, and ARIMA to be compared on the same horizon.
 
 ::: {.figure-frame}
 ![](poster-assets/forecast-series.png)
@@ -194,23 +137,13 @@ Forecasting follows the Chapter 19 and Chapter 20 workflow from *R for Visual An
 ::: {.section-box .section-future}
 ### Future Work
 
-- extend forecasting to additional source markets and transport modes
-- deploy the Shiny app to a public host for wider access
-- translate cluster outputs into reusable market personas
-- add more business-side indicators for pricing and utilisation decisions
+Future development will extend forecasting to additional source markets and transport modes, publish the Shiny app on a public host, translate cluster outputs into reusable market personas, and integrate more business-side indicators for pricing and utilisation decisions.
 :::
 
 ::: {.section-box .section-results}
 ### Poster Reading Guide
 
-This poster is intended to be read from left to right:
-
-1. **Problem and motivation** explain why aggregate totals are insufficient.
-2. **Approach** defines the shared data backbone and the three-module workflow.
-3. **Results** demonstrate how exploration, clustering, and forecasting each add a different layer of evidence.
-4. **Future work** shows how the current system can be extended into a fuller decision-support tool.
-
-By arranging the poster this way, the visual evidence and narrative evidence remain aligned, which helps the audience understand both the analytical process and the value of the final system.
+This poster reads from left to right. The first column introduces the problem context, motivation, and system architecture. The center column shows the exploratory and clustering evidence that explains market structure and recovery pattern. The right column shows the forecasting evidence and the remaining development path. This arrangement keeps the analytical sequence visible from description to grouping and then to projection.
 :::
 
 :::
