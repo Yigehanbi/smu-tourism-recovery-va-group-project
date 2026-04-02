@@ -4,88 +4,195 @@ library(bslib)
 mod_forecast_ui <- function(id) {
   ns <- NS(id)
 
-  layout_sidebar(
-    sidebar = sidebar(
-      width = 320,
-      selectInput(ns("series_label"), "Country Arrival Series", choices = NULL),
-      sliderInput(ns("horizon"), "Test / Forecast Horizon", min = 6, max = 18, value = 12, step = 1),
-      checkboxGroupInput(
-        ns("model_choices"),
-        "Models to compare",
-        choices = c("Seasonal Naive", "ETS", "ARIMA"),
-        selected = c("Seasonal Naive", "ETS", "ARIMA")
+  div(
+    class = "forecast-shell",
+    div(
+      class = "forecast-header",
+      div(
+        class = "forecast-header-copy",
+        div(class = "va-kicker", "Forecasting Studio"),
+        h2("Singapore tourism demand forecasting"),
+        p("Build and compare forecasting models on country-level arrivals, then interpret the forecast through diagnostics and tourism-performance context in one single-page workspace.")
       ),
-      actionButton(ns("run_forecast"), "Run Forecasting", class = "btn-primary"),
-      hr(),
-      p("Click Run Forecasting to generate the outputs below."),
-      p("Forecast stack: modeltime workflow when available, otherwise a forecast-package fallback using the same benchmark labels."),
-      p("Scope: country-level visitor arrivals on the shared arrivals backbone"),
-      p("Hotel occupancy, stay length, and room revenue are used only as supporting context")
+      div(
+        class = "forecast-header-meta",
+        div(class = "forecast-meta-chip", "Interactive analytics, not static charts"),
+        div(class = "forecast-meta-chip", "Forecast + diagnostics + context"),
+        div(class = "forecast-meta-chip", "Single-page model studio")
+      )
     ),
-    navset_card_tab(
-      id = ns("forecast_pages"),
-      nav_panel(
-        "Forecast Plot",
-        layout_column_wrap(
-          width = 1 / 2,
-          fill = FALSE,
-          card(
-            card_header("Testing and Forecast Comparison"),
-            card_body(plotOutput(ns("forecast_plot"), height = "360px"))
+    div(
+      class = "forecast-workspace",
+      div(
+        class = "forecast-controls",
+        h3("Model controls"),
+        p(
+          class = "forecast-controls-intro",
+          "Choose a source market, configure the workflow, and click once to run the forecasting studio."
+        ),
+        selectInput(ns("series_label"), "Country arrival series", choices = NULL),
+        selectInput(
+          ns("engine_preference"),
+          "Forecast engine",
+          choices = c(
+            "Auto (best available)" = "auto",
+            "Require modeltime" = "modeltime",
+            "Use lightweight fallback" = "fallback"
           ),
-          card(
-            card_header("Accuracy Table"),
-            card_body(DT::DTOutput(ns("accuracy_table")))
+          selected = "auto"
+        ),
+        sliderInput(ns("horizon"), "Test / forecast horizon", min = 6, max = 18, value = 12, step = 1),
+        checkboxGroupInput(
+          ns("model_choices"),
+          "Models to compare",
+          choices = c("Seasonal Naive", "ETS", "ARIMA"),
+          selected = c("Seasonal Naive", "ETS", "ARIMA")
+        ),
+        checkboxGroupInput(
+          ns("context_indicators"),
+          "Context indicators",
+          choices = c(
+            "Hotel occupancy" = "Hotel Room Occupancy Rate",
+            "Average stay length" = "Average Length of Stay",
+            "Room revenue" = "Total Room Revenue"
           ),
-          card(
-            card_header("Series Summary"),
-            card_body(textOutput(ns("series_summary")))
-          ),
-          card(
-            card_header("Split Summary"),
-            card_body(DT::DTOutput(ns("split_table")))
+          selected = c(
+            "Hotel Room Occupancy Rate",
+            "Average Length of Stay",
+            "Total Room Revenue"
+          )
+        ),
+        radioButtons(
+          ns("rank_metric"),
+          "Model ranking metric",
+          choices = c("RMSE" = "rmse", "MAE" = "mae", "MAPE" = "mape"),
+          selected = "rmse",
+          inline = TRUE
+        ),
+        actionButton(ns("run_forecast"), "Run Forecasting", class = "btn-primary"),
+        div(
+          class = "forecast-controls-note",
+          h4("What this app demonstrates"),
+          tags$ul(
+            tags$li("It waits for user input before running the model."),
+            tags$li("It compares benchmark and model-based forecasts on the same holdout window."),
+            tags$li("It exposes diagnostics, residual behaviour, and supporting tourism context."),
+            tags$li("It turns the Shiny page into a small analytics workstation rather than a static dashboard.")
           )
         )
       ),
-      nav_panel(
-        "Tourism Performance Context",
-        card(
-          card_header("Country Arrivals vs Supporting Tourism Indicators"),
-          card_body(plotOutput(ns("context_plot"), height = "420px"))
-        )
-      ),
-      nav_panel(
-        "Trend and Seasonal",
-        layout_column_wrap(
-          width = 1 / 2,
-          fill = FALSE,
-          card(
-            card_header("Raw Time Series"),
-            card_body(plotOutput(ns("raw_series_plot"), height = "360px"))
+      div(
+        class = "forecast-main",
+        uiOutput(ns("summary_cards")),
+        navset_card_tab(
+          id = ns("forecast_pages"),
+          full_screen = FALSE,
+          height = "100%",
+          nav_panel(
+            "Forecast",
+            div(
+              class = "forecast-tab-grid forecast-tab-grid--forecast",
+              card(
+                class = "forecast-panel forecast-panel--hero",
+                card_header("Holdout comparison"),
+                card_body(plotOutput(ns("forecast_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel forecast-panel--hero",
+                card_header("Forward forecast"),
+                card_body(plotOutput(ns("future_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel",
+                card_header("Accuracy table"),
+                card_body(
+                  class = "forecast-table-panel",
+                  div(class = "forecast-table-wrap", DT::DTOutput(ns("accuracy_table")))
+                )
+              ),
+              card(
+                class = "forecast-panel",
+                card_header("Series summary"),
+                card_body(textOutput(ns("series_summary")))
+              )
+            )
           ),
-          card(
-            card_header("Seasonal Pattern by Month"),
-            card_body(plotOutput(ns("seasonal_plot"), height = "360px"))
-          )
-        )
-      ),
-      nav_panel(
-        "Decomposition",
-        card(
-          card_header("Trend / Seasonal / Remainder"),
-          card_body(plotOutput(ns("decomposition_plot"), height = "520px"))
-        )
-      ),
-      nav_panel(
-        "Forecast Notes",
-        card(
-          card_header("Interpretation Guide"),
-          card_body(
-            tags$ol(
-              tags$li("Read the context panel first to position the selected arrivals series against hotel and stay indicators."),
-              tags$li("Use the trend, seasonal, and decomposition views to justify whether a forecasting workflow is appropriate."),
-              tags$li("Interpret the forecast plot together with the accuracy table rather than relying on one model label alone."),
-              tags$li("Treat the baseline Seasonal Naive result as the minimum benchmark the modeltime candidates must beat.")
+          nav_panel(
+            "Model Studio",
+            div(
+              class = "forecast-tab-grid forecast-tab-grid--model",
+              card(
+                class = "forecast-panel forecast-panel--hero",
+                card_header("Model leaderboard"),
+                card_body(plotOutput(ns("leaderboard_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel forecast-panel--hero",
+                card_header("Holdout residual comparison"),
+                card_body(plotOutput(ns("residual_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel",
+                card_header("Engine status"),
+                card_body(uiOutput(ns("engine_status")))
+              ),
+              card(
+                class = "forecast-panel",
+                card_header("Model interpretation"),
+                card_body(uiOutput(ns("model_interpretation")))
+              )
+            )
+          ),
+          nav_panel(
+            "Diagnostics",
+            div(
+              class = "forecast-tab-grid forecast-tab-grid--diagnostics",
+              card(
+                class = "forecast-panel forecast-panel--hero",
+                card_header("Raw time series"),
+                card_body(plotOutput(ns("raw_series_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel forecast-panel--hero",
+                card_header("Seasonal pattern"),
+                card_body(plotOutput(ns("seasonal_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel forecast-panel--hero",
+                card_header("Decomposition"),
+                card_body(plotOutput(ns("decomposition_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel",
+                card_header("Split summary"),
+                card_body(
+                  class = "forecast-table-panel",
+                  div(class = "forecast-table-wrap", DT::DTOutput(ns("split_table")))
+                )
+              )
+            )
+          ),
+          nav_panel(
+            "Context",
+            div(
+              class = "forecast-tab-grid forecast-tab-grid--context",
+              card(
+                class = "forecast-panel forecast-panel--wide",
+                card_header("Tourism performance context"),
+                card_body(plotOutput(ns("context_plot"), height = "100%"))
+              ),
+              card(
+                class = "forecast-panel",
+                card_header("Interpretation guide"),
+                card_body(
+                  tags$ol(
+                    tags$li("Start from Holdout comparison to judge whether the model beats the baseline on unseen months."),
+                    tags$li("Move to Model Studio to understand which model wins and where forecast errors remain."),
+                    tags$li("Use Diagnostics to decide whether trend breaks or seasonality help explain the model result."),
+                    tags$li("Use Context to compare arrivals against hotel occupancy, stay length, and room revenue before drawing business conclusions.")
+                  )
+                )
+              )
             )
           )
         )

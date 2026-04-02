@@ -89,6 +89,13 @@ smu-tourism-recovery-va-group-project/
 - inspect holdout accuracy and projected future path
 - run the full `modeltime` workflow when available, otherwise fall back to a lighter `forecast` implementation with the same benchmark labels
 
+Recent forecasting app updates:
+
+- the forecasting Shiny page has been refactored into a single-page model studio with `Forecast`, `Model Studio`, `Diagnostics`, and `Context` tabs
+- the `Forecast engine` control now uses explicit wording: `Require modeltime` means the app will not silently fall back when that stack is missing
+- the top summary cards now follow the selected ranking metric (`RMSE`, `MAE`, or `MAPE`) instead of always reporting RMSE
+- the `Forecast` tab keeps `Accuracy table` inside a scrollable panel so model-comparison results remain visible without leaving the page
+
 ## Poster Files
 
 The final poster materials are stored in the following relative locations:
