@@ -89,12 +89,17 @@ smu-tourism-recovery-va-group-project/
 - inspect holdout accuracy and projected future path
 - run the full `modeltime` workflow when available, otherwise fall back to a lighter `forecast` implementation with the same benchmark labels
 
-Recent forecasting app updates:
+Forecasting Shiny integration on the current `main` base now uses the compact single-page studio layout that was previously confirmed in the forecasting-only refinement branch. The integrated app keeps the shared four-tab structure (`Time Series Visual Analysis`, `Time Series Clustering`, `Forecasting`, `About`) while replacing only the forecasting module UI and server workflow.
 
-- the forecasting Shiny page has been refactored into a single-page model studio with `Forecast`, `Model Studio`, `Diagnostics`, and `Context` tabs
-- the `Forecast engine` control now uses explicit wording: `Require modeltime` means the app will not silently fall back when that stack is missing
-- the top summary cards now follow the selected ranking metric (`RMSE`, `MAE`, or `MAPE`) instead of always reporting RMSE
-- the `Forecast` tab keeps `Accuracy table` inside a scrollable panel so model-comparison results remain visible without leaving the page
+## Path Handling
+
+The live project code is expected to use project-relative paths only.
+
+- `app/app.R` discovers the project root by locating `_quarto.yml`, then sources module files with `file.path(project_root, ...)`.
+- data-loading helpers under `app/R/data_utils.R` read shared workbooks and processed files through project-relative paths.
+- README examples, poster references, prototype references, and app launch instructions are all written as relative project paths rather than machine-specific absolute paths.
+
+During the latest review pass, the source files and rendered project text files were checked again for machine-specific path references. No active absolute-path dependencies remain in the project code. The only remaining path-like matches were inside third-party compiled assets under `docs/site_libs/`, which are vendor files rather than project-authored references.
 
 ## Poster Files
 
