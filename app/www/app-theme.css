@@ -7,12 +7,18 @@ html, body {
   overflow: hidden;
 }
 
+.bslib-page-navbar {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .bslib-page-navbar > .container-fluid,
 .bslib-page-fill {
   background:
     radial-gradient(circle at 0% 0%, rgba(225, 236, 232, 0.9), rgba(225, 236, 232, 0) 32%),
     radial-gradient(circle at 100% 0%, rgba(250, 226, 211, 0.75), rgba(250, 226, 211, 0) 24%),
     #f6f2ea;
+  height: 100%;
 }
 
 .bslib-page-fill,
@@ -85,8 +91,10 @@ html, body {
   display: grid;
   grid-template-columns: 235px minmax(0, 1fr);
   gap: 0.6rem;
+  align-items: start;
   min-height: 0;
   overflow: hidden;
+  height: calc(100vh - 186px);
 }
 
 .forecast-controls {
@@ -442,7 +450,9 @@ html, body {
     grid-template-columns: 1fr;
     grid-template-areas: none;
   }
-}.cluster-header,
+}
+
+.cluster-header,
 .va-preview {
   display: flex;
   align-items: flex-end;
@@ -502,15 +512,16 @@ html, body {
 .cluster-workspace {
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
   align-items: start;
-  min-height: calc(100vh - 170px);
+  min-height: 0;
+  height: calc(100vh - 184px);
 }
 
 .cluster-controls {
   position: sticky;
   top: 1rem;
-  padding: 1.15rem 1rem;
+  padding: 1rem 0.95rem;
   background: rgba(255, 252, 247, 0.92);
   border: 1px solid #e4d8c8;
   border-radius: 18px;
@@ -519,7 +530,7 @@ html, body {
 
 .cluster-controls .form-group,
 .cluster-controls .shiny-input-radiogroup {
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .cluster-controls .selectize-input,
@@ -530,20 +541,20 @@ html, body {
 }
 
 .cluster-controls h3 {
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.2rem;
   color: #20373a;
 }
 
 .cluster-controls-intro {
   color: #5f6d70;
-  margin-bottom: 0.95rem;
-  line-height: 1.55;
+  margin-bottom: 0.75rem;
+  line-height: 1.45;
 }
 
 .cluster-controls .btn-primary {
   width: 100%;
   border-radius: 999px;
-  padding: 0.75rem 1rem;
+  padding: 0.68rem 1rem;
   font-weight: 700;
 }
 
@@ -567,13 +578,13 @@ html, body {
 
 .cluster-main .card {
   border-radius: 20px;
+  min-height: 0;
 }
 
 .cluster-main .tab-content {
-  padding-top: 1rem;
-  max-height: calc(100vh - 235px);
-  overflow-y: auto;
-  padding-right: 0.35rem;
+  padding-top: 0.7rem;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .cluster-main .nav-tabs {
@@ -586,7 +597,7 @@ html, body {
   border-radius: 999px;
   color: #4f5f63;
   background: transparent;
-  padding: 0.55rem 0.95rem;
+  padding: 0.46rem 0.82rem;
   font-weight: 600;
 }
 
@@ -599,6 +610,8 @@ html, body {
 .cluster-tab-stack {
   display: grid;
   gap: 0.75rem;
+  min-height: 0;
+  align-content: start;
 }
 
 .cluster-helper-text {
@@ -619,17 +632,18 @@ html, body {
   background: linear-gradient(180deg, #fffdf9 0%, #f6eee4 100%);
   border-bottom: 1px solid #eadfce;
   font-weight: 700;
+  padding: 0.7rem 0.95rem;
 }
 
 .cluster-panel .card-body {
   background: rgba(255, 255, 252, 0.96);
-  padding: 0.85rem 0.95rem;
+  padding: 0.7rem;
 }
 
 .cluster-toolbar {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.55rem;
 }
 
 .cluster-toolbar .btn {
@@ -871,11 +885,25 @@ html, body {
   vertical-align: middle;
 }
 
+.cluster-main table.dataTable.compact thead th,
+.cluster-main table.dataTable.compact tbody td {
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
+
 .cluster-main .dataTables_wrapper .dataTables_length,
 .cluster-main .dataTables_wrapper .dataTables_filter,
 .cluster-main .dataTables_wrapper .dataTables_info,
 .cluster-main .dataTables_wrapper .dataTables_paginate {
-  margin-top: 0.55rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+}
+
+.cluster-main .dataTables_wrapper .dataTables_filter input,
+.cluster-main .dataTables_wrapper .dataTables_length select {
+  min-height: 34px;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 }
 
 @media (max-width: 1100px) {
@@ -903,17 +931,23 @@ html, body {
   }
 
   .forecast-header-meta {
+    flex-wrap: wrap;
     justify-content: flex-start;
+    white-space: normal;
   }
 
   .forecast-stat-grid,
-  .forecast-tab-grid--two,
+  .forecast-tab-grid--forecast,
+  .forecast-tab-grid--model,
+  .forecast-tab-grid--diagnostics,
   .forecast-tab-grid--context {
     grid-template-columns: 1fr;
+    grid-template-areas: none;
   }
 
   .cluster-workspace {
     grid-template-columns: 1fr;
+    height: auto;
   }
 
   .cluster-controls {
