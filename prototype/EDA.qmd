@@ -30,6 +30,7 @@ pacman::p_load(tidyverse, lubridate, plotly, patchwork, readxl, cellranger, knit
 ```{r}
 path <- "../data/raw/tourism_update.xlsx"
 
+# Read data starting from the actual observation rows
 tour <- read_excel(
   path,
   sheet = "My Series",
@@ -38,6 +39,7 @@ tour <- read_excel(
   .name_repair = "minimal"
 )
 
+# Assign proper column names manually
 names(tour) <- c(
   "Date",
   "Visitor Arrivals",
@@ -103,24 +105,13 @@ names(tour) <- c(
   "Visitor Arrivals: Republic of South Africa"
 )
 
+# Convert date column
 tour <- tour %>%
   mutate(Date = as.Date(Date))
 
+# Keep only 2017 to 2025
 tour_clean <- tour %>%
-  filter(year(Date) >= 2017, year(Date) != 2026)
-
-shared_arrivals <- read.csv(
-  "../data/processed/arrivals_country_long.csv",
-  stringsAsFactors = FALSE,
-  check.names = FALSE
-) %>%
-  mutate(
-    date = as.Date(date),
-    Country = country,
-    Arrivals = arrivals,
-    Year = year
-  ) %>%
-  filter(date >= as.Date("2017-01-01"), date <= as.Date("2025-12-01"))
+  filter(year(Date) >= 2017 & year(Date) <= 2025)
 ```
 
 ```{r}
@@ -180,11 +171,15 @@ country_cols <- c(
   "Visitor Arrivals: Republic of South Africa"
 )
 
-tour_long <- shared_arrivals %>%
-  transmute(
-    Date = date,
-    Country,
-    Arrivals
+tour_long <- tour_clean %>%
+  select(Date, all_of(country_cols)) %>%
+  pivot_longer(
+    cols = -Date,
+    names_to = "Country",
+    values_to = "Arrivals"
+  ) %>%
+  mutate(
+    Country = str_remove(Country, "^Visitor Arrivals: ")
   )
 ```
 
@@ -196,61 +191,10 @@ Before we continue with analysis results, some Date periods should be noticed: *
 
 ## EDA 1 - Singapore Visitors
 
-```{r}
-country_cols <- c(
-  "Visitor Arrivals: China",
-  "Visitor Arrivals: Malaysia",
-  "Visitor Arrivals: India",
-  "Visitor Arrivals: Indonesia",
-  "Visitor Arrivals: Australia",
-  "Visitor Arrivals: Taiwan",
-  "Visitor Arrivals: Hong Kong SAR (China)",
-  "Visitor Arrivals: Italy",
-  "Visitor Arrivals: Russian Federal (CIS)",
-  "Visitor Arrivals: France",
-  "Visitor Arrivals: Philippines",
-  "Visitor Arrivals: Spain",
-  "Visitor Arrivals: Thailand",
-  "Visitor Arrivals: Ireland",
-  "Visitor Arrivals: United Arab Emirates",
-  "Visitor Arrivals: United Kingdom",
-  "Visitor Arrivals: Bangladesh",
-  "Visitor Arrivals: Iran",
-  "Visitor Arrivals: New Zealand",
-  "Visitor Arrivals: Israel",
-  "Visitor Arrivals: Germany",
-  "Visitor Arrivals: Scandinavia: Sweden",
-  "Visitor Arrivals: Switzerland",
-  "Visitor Arrivals: USA",
-  "Visitor Arrivals: Canada",
-  "Visitor Arrivals: Mauritius",
-  "Visitor Arrivals: Kuwait",
-  "Visitor Arrivals: Egypt",
-  "Visitor Arrivals: Brunei",
-  "Visitor Arrivals: Finland",
-  "Visitor Arrivals: Japan",
-  "Visitor Arrivals: South Korea",
-  "Visitor Arrivals: Myanmar",
-  "Visitor Arrivals: Netherlands",
-  "Visitor Arrivals: Scandinavia: Norway",
-  "Visitor Arrivals: Saudi Arabia",
-  "Visitor Arrivals: Sri Lanka",
-  "Visitor Arrivals: Vietnam",
-  "Visitor Arrivals: Pakistan",
-  "Visitor Arrivals: Republic of South Africa"
-)
-
-tour_long <- shared_arrivals %>%
-  transmute(
-    Date = date,
-    Country,
-    Arrivals,
-    Year
-  )
-```
 
 ```{r}
 geo_year <- tour_long %>%
+  mutate(Year = year(Date)) %>%
   group_by(Year, Country) %>%
   summarise(
     Arrivals = sum(Arrivals, na.rm = TRUE),
@@ -358,9 +302,9 @@ plot_ly(
 ```
 :::
 
-During the pre-COVID period (2017–2019), Singapore’s inbound tourism market was led by China, which recorded an average monthly arrival figure of 285,357 and accounted for 18.66% of Singapore’s total inbound visitor arrivals. This indicates that China was the most important single source market before the pandemic. India ranked second with 114,787 average monthly arrivals and an overall market share of 7.51%, followed by Malaysia at 101,198 (6.62%), Australia at 92,571 (6.05%), and Japan at 69,635 (4.55%).
+During the pre-COVID period (2017–2019), Singapore’s inbound tourism market was led by China and Indonesia, which recorded average monthly arrivals of 285,357 and 252,402 respectively. Their corresponding overall market shares, 18.66% and 16.51%, show that these two countries formed the dominant core of Singapore’s visitor market before the pandemic. India, Malaysia, and Australia followed at a noticeably lower level, with average monthly arrivals of 114,787, 101,198, and 92,571, accounting for 7.51%, 6.62%, and 6.05% of Singapore’s total inbound visitor arrivals respectively. 
 
-These results suggest that Singapore’s pre-pandemic visitor market was concentrated in a relatively small number of major source countries, with China standing out very clearly as the dominant market. The gap between China and the other four countries is substantial, showing that the market was not evenly distributed even within the top five visitor sources. Instead, a significant share of total visitor demand was anchored in one especially dominant country, followed by a second tier of comparatively smaller but still important markets. This points to a tourism structure that was concentrated, but with a particularly strong dependence on China.
+These results indicate that Singapore’s pre-pandemic visitor structure was concentrated in a relatively small number of major source markets, with China and Indonesia clearly occupying the most prominent positions. The gap between the top two countries and the remaining three suggests that the market was not evenly distributed even among the leading visitor sources. Instead, a substantial share of total visitor demand was anchored in a narrow group of dominant markets. This pattern points to a relatively concentrated tourism structure prior to COVID-19.
 
 ::: panel-tabset
 ## Table - Post_Covid
@@ -411,11 +355,13 @@ plot_ly(
 ```
 :::
 
-During the post-COVID recovery period (2022–2025), Singapore’s visitor market was led by China, which recorded an average monthly arrival figure of 159,896 and accounted for 14.39% of Singapore’s total inbound visitor arrivals. This indicates that China remained the most important single source market in the recovery phase, even though its scale was still below the pre-pandemic level. India ranked second with 86,675 average monthly arrivals and an overall market share of 7.80%, followed closely by Malaysia at 86,258 (7.76%), Australia at 85,258 (7.67%), and the Philippines at 53,741 (4.84%).
+During the post-COVID recovery period (2022–2025), Singapore’s visitor market recovered with a structure that remained broadly similar to the pre-pandemic period, but with some notable changes in relative ranking and market share. Indonesia ranked first during this period with an average monthly arrival figure of 173,636, accounting for 15.62% of Singapore’s total inbound visitor arrivals. China followed in second place with 159,896 average monthly arrivals and an overall market share of 14.39%. This indicates that although both countries remained central to Singapore’s tourism recovery, Indonesia overtook China in the post-pandemic period and emerged as the largest individual source market. 
 
-These results suggest that Singapore’s post-pandemic visitor structure remained concentrated in a limited number of major source markets, with China continuing to occupy a clearly dominant position. Although the ranking pattern changed compared with the pre-COVID period, the results still point to a market structure in which a small group of countries accounted for a substantial share of total visitor arrivals. At the same time, the gap between China and the remaining four countries remained large, showing that the recovery period did not eliminate the strong concentration of visitor demand at the top of the market.
+India remained in third place with an average monthly arrival level of 86,675, representing 7.80% of Singapore’s overall inbound market. Malaysia and Australia followed closely with 86,258 (7.76%) and 85,258 (7.67%) respectively. Compared with the pre-COVID period, the composition of the top five visitor source countries remained unchanged, suggesting that Singapore’s core visitor base demonstrated a relatively high degree of structural stability. However, the reduced arrival levels across all five countries indicate that recovery remained incomplete in absolute terms, even though the same major source markets continued to dominate the visitor mix. 
 
-A comparison with the pre-COVID baseline provides a clearer view of recovery status. China’s average monthly arrivals declined from 285,357 in P1 to 159,896 in P2, while India fell from 114,787 to 86,675, Malaysia from 101,198 to 86,258, and Australia from 92,571 to 85,258. The appearance of the Philippines in the top five, replacing Japan, suggests that the composition of Singapore’s key source markets shifted during the recovery period. This indicates that post-COVID recovery was not simply a return to the previous market structure, but involved some reordering in the relative importance of individual countries.
+A clearer view of recovery emerges when the P2 results are compared directly with the pre-COVID baseline. China’s average monthly arrivals declined from 285,357 in P1 to 159,896 in P2, while Indonesia fell from 252,402 to 173,636. Similar reductions are also observed for India, Malaysia, and Australia. These changes suggest that by 2022–2025, Singapore’s tourism sector had largely regained its core market structure, but not yet its earlier scale. In other words, recovery appears to have been stronger in terms of preserving the composition of key source markets than in terms of fully restoring visitor volume. 
+
+The ranking reversal between China and Indonesia is especially important. It suggests that the recovery process was uneven across major source markets. Indonesia’s stronger position in the post-COVID period may reflect a faster rebound in short-haul regional travel, whereas China’s drop from first to second place points to a relatively slower return compared with its pre-pandemic dominance. At the same time, the continued presence of India, Malaysia, and Australia in the top five reinforces the view that Singapore’s tourism recovery remained firmly anchored in established Asia-Pacific markets.
 
 
 ## Conclusion
