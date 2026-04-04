@@ -21,14 +21,19 @@ mod_forecast_server <- function(id, data) {
       prepare_forecast_series(data()$long_monthly, input$series_label)
     })
 
-    forecast_state <- eventReactive(input$run_forecast, {
+    forecast_results <- eventReactive(input$run_forecast, {
       series_df <- selected_series()
       selected_models <- input$model_choices
-      stack_status <- forecast_stack_status()
 
       validate(
         need(nrow(series_df) > input$horizon + 12, "Series is too short for the current horizon."),
         need(length(selected_models) > 0, "Select at least one forecasting model.")
+      )
+
+      res <- run_forecast_workflow(
+        series_df = series_df,
+        horizon = input$horizon,
+        engine = input$engine_preference
       )
 
       normalize_model_choice <- function(model_name) {
@@ -39,81 +44,39 @@ mod_forecast_server <- function(id, data) {
         )
       }
 
-      tryCatch({
-        res <- run_forecast_workflow(
-          series_df = series_df,
-          horizon = input$horizon,
-          engine = input$engine_preference
-        )
+      selected_holdout <- res$holdout_forecast_tbl |>
+        filter(normalize_model_choice(.model_desc) %in% selected_models)
 
-        selected_holdout <- res$holdout_forecast_tbl |>
-          filter(normalize_model_choice(.model_desc) %in% selected_models)
+      selected_accuracy <- res$accuracy_tbl |>
+        filter(normalize_model_choice(.model_desc) %in% selected_models)
 
-        selected_accuracy <- res$accuracy_tbl |>
-          filter(normalize_model_choice(.model_desc) %in% selected_models)
+      selected_models_tbl <- res$models_tbl |>
+        filter(normalize_model_choice(.model_desc) %in% selected_models)
 
-        selected_models_tbl <- res$models_tbl |>
-          filter(normalize_model_choice(.model_desc) %in% selected_models)
+      if (nrow(selected_accuracy) == 0 || nrow(selected_holdout) == 0) {
+        stop("No forecast results matched the selected model choices.")
+      }
 
-        selected_future <- res$future_forecast_tbl |>
-          filter(normalize_model_choice(.model_desc) %in% selected_models)
-
-        if (nrow(selected_accuracy) == 0 || nrow(selected_holdout) == 0 || nrow(selected_future) == 0) {
-          stop("No forecast results matched the selected model choices.")
-        }
-
-        res$holdout_forecast_tbl <- selected_holdout
-        res$accuracy_tbl <- selected_accuracy
-        res$models_tbl <- selected_models_tbl
-        res$future_forecast_tbl <- selected_future
-        res$selected_models <- selected_models
-        res$requested_engine <- input$engine_preference
-
-        list(
-          ok = TRUE,
-          result = res,
-          stack_status = stack_status,
-          requested_engine = input$engine_preference
-        )
-      }, error = function(e) {
-        list(
-          ok = FALSE,
-          error_message = conditionMessage(e),
-          stack_status = stack_status,
-          requested_engine = input$engine_preference
-        )
-      })
+      res$holdout_forecast_tbl <- selected_holdout
+      res$accuracy_tbl <- selected_accuracy
+      res$models_tbl <- selected_models_tbl
+      res$selected_models <- selected_models
+      res$requested_engine <- input$engine_preference
+      res
     }, ignoreNULL = TRUE)
 
-    forecast_results <- reactive({
-      state <- forecast_state()
-      validate(
-        need(isTRUE(state$ok), state$error_message)
-      )
-      state$result
-    })
-
-    ranked_models <- reactive({
-      res <- forecast_results()
-      metric <- req(input$rank_metric)
-
-      res$accuracy_tbl |>
-        arrange(.data[[metric]])
-    })
-
-    best_model_row <- reactive({
-      ranked_models() |>
-        slice(1)
-    })
-
-    output$series_summary <- renderText({
+    output$series_summary <- renderUI({
       series_df <- selected_series()
-      paste(
-        "Observations:", nrow(series_df),
-        "| Start:", format(min(series_df$date), "%Y-%m"),
-        "| End:", format(max(series_df$date), "%Y-%m"),
-        "| Scope: country-level arrivals",
-        "| Models:", paste(input$model_choices, collapse = ", ")
+
+      tagList(
+        div(
+          class = "forecast-copy-stack",
+          div(class = "forecast-copy-row", tags$strong("Observations:"), format(nrow(series_df), big.mark = ",")),
+          div(class = "forecast-copy-row", tags$strong("Coverage:"), paste(format(min(series_df$date), "%Y-%m"), "to", format(max(series_df$date), "%Y-%m"))),
+          div(class = "forecast-copy-row", tags$strong("Scope:"), "Country-level visitor arrivals"),
+          div(class = "forecast-copy-row", tags$strong("Models compared:"), paste(input$model_choices, collapse = ", ")),
+          div(class = "forecast-copy-note", "This summary describes the current time series used in the holdout comparison and future forecast.")
+        )
       )
     })
 
@@ -123,8 +86,12 @@ mod_forecast_server <- function(id, data) {
       metric <- req(input$rank_metric)
       metric_label <- toupper(metric)
 
-      best_row <- best_model_row()
-      second_row <- ranked_models() |>
+      best_row <- res$accuracy_tbl |>
+        arrange(.data[[metric]]) |>
+        slice(1)
+
+      second_row <- res$accuracy_tbl |>
+        arrange(.data[[metric]]) |>
         slice(2)
 
       improvement_note <- if (nrow(second_row) == 1 &&
@@ -216,19 +183,11 @@ mod_forecast_server <- function(id, data) {
     output$future_plot <- renderPlot({
       req(input$run_forecast > 0)
       res <- forecast_results()
-      best_row <- best_model_row()
-      future_tbl <- res$future_forecast_tbl |>
-        filter(.model_desc == best_row$.model_desc)
-      future_res <- res
-      future_res$future_forecast_tbl <- future_tbl
 
-      plot_forecast_results(
-        future_res,
-        type = "future"
-      ) +
+      plot_forecast_results(res, type = "future") +
         labs(
           title = input$series_label,
-          subtitle = paste("Forward projection using best holdout model:", best_row$.model_desc)
+          subtitle = paste("Forward projection using best holdout model:", res$best_model_desc)
         )
     })
 
@@ -322,30 +281,25 @@ mod_forecast_server <- function(id, data) {
 
     output$engine_status <- renderUI({
       req(input$run_forecast > 0)
-      state <- forecast_state()
-      stack_status <- state$stack_status
+      res <- forecast_results()
+      stack_status <- forecast_stack_status()
 
       missing_pkgs <- stack_status$missing_modeltime_packages
-      missing_text <- if (length(missing_pkgs) == 0) {
-        "None"
-      } else {
-        paste(missing_pkgs, collapse = ", ")
-      }
+      missing_text <- if (length(missing_pkgs) == 0) "None" else paste(missing_pkgs, collapse = ", ")
 
-      tagList(
-        tags$p(tags$strong("Requested engine: "), state$requested_engine),
-        tags$p(tags$strong("Executed engine: "), if (isTRUE(state$ok)) state$result$engine_label else "Run did not complete"),
-        tags$p(tags$strong("Fallback ready: "), ifelse(stack_status$fallback_ready, "Yes", "No")),
-        tags$p(tags$strong("Modeltime ready: "), ifelse(stack_status$modeltime_ready, "Yes", "No")),
-        tags$p(tags$strong("Missing modeltime packages: "), missing_text),
-        tags$p(
-          tags$strong("Execution note: "),
-          if (!isTRUE(state$ok)) {
-            state$error_message
-          } else if (identical(state$requested_engine, "modeltime")) {
-            "Require modeltime was selected, so the app will not fall back automatically if that stack is unavailable."
+      div(
+        class = "forecast-copy-stack",
+        div(class = "forecast-copy-row", tags$strong("Requested:"), res$requested_engine),
+        div(class = "forecast-copy-row", tags$strong("Executed:"), res$engine_label),
+        div(class = "forecast-copy-row", tags$strong("Fallback ready:"), ifelse(stack_status$fallback_ready, "Yes", "No")),
+        div(class = "forecast-copy-row", tags$strong("Modeltime ready:"), ifelse(stack_status$modeltime_ready, "Yes", "No")),
+        div(class = "forecast-copy-row forecast-copy-row--small", tags$strong("Missing packages:"), missing_text),
+        div(
+          class = "forecast-copy-note",
+          if (identical(res$requested_engine, "modeltime")) {
+            "Require modeltime is a strict mode. If that stack is unavailable, the app stops instead of falling back."
           } else {
-            "Auto may choose modeltime when available and otherwise use the lightweight fallback."
+            "Auto mode prefers modeltime when available and otherwise uses the lightweight fallback."
           }
         )
       )
@@ -353,8 +307,13 @@ mod_forecast_server <- function(id, data) {
 
     output$model_interpretation <- renderUI({
       req(input$run_forecast > 0)
-      best_row <- best_model_row()
-      second_row <- ranked_models() |>
+      res <- forecast_results()
+      best_row <- res$accuracy_tbl |>
+        arrange(.data[[input$rank_metric]]) |>
+        slice(1)
+
+      second_row <- res$accuracy_tbl |>
+        arrange(.data[[input$rank_metric]]) |>
         slice(2)
 
       gap_note <- if (nrow(second_row) == 1) {
@@ -369,13 +328,15 @@ mod_forecast_server <- function(id, data) {
         "Only one forecast line is currently active, so there is no direct model gap to compare."
       }
 
-      tagList(
-        tags$p(tags$strong("Best model: "), best_row$.model_desc),
-        tags$p(gap_note),
+      div(
+        class = "forecast-copy-stack",
+        div(class = "forecast-copy-row", tags$strong("Best model:"), best_row$.model_desc),
+        div(class = "forecast-copy-note", gap_note),
         tags$ul(
-          tags$li("Seasonal Naive is the benchmark and shows what happens if we only repeat the historical seasonal pattern."),
-          tags$li("ETS is useful when level, trend, and seasonality evolve smoothly over time."),
-          tags$li("ARIMA is useful when autocorrelation structure adds forecasting signal beyond seasonality.")
+          class = "forecast-copy-list",
+          tags$li(tags$strong("Seasonal Naive:"), " benchmark repeating the historical seasonal pattern."),
+          tags$li(tags$strong("ETS:"), " best when level, trend, and seasonality evolve smoothly."),
+          tags$li(tags$strong("ARIMA:"), " useful when autocorrelation adds extra predictive signal.")
         )
       )
     })
@@ -441,22 +402,39 @@ mod_forecast_server <- function(id, data) {
         )
     })
 
-    output$accuracy_table <- DT::renderDT({
+    output$accuracy_summary <- renderUI({
       req(input$run_forecast > 0)
       res <- forecast_results()
-      accuracy_tbl <- res$accuracy_tbl |>
-        mutate(across(where(is.numeric), ~ round(.x, 3)))
 
-      DT::datatable(
-        accuracy_tbl,
-        rownames = FALSE,
-        options = list(
-          dom = "t",
-          paging = FALSE,
-          ordering = TRUE,
-          scrollX = TRUE,
-          scrollY = "190px",
-          scrollCollapse = TRUE
+      metric <- req(input$rank_metric)
+      accuracy_tbl <- res$accuracy_tbl |>
+        mutate(
+          rank_value = .data[[metric]],
+          rmse = round(rmse, 2),
+          mae = round(mae, 2),
+          mape = round(mape, 2)
+        ) |>
+        arrange(rank_value) |>
+        mutate(rank_label = row_number())
+
+      summary_items <- lapply(seq_len(nrow(accuracy_tbl)), function(i) {
+        row <- accuracy_tbl[i, ]
+        tags$li(
+          tags$strong(paste0("#", row$rank_label, " ", row$.model_desc, ": ")),
+          paste0(
+            "RMSE ", format(row$rmse, big.mark = ","),
+            " | MAE ", format(row$mae, big.mark = ","),
+            " | MAPE ", row$mape, "%"
+          )
+        )
+      })
+
+      tagList(
+        div(
+          class = "forecast-copy-stack",
+          div(class = "forecast-copy-row", tags$strong("Ranking metric:"), toupper(metric)),
+          div(class = "forecast-copy-note", "Lower values indicate better holdout performance. The models below are ranked by the selected metric, while RMSE, MAE, and MAPE are shown together for quick comparison."),
+          tags$ul(class = "forecast-copy-list forecast-copy-list--spacious", summary_items)
         )
       )
     })
