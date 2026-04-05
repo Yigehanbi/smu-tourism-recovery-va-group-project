@@ -1,32 +1,56 @@
 library(shiny)
 library(bslib)
 
-find_project_root <- function(start = getwd()) {
+find_app_root <- function(start = getwd()) {
   current <- normalizePath(start, winslash = "/", mustWork = TRUE)
 
   repeat {
+    if (
+      file.exists(file.path(current, "app.R")) &&
+      dir.exists(file.path(current, "R")) &&
+      dir.exists(file.path(current, "www"))
+    ) {
+      return(current)
+    }
+
+    if (
+      file.exists(file.path(current, "app", "app.R")) &&
+      dir.exists(file.path(current, "app", "R")) &&
+      dir.exists(file.path(current, "app", "www"))
+    ) {
+      return(file.path(current, "app"))
+    }
+
+    if (file.exists(file.path(current, "_quarto.yml")) && dir.exists(file.path(current, "app", "R"))) {
+      return(file.path(current, "app"))
+    }
+
     if (file.exists(file.path(current, "_quarto.yml"))) {
       return(current)
     }
 
     parent <- dirname(current)
     if (identical(parent, current)) {
-      stop("Project root not found. Expected to locate _quarto.yml.")
+      stop("App root not found. Expected to locate app.R with R/ and www/ assets.")
     }
 
     current <- parent
   }
 }
 
-project_root <- find_project_root()
+app_root <- find_app_root()
+project_root <- normalizePath(file.path(app_root, ".."), winslash = "/", mustWork = TRUE)
 
-source(file.path(project_root, "app", "R", "data_utils.R"))
-source(file.path(project_root, "app", "R", "mod_eda_ui.R"))
-source(file.path(project_root, "app", "R", "mod_eda_server.R"))
-source(file.path(project_root, "app", "R", "mod_cluster_ui.R"))
-source(file.path(project_root, "app", "R", "mod_cluster_server.R"))
-source(file.path(project_root, "app", "R", "mod_forecast_ui.R"))
-source(file.path(project_root, "app", "R", "mod_forecast_server.R"))
+options(tourism.va.project_root = project_root)
+Sys.setenv(TOURISM_VA_PROJECT_ROOT = project_root)
+
+source(file.path(app_root, "R", "data_utils.R"))
+source(file.path(app_root, "R", "mod_eda_ui.R"))
+source(file.path(app_root, "R", "mod_eda_server.R"))
+source(file.path(app_root, "R", "mod_cluster_ui.R"))
+source(file.path(app_root, "R", "mod_cluster_server.R"))
+source(file.path(app_root, "R", "mod_forecast_ui.R"))
+source(file.path(app_root, "R", "mod_forecast_server.R"))
 
 ui <- page_navbar(
   title = "Singapore Tourism Time-Series VA Prototype",
@@ -80,7 +104,7 @@ ui <- page_navbar(
 
 ui <- tagList(
   tags$head(
-    includeCSS(file.path(project_root, "app", "www", "app-theme.css"))
+    includeCSS(file.path(app_root, "www", "app-theme.css"))
   ),
   ui
 )

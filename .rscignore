@@ -1,0 +1,9 @@
+.git/
+.playwright-cli/
+.quarto/
+_freeze/
+docs/
+output/
+artifacts/
+app/rsconnect/
+*.Rproj

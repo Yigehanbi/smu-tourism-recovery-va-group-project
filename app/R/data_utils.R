@@ -6,6 +6,16 @@ library(lubridate)
 library(forecast)
 
 find_project_root <- function(start = getwd()) {
+  option_root <- getOption("tourism.va.project_root", default = NA_character_)
+  if (!is.na(option_root) && nzchar(option_root) && dir.exists(option_root)) {
+    return(normalizePath(option_root, winslash = "/", mustWork = TRUE))
+  }
+
+  env_root <- Sys.getenv("TOURISM_VA_PROJECT_ROOT", unset = "")
+  if (nzchar(env_root) && dir.exists(env_root)) {
+    return(normalizePath(env_root, winslash = "/", mustWork = TRUE))
+  }
+
   current <- normalizePath(start, winslash = "/", mustWork = TRUE)
 
   repeat {
@@ -13,9 +23,13 @@ find_project_root <- function(start = getwd()) {
       return(current)
     }
 
+    if (dir.exists(file.path(current, "data", "raw"))) {
+      return(current)
+    }
+
     parent <- dirname(current)
     if (identical(parent, current)) {
-      stop("Project root not found. Expected to locate _quarto.yml.")
+      stop("Project root not found. Expected to locate _quarto.yml or data/raw/.")
     }
 
     current <- parent
