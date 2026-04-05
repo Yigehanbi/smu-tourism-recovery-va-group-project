@@ -49,6 +49,14 @@ body.page-home main.content {
   padding-inline: clamp(1.2rem, 2.8vw, 3.5rem);
 }
 
+.home-stage > h2,
+.home-stage > p,
+.home-stage > pre {
+  width: min(calc(100vw - 2.4rem), 2800px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .page-home #title-block-header {
   display: none;
 }
@@ -134,7 +142,8 @@ body.page-home main.content {
   grid-template-columns: minmax(0, 1.08fr) minmax(520px, 0.92fr);
   gap: clamp(2rem, 4vw, 4.5rem);
   align-items: center;
-  max-width: 1760px;
+  width: min(calc(100vw - 2.4rem), 2800px);
+  max-width: none;
   margin: 0 auto 2.8rem;
   padding: clamp(1.8rem, 3vw, 3rem);
   min-height: min(78vh, 880px);
@@ -270,7 +279,8 @@ body.page-home main.content {
 .home-workflow,
 .home-deliverables,
 .home-link-grid {
-  max-width: 1760px;
+  width: min(calc(100vw - 2.4rem), 2800px);
+  max-width: none;
   margin: 1rem auto 2rem;
 }
 
@@ -284,7 +294,8 @@ body.page-home main.content {
 
 .home-sequence,
 .home-editorial-band {
-  max-width: 1760px;
+  width: min(calc(100vw - 2.4rem), 2800px);
+  max-width: none;
   margin-left: auto;
   margin-right: auto;
 }
