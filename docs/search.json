@@ -305,14 +305,14 @@
     "href": "index.html",
     "title": "Project Home",
     "section": "",
-    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis project studies tourism recovery as a comparative time-series problem. The site and the app work together: the website documents the analytical story, while the Shiny app lets users explore market structure, compare recovery trajectories, and run forward forecasts on a shared arrivals backbone.\n\nOpen Shiny App Read User Guide View Poster\n\n\n\nLive modulesVisual Analysis, Clustering, Forecasting\n\n\nShared backboneCountry-level visitor arrivals\n\n\nDeploymentshinyapps.io connected"
+    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis project frames tourism recovery as a comparative time-series problem. The website carries the analytical story, while the Shiny app turns that story into an interactive workspace for market structure, recovery pattern comparison, and forward projection.\n\nOpen Shiny App Read User Guide View Poster\n\n\n\nLive modulesVisual Analysis, Clustering, Forecasting\n\n\nShared backboneCountry-level visitor arrivals\n\n\nDeploymentrender without SHINY_APP_URL\n\n\n\nThe intended reading flow is direct. Start with market structure, move into trajectory clustering, then finish with forecasting and context interpretation."
   },
   {
-    "objectID": "index.html#what-this-system-answers",
-    "href": "index.html#what-this-system-answers",
+    "objectID": "index.html#read-the-recovery-story-in-one-pass",
+    "href": "index.html#read-the-recovery-story-in-one-pass",
     "title": "Project Home",
-    "section": "What This System Answers",
-    "text": "What This System Answers\n\n\nMarket Structure\nThe visual analysis module shows how source-market concentration changes across pre-COVID, shock, and recovery periods. It helps readers understand who the leading markets are before they move into deeper modelling.\n\n\nRecovery Patterns\nThe clustering module groups country trajectories by recovery shape. It reveals which markets recovered together, which remained delayed, and where a selected priority market sits in the wider landscape.\n\n\nForward Projection\nThe forecasting module compares baseline and model-based forecasts on a holdout window, then places the selected arrivals series next to hotel occupancy, stay length, and room revenue context."
+    "section": "Read The Recovery Story In One Pass",
+    "text": "Read The Recovery Story In One Pass\n\n\n\nStage 1\n\n\nMarket Structure\nVisual Analysis maps source-market concentration and shows how the leading countries change from the pre-COVID baseline to the recovery window.\n\n\n\n\nStage 2\n\n\nRecovery Patterns\nClustering groups country trajectories by recovery shape, then places one selected priority market back inside the wider pattern landscape.\n\n\n\n\nStage 3\n\n\nForward Projection\nForecasting compares model families on a holdout window, then projects the selected arrivals series forward beside hotel occupancy, stay length, and room revenue context."
   },
   {
     "objectID": "index.html#one-workflow-three-modules",
@@ -320,6 +320,13 @@
     "title": "Project Home",
     "section": "One Workflow, Three Modules",
     "text": "One Workflow, Three Modules\n\n\n\nModule 1\n\n\nTime Series Visual Analysis\nStart with the market map and the period ranking view. This establishes the source-market structure, the current leaders, and the shift from pre-COVID to recovery.\n\n\n\n\nModule 2\n\n\nTime Series Clustering\nMove into the guided clustering workspace to inspect pattern quality, representative trajectories, recovery position, and focus-market placement.\n\n\n\n\nModule 3\n\n\nForecasting\nFinish in the forecasting studio to compare model families, inspect diagnostics, and explain the winning forecast with tourism-performance context."
+  },
+  {
+    "objectID": "index.html#what-the-app-delivers",
+    "href": "index.html#what-the-app-delivers",
+    "title": "Project Home",
+    "section": "What The App Delivers",
+    "text": "What The App Delivers\n\n\nThe app is designed as one continuous decision surface rather than three isolated demos. The first module establishes market composition. The second module explains recovery behaviour. The third module turns that structure into a forecast narrative. This keeps the website, the Shiny build, and the final poster aligned to one analytical contract.\n\n\n\nWebsiteProposal, poster, prototypes, and team records\n\n\nAppOne integrated Shiny workspace with three linked modules\n\n\nSubmissionSite pages plus deployed shinyapps.io application"
   },
   {
     "objectID": "index.html#deliverables-on-this-site",
@@ -340,7 +347,7 @@
     "href": "index.html#data-contract-and-deployment",
     "title": "Project Home",
     "section": "Data Contract And Deployment",
-    "text": "Data Contract And Deployment\nThe site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in data/raw/visitor_arrivals_full_dataset.xlsx, the EDA and ranking views use processed arrivals tables under data/processed/, clustering reads the coordinated clustering artifacts under data/processed/, and forecasting layers in data/raw/tourism_update.xlsx for optional tourism-performance context.\nThe current website render points to: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/"
+    "text": "Data Contract And Deployment\nThe site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in data/raw/visitor_arrivals_full_dataset.xlsx, the EDA and ranking views use processed arrivals tables under data/processed/, clustering reads the coordinated clustering artifacts under data/processed/, and forecasting layers in data/raw/tourism_update.xlsx for optional tourism-performance context.\nThis render does not yet have SHINY_APP_URL injected, so the launch button falls back to the Shiny setup page."
   },
   {
     "objectID": "index.html#local-run",

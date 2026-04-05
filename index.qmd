@@ -18,7 +18,7 @@ shiny_launch_label <- if (nzchar(shiny_app_url)) "Launch Live Shiny App" else "O
 
 # Singapore Tourism Time-Series Visual Analytics
 
-This project studies tourism recovery as a comparative time-series problem. The site and the app work together: the website documents the analytical story, while the Shiny app lets users explore market structure, compare recovery trajectories, and run forward forecasts on a shared arrivals backbone.
+This project frames tourism recovery as a comparative time-series problem. The website carries the analytical story, while the Shiny app turns that story into an interactive workspace for market structure, recovery pattern comparison, and forward projection.
 
 ::: {.home-actions}
 [Open Shiny App](`r shiny_launch_href`){target="_blank" .btn-home-primary}
@@ -31,6 +31,10 @@ This project studies tourism recovery as a comparative time-series problem. The 
 <div><span>Shared backbone</span><strong>Country-level visitor arrivals</strong></div>
 <div><span>Deployment</span><strong>`r if (nzchar(shiny_app_url)) "shinyapps.io connected" else "render without SHINY_APP_URL"`</strong></div>
 :::
+
+::: {.home-hero-note}
+The intended reading flow is direct. Start with market structure, move into trajectory clustering, then finish with forecasting and context interpretation.
+:::
 :::
 
 ::: {.home-hero-media}
@@ -38,25 +42,28 @@ This project studies tourism recovery as a comparative time-series problem. The 
 :::
 :::
 
-## What This System Answers
+## Read The Recovery Story In One Pass
 
-::: {.home-insight-band}
-::: {.home-insight}
+::: {.home-sequence}
+::: {.home-sequence-step}
+<div class="home-step-kicker">Stage 1</div>
 ### Market Structure
 
-The visual analysis module shows how source-market concentration changes across pre-COVID, shock, and recovery periods. It helps readers understand who the leading markets are before they move into deeper modelling.
+Visual Analysis maps source-market concentration and shows how the leading countries change from the pre-COVID baseline to the recovery window.
 :::
 
-::: {.home-insight}
+::: {.home-sequence-step}
+<div class="home-step-kicker">Stage 2</div>
 ### Recovery Patterns
 
-The clustering module groups country trajectories by recovery shape. It reveals which markets recovered together, which remained delayed, and where a selected priority market sits in the wider landscape.
+Clustering groups country trajectories by recovery shape, then places one selected priority market back inside the wider pattern landscape.
 :::
 
-::: {.home-insight}
+::: {.home-sequence-step}
+<div class="home-step-kicker">Stage 3</div>
 ### Forward Projection
 
-The forecasting module compares baseline and model-based forecasts on a holdout window, then places the selected arrivals series next to hotel occupancy, stay length, and room revenue context.
+Forecasting compares model families on a holdout window, then projects the selected arrivals series forward beside hotel occupancy, stay length, and room revenue context.
 :::
 :::
 
@@ -82,6 +89,20 @@ Move into the guided clustering workspace to inspect pattern quality, representa
 ### Forecasting
 
 Finish in the forecasting studio to compare model families, inspect diagnostics, and explain the winning forecast with tourism-performance context.
+:::
+:::
+
+## What The App Delivers
+
+::: {.home-editorial-band}
+::: {.home-editorial-copy}
+The app is designed as one continuous decision surface rather than three isolated demos. The first module establishes market composition. The second module explains recovery behaviour. The third module turns that structure into a forecast narrative. This keeps the website, the Shiny build, and the final poster aligned to one analytical contract.
+:::
+
+::: {.home-editorial-proof}
+<div><span>Website</span><strong>Proposal, poster, prototypes, and team records</strong></div>
+<div><span>App</span><strong>One integrated Shiny workspace with three linked modules</strong></div>
+<div><span>Submission</span><strong>Site pages plus deployed shinyapps.io application</strong></div>
 :::
 :::
 

@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bc4169feef28fbbd7b01b8dfa4d2052d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3df65affd6afc8f3370003f7c889d758.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -232,9 +232,9 @@ Singapore Tourism Recovery | Visual Analytics Project
 </div>
 <section id="singapore-tourism-time-series-visual-analytics" class="level1">
 <h1>Singapore Tourism Time-Series Visual Analytics</h1>
-<p>This project studies tourism recovery as a comparative time-series problem. The site and the app work together: the website documents the analytical story, while the Shiny app lets users explore market structure, compare recovery trajectories, and run forward forecasts on a shared arrivals backbone.</p>
+<p>This project frames tourism recovery as a comparative time-series problem. The website carries the analytical story, while the Shiny app turns that story into an interactive workspace for market structure, recovery pattern comparison, and forward projection.</p>
 <div class="home-actions">
-<p><a href="https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/" class="btn-home-primary" target="_blank">Open Shiny App</a> <a href="./user-guide.html" class="btn-home-secondary">Read User Guide</a> <a href="./poster.html" class="btn-home-secondary">View Poster</a></p>
+<p><a href="./app-guide.html" class="btn-home-primary" target="_blank">Open Shiny App</a> <a href="./user-guide.html" class="btn-home-secondary">Read User Guide</a> <a href="./poster.html" class="btn-home-secondary">View Poster</a></p>
 </div>
 <div class="home-proof">
 <div>
@@ -244,8 +244,11 @@ Singapore Tourism Recovery | Visual Analytics Project
 <span>Shared backbone</span><strong>Country-level visitor arrivals</strong>
 </div>
 <div>
-<span>Deployment</span><strong>shinyapps.io connected</strong>
+<span>Deployment</span><strong>render without SHINY_APP_URL</strong>
 </div>
+</div>
+<div class="home-hero-note">
+<p>The intended reading flow is direct. Start with market structure, move into trajectory clustering, then finish with forecasting and context interpretation.</p>
 </div>
 </section>
 </div>
@@ -253,21 +256,36 @@ Singapore Tourism Recovery | Visual Analytics Project
 <p><img src="guide-assets/home/clustering-dashboard-hero.png" class="img-fluid"></p>
 </div>
 </div>
-<section id="what-this-system-answers" class="level2">
-<h2 class="anchored" data-anchor-id="what-this-system-answers">What This System Answers</h2>
-<div class="home-insight-band">
-<section id="market-structure" class="level3 home-insight">
+<section id="read-the-recovery-story-in-one-pass" class="level2">
+<h2 class="anchored" data-anchor-id="read-the-recovery-story-in-one-pass">Read The Recovery Story In One Pass</h2>
+<div class="home-sequence">
+<div class="home-sequence-step">
+<div class="home-step-kicker">
+Stage 1
+</div>
+<section id="market-structure" class="level3">
 <h3 class="anchored" data-anchor-id="market-structure">Market Structure</h3>
-<p>The visual analysis module shows how source-market concentration changes across pre-COVID, shock, and recovery periods. It helps readers understand who the leading markets are before they move into deeper modelling.</p>
+<p>Visual Analysis maps source-market concentration and shows how the leading countries change from the pre-COVID baseline to the recovery window.</p>
 </section>
-<section id="recovery-patterns" class="level3 home-insight">
+</div>
+<div class="home-sequence-step">
+<div class="home-step-kicker">
+Stage 2
+</div>
+<section id="recovery-patterns" class="level3">
 <h3 class="anchored" data-anchor-id="recovery-patterns">Recovery Patterns</h3>
-<p>The clustering module groups country trajectories by recovery shape. It reveals which markets recovered together, which remained delayed, and where a selected priority market sits in the wider landscape.</p>
+<p>Clustering groups country trajectories by recovery shape, then places one selected priority market back inside the wider pattern landscape.</p>
 </section>
-<section id="forward-projection" class="level3 home-insight">
+</div>
+<div class="home-sequence-step">
+<div class="home-step-kicker">
+Stage 3
+</div>
+<section id="forward-projection" class="level3">
 <h3 class="anchored" data-anchor-id="forward-projection">Forward Projection</h3>
-<p>The forecasting module compares baseline and model-based forecasts on a holdout window, then places the selected arrivals series next to hotel occupancy, stay length, and room revenue context.</p>
+<p>Forecasting compares model families on a holdout window, then projects the selected arrivals series forward beside hotel occupancy, stay length, and room revenue context.</p>
 </section>
+</div>
 </div>
 </section>
 <section id="one-workflow-three-modules" class="level2">
@@ -302,6 +320,25 @@ Module 3
 </div>
 </div>
 </section>
+<section id="what-the-app-delivers" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-app-delivers">What The App Delivers</h2>
+<div class="home-editorial-band">
+<div class="home-editorial-copy">
+<p>The app is designed as one continuous decision surface rather than three isolated demos. The first module establishes market composition. The second module explains recovery behaviour. The third module turns that structure into a forecast narrative. This keeps the website, the Shiny build, and the final poster aligned to one analytical contract.</p>
+</div>
+<div class="home-editorial-proof">
+<div>
+<span>Website</span><strong>Proposal, poster, prototypes, and team records</strong>
+</div>
+<div>
+<span>App</span><strong>One integrated Shiny workspace with three linked modules</strong>
+</div>
+<div>
+<span>Submission</span><strong>Site pages plus deployed shinyapps.io application</strong>
+</div>
+</div>
+</div>
+</section>
 <section id="deliverables-on-this-site" class="level2">
 <h2 class="anchored" data-anchor-id="deliverables-on-this-site">Deliverables On This Site</h2>
 <div class="home-deliverables">
@@ -317,7 +354,7 @@ Module 3
 <section id="data-contract-and-deployment" class="level2">
 <h2 class="anchored" data-anchor-id="data-contract-and-deployment">Data Contract And Deployment</h2>
 <p>The site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in <code>data/raw/visitor_arrivals_full_dataset.xlsx</code>, the EDA and ranking views use processed arrivals tables under <code>data/processed/</code>, clustering reads the coordinated clustering artifacts under <code>data/processed/</code>, and forecasting layers in <code>data/raw/tourism_update.xlsx</code> for optional tourism-performance context.</p>
-<p>The current website render points to: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/</p>
+<p>This render does not yet have SHINY_APP_URL injected, so the launch button falls back to the Shiny setup page.</p>
 </section>
 <section id="local-run" class="level2">
 <h2 class="anchored" data-anchor-id="local-run">Local Run</h2>
