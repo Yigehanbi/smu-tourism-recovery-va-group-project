@@ -48,6 +48,8 @@ website:
             text: First Meeting Record
           - href: Meeting Minutes/second-meeting-record.qmd
             text: Pivot Meeting Record
+          - href: Meeting Minutes/Third-Meeting-Record.qmd
+            text: Third Meeting Record
       - href: team/onboarding.qmd
         text: Team
   page-footer:

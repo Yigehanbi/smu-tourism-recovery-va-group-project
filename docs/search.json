@@ -4,21 +4,21 @@
     "href": "user-guide.html",
     "title": "User Guide",
     "section": "",
-    "text": "This guide explains how to use the final tourism analytics app as one connected workflow. The three analytical modules share the same country-arrivals backbone, so the intended reading order is simple: begin with market structure, continue into recovery-pattern comparison, and finish with forward projection."
+    "text": "This guide explains how to use the final tourism analytics app as one connected workflow. The three analytical modules share the same country-arrivals backbone, so the intended reading order is to begin with market structure, continue into recovery-pattern comparison, and finish with forward projection."
   },
   {
     "objectID": "user-guide.html#purpose",
     "href": "user-guide.html#purpose",
     "title": "User Guide",
     "section": "",
-    "text": "This guide explains how to use the final tourism analytics app as one connected workflow. The three analytical modules share the same country-arrivals backbone, so the intended reading order is simple: begin with market structure, continue into recovery-pattern comparison, and finish with forward projection."
+    "text": "This guide explains how to use the final tourism analytics app as one connected workflow. The three analytical modules share the same country-arrivals backbone, so the intended reading order is to begin with market structure, continue into recovery-pattern comparison, and finish with forward projection."
   },
   {
     "objectID": "user-guide.html#app-structure",
     "href": "user-guide.html#app-structure",
     "title": "User Guide",
     "section": "App Structure",
-    "text": "App Structure\nThe live Shiny app is organised into four top-level tabs: Time Series Visual Analysis, Time Series Clustering, Forecasting, and About. The first three tabs do the analytical work. The About tab summarises the shared data contract and the role of each module inside the integrated build."
+    "text": "App Structure\nThe live Shiny app is organised into four top-level tabs: Time Series Visual Analysis, Time Series Clustering, Forecasting, and About. The first three tabs do the analytical work. The About tab summarises the shared data contract and the role of each module inside the integrated build.\n\nUse the top navigation to move between modules. The workflow is designed to be read from left to right. Time Series Visual Analysis establishes market structure, Time Series Clustering compares recovery shapes, and Forecasting turns one selected arrivals series into a forward-looking model comparison."
   },
   {
     "objectID": "user-guide.html#shared-data-scope",
@@ -32,7 +32,7 @@
     "href": "user-guide.html#time-series-visual-analysis",
     "title": "User Guide",
     "section": "Time Series Visual Analysis",
-    "text": "Time Series Visual Analysis\nOpen the Time Series Visual Analysis tab when you want to establish market structure before moving into clustering or forecasting. The left control panel sets the ranking period, the map year inside that period, and the number of leading markets shown in the ranking view.\nThe Market Map page shows annual country totals on a choropleth map. Read the overview cards first, then use the selected-year insight panel to connect the map leader to the chosen ranking window. This page answers which markets dominate a given year and how concentrated the visible recovery landscape is.\nThe Top Markets page compares the pre-COVID and recovery leaders side by side. The ranking table and interpretation card explain how the leading source markets change between the two periods. This is the fastest way to see whether the same countries still lead in the recovery window and whether the market structure has shifted."
+    "text": "Time Series Visual Analysis\nOpen the Time Series Visual Analysis tab when you want to establish market structure before moving into clustering or forecasting. This module is the first analytical stop because it shows which source markets dominate each period and how the ranking structure changes between the pre-COVID and recovery windows.\n\n\nStep 1: Configure the market-structure view\nStart from the control panel. Ranking period determines which analytical window is active. Map year lets you move inside that chosen period. Top markets to show controls the ranking depth used in the comparison page. These three inputs should always be read together because the map and ranking story are designed to stay aligned.\n\n\nStep 2: Read the Market Map first\nThe Market Map page shows annual country totals on a choropleth map. Read the overview cards first, then use the selected-year insight panel to connect the map leader to the chosen ranking window. This page answers which markets dominate a given year, how concentrated the visible recovery landscape is, and whether the market leader in the selected year is consistent with the wider period story.\n\n\n\nStep 3: Compare the pre-COVID and recovery leaders\nThe Top Markets page compares the pre-COVID and recovery leaders side by side. The ranking charts and interpretation card explain how the leading source markets change between the two periods. Use this page when you need to show whether the same countries still lead in the recovery window, whether the top-ranked market changes across periods, and how concentrated the market structure remains after recovery."
   },
   {
     "objectID": "user-guide.html#time-series-clustering",
@@ -46,7 +46,7 @@
     "href": "user-guide.html#forecasting",
     "title": "User Guide",
     "section": "Forecasting",
-    "text": "Forecasting\nOpen the Forecasting tab when you want to project one country-level arrivals series forward and compare model families on a time-aware holdout window.\n\nConfigure the controls\nThe left control panel sets up one forecasting run. Choose the Country arrival series, the Forecast engine, the Test / forecast horizon, the Models to compare, the optional Context indicators, and the Model ranking metric. The module does not re-run automatically. Click Run Forecasting after you change any of those settings.\n\n\nWhat needs a rerun\nThe following controls affect the forecast results and therefore require a fresh click on Run Forecasting:\n\nCountry arrival series\nForecast engine\nTest / forecast horizon\nModels to compare\nModel ranking metric\n\n\n\nForecast tab\nThe Forecast tab is the main results page. Holdout comparison shows how the selected models perform on unseen months. Forward forecast displays the future projection from the best model under the chosen ranking metric from the most recent run. Accuracy summary translates the score table into readable model comparisons. Series summary confirms the date coverage, observation count, and current model scope.\n\n\nModel Studio tab\nThe Model Studio tab explains why one model wins. Model leaderboard ranks the models under RMSE, MAE, or MAPE. Holdout residual comparison shows where forecast errors remain on the holdout window. Engine status reports which engine was requested, which one actually executed, and which packages are missing when the strict Require modeltime path cannot run. Model interpretation turns the ranking result into a plain-language explanation.\n\n\nDiagnostics tab\nThe Diagnostics tab focuses on the time-series structure. Raw time series shows the full historical path. Seasonal pattern reveals month-level recurrence across years. Decomposition separates the series into trend, seasonal, and remainder components. Split summary confirms the training and testing window used in the latest run.\n\n\nContext tab\nThe Context tab places the arrivals series next to hotel occupancy, average length of stay, and room revenue. These context indicators are normalized for comparison, so the chart should be read as a relationship view rather than a direct scale comparison."
+    "text": "Forecasting\nOpen the Forecasting tab when you want to project one country-level arrivals series forward and compare model families on a time-aware holdout window.\n\n\nStep 1: Configure the forecasting run\nThe left control panel sets up one forecasting run. Choose the Country arrival series, the Forecast engine, the Test / forecast horizon, the Models to compare, the optional Context indicators, and the Model ranking metric. The module does not re-run automatically. Click Run Forecasting after you change any of those settings.\n\n\nStep 2: Know what requires a rerun\nThe following controls affect the forecast results and therefore require a fresh click on Run Forecasting:\n\nCountry arrival series\nForecast engine\nTest / forecast horizon\nModels to compare\nModel ranking metric\n\n\n\nStep 3: Read the Forecast tab first\n\nThe Forecast tab is the main results page. Holdout comparison shows how the selected models perform on unseen months. Forward forecast displays the future projection from the best model under the chosen ranking metric from the most recent run. Accuracy summary translates the score table into readable model comparisons. Series summary confirms the date coverage, observation count, and current model scope.\n\n\nStep 4: Use Model Studio to explain why one model wins\n\nThe Model Studio tab explains why one model wins. Model leaderboard ranks the models under RMSE, MAE, or MAPE. Holdout residual comparison shows where forecast errors remain on the holdout window. Engine status reports which engine was requested, which one actually executed, and which packages are missing when the strict Require modeltime path cannot run. Model interpretation turns the ranking result into a plain-language explanation. This page is the fastest way to explain why the selected best model is defensible.\n\n\nStep 5: Use Diagnostics for structure checking\n\nThe Diagnostics tab focuses on time-series structure. Raw time series shows the full historical path. Seasonal pattern reveals month-level recurrence across years. Decomposition separates the series into trend, seasonal, and remainder components. Split summary confirms the training and testing window used in the latest run.\n\n\nStep 6: Use Context for business interpretation\n\nThe Context tab places the arrivals series next to hotel occupancy, average length of stay, and room revenue. These context indicators are normalized for comparison, so the chart should be read as a relationship view rather than a direct scale comparison."
   },
   {
     "objectID": "user-guide.html#recommended-reading-order",
@@ -305,56 +305,56 @@
     "href": "index.html",
     "title": "Project Home",
     "section": "",
-    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis project studies tourism recovery as a comparative time-series problem. The website presents the analytical story, the merged user guide explains the full workflow across all three modules, and the deployed Shiny app turns that structure into an interactive workspace for market structure, recovery pattern comparison, and forward projection.\n\nOpen Live Shiny App Read Merged User Guide View Poster\n\n\n\nLive modulesVisual Analysis, Clustering, Forecasting\n\n\nShared backboneCountry-level visitor arrivals\n\n\nDeploymentshinyapps.io linked from this homepage\n\n\n\nStart with market structure, continue into recovery clustering, and finish with forecasting. The merged user guide follows that same order and the homepage button opens the deployed app directly."
+    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis project studies tourism recovery as a comparative time-series problem. The website presents the analytical story, the merged user guide explains the full workflow across all three modules, and the deployed Shiny app turns that structure into an interactive workspace for market structure, recovery pattern comparison, and forward projection.\n\nOpen Live Shiny App Read Merged User Guide View Poster\n\n\n\nLive modulesVisual Analysis, Clustering, Forecasting\n\n\nShared backboneCountry-level visitor arrivals\n\n\nDeploymentshinyapps.io linked from this homepage\n\n\n\nStart with market structure, continue into recovery clustering, and finish with forecasting. The merged user guide follows that same order and the homepage button opens the deployed app directly.\n\n\n\n\n\n\n\n\n\n\n\n\nStage 1\n\n\n\nVisual Analysis maps source-market concentration and shows how the leading countries change from the pre-COVID baseline to the recovery window.\n\n\n\n\nStage 2\n\n\n\nClustering groups country trajectories by recovery shape, then places one selected priority market back inside the wider pattern landscape.\n\n\n\n\nStage 3\n\n\n\nForecasting compares model families on a holdout window, then projects the selected arrivals series forward beside hotel occupancy, stay length, and room revenue context.\n\n\n\n\n\n\n\n\n\nModule 1\n\n\n\nStart with the market map and the period ranking view. This establishes the source-market structure, the current leaders, and the shift from pre-COVID to recovery.\n\n\n\n\nModule 2\n\n\n\nMove into the guided clustering workspace to inspect pattern quality, representative trajectories, recovery position, and focus-market placement.\n\n\n\n\nModule 3\n\n\n\nFinish in the forecasting studio to compare model families, inspect diagnostics, and explain the winning forecast with tourism-performance context.\n\n\n\n\n\n\n\n\nThe app is designed as one continuous decision surface rather than three isolated demos. The first module establishes market composition. The second module explains recovery behaviour. The third module turns that structure into a forecast narrative. This keeps the website, the Shiny build, and the final poster aligned to one analytical contract.\n\n\n\nWebsiteProposal, poster, prototypes, and team records\n\n\nAppOne integrated Shiny workspace with three linked modules\n\n\nSubmissionSite pages plus deployed shinyapps.io application\n\n\n\n\n\n\n\n Proposal Project framing, scope, and analytical direction   Shiny App Launch page, deployment target, and embedded preview   User Guide Merged walkthrough across visual analysis, clustering, and forecasting   Poster Final project poster in website form   Storyboard UI story and prototype flow across the app   Meeting Minutes Decision trail, task ownership, and pivot history \n\n\n\n\n\nEDA prototype CDA prototype Clustering prototype Forecasting prototype First meeting record Pivot meeting record\n\n\n\n\nThe site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in data/raw/visitor_arrivals_full_dataset.xlsx, the EDA and ranking views use processed arrivals tables under data/processed/, clustering reads the coordinated clustering artifacts under data/processed/, and forecasting layers in data/raw/tourism_update.xlsx for optional tourism-performance context.\nThe homepage and the Shiny App page both point directly to the deployed application at https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/.\n\n\n\nquarto preview\nRscript run_app.R 3838"
   },
   {
     "objectID": "index.html#read-the-recovery-story-in-one-pass",
     "href": "index.html#read-the-recovery-story-in-one-pass",
     "title": "Project Home",
-    "section": "Read The Recovery Story In One Pass",
-    "text": "Read The Recovery Story In One Pass\n\n\n\nStage 1\n\n\nMarket Structure\nVisual Analysis maps source-market concentration and shows how the leading countries change from the pre-COVID baseline to the recovery window.\n\n\n\n\nStage 2\n\n\nRecovery Patterns\nClustering groups country trajectories by recovery shape, then places one selected priority market back inside the wider pattern landscape.\n\n\n\n\nStage 3\n\n\nForward Projection\nForecasting compares model families on a holdout window, then projects the selected arrivals series forward beside hotel occupancy, stay length, and room revenue context."
+    "section": "",
+    "text": "Stage 1\n\n\n\nVisual Analysis maps source-market concentration and shows how the leading countries change from the pre-COVID baseline to the recovery window.\n\n\n\n\nStage 2\n\n\n\nClustering groups country trajectories by recovery shape, then places one selected priority market back inside the wider pattern landscape.\n\n\n\n\nStage 3\n\n\n\nForecasting compares model families on a holdout window, then projects the selected arrivals series forward beside hotel occupancy, stay length, and room revenue context."
   },
   {
     "objectID": "index.html#one-workflow-three-modules",
     "href": "index.html#one-workflow-three-modules",
     "title": "Project Home",
-    "section": "One Workflow, Three Modules",
-    "text": "One Workflow, Three Modules\n\n\n\nModule 1\n\n\nTime Series Visual Analysis\nStart with the market map and the period ranking view. This establishes the source-market structure, the current leaders, and the shift from pre-COVID to recovery.\n\n\n\n\nModule 2\n\n\nTime Series Clustering\nMove into the guided clustering workspace to inspect pattern quality, representative trajectories, recovery position, and focus-market placement.\n\n\n\n\nModule 3\n\n\nForecasting\nFinish in the forecasting studio to compare model families, inspect diagnostics, and explain the winning forecast with tourism-performance context."
+    "section": "",
+    "text": "Module 1\n\n\n\nStart with the market map and the period ranking view. This establishes the source-market structure, the current leaders, and the shift from pre-COVID to recovery.\n\n\n\n\nModule 2\n\n\n\nMove into the guided clustering workspace to inspect pattern quality, representative trajectories, recovery position, and focus-market placement.\n\n\n\n\nModule 3\n\n\n\nFinish in the forecasting studio to compare model families, inspect diagnostics, and explain the winning forecast with tourism-performance context."
   },
   {
     "objectID": "index.html#what-the-app-delivers",
     "href": "index.html#what-the-app-delivers",
     "title": "Project Home",
-    "section": "What The App Delivers",
-    "text": "What The App Delivers\n\n\nThe app is designed as one continuous decision surface rather than three isolated demos. The first module establishes market composition. The second module explains recovery behaviour. The third module turns that structure into a forecast narrative. This keeps the website, the Shiny build, and the final poster aligned to one analytical contract.\n\n\n\nWebsiteProposal, poster, prototypes, and team records\n\n\nAppOne integrated Shiny workspace with three linked modules\n\n\nSubmissionSite pages plus deployed shinyapps.io application"
+    "section": "",
+    "text": "The app is designed as one continuous decision surface rather than three isolated demos. The first module establishes market composition. The second module explains recovery behaviour. The third module turns that structure into a forecast narrative. This keeps the website, the Shiny build, and the final poster aligned to one analytical contract.\n\n\n\nWebsiteProposal, poster, prototypes, and team records\n\n\nAppOne integrated Shiny workspace with three linked modules\n\n\nSubmissionSite pages plus deployed shinyapps.io application"
   },
   {
     "objectID": "index.html#deliverables-on-this-site",
     "href": "index.html#deliverables-on-this-site",
     "title": "Project Home",
-    "section": "Deliverables On This Site",
-    "text": "Deliverables On This Site\n\n Proposal Project framing, scope, and analytical direction   Shiny App Launch page, deployment target, and embedded preview   User Guide Merged walkthrough across visual analysis, clustering, and forecasting   Poster Final project poster in website form   Storyboard UI story and prototype flow across the app   Meeting Minutes Decision trail, task ownership, and pivot history"
+    "section": "",
+    "text": "Proposal Project framing, scope, and analytical direction   Shiny App Launch page, deployment target, and embedded preview   User Guide Merged walkthrough across visual analysis, clustering, and forecasting   Poster Final project poster in website form   Storyboard UI story and prototype flow across the app   Meeting Minutes Decision trail, task ownership, and pivot history"
   },
   {
     "objectID": "index.html#analysis-pages-and-prototypes",
     "href": "index.html#analysis-pages-and-prototypes",
     "title": "Project Home",
-    "section": "Analysis Pages And Prototypes",
-    "text": "Analysis Pages And Prototypes\n\nEDA prototype CDA prototype Clustering prototype Forecasting prototype First meeting record Pivot meeting record"
+    "section": "",
+    "text": "EDA prototype CDA prototype Clustering prototype Forecasting prototype First meeting record Pivot meeting record"
   },
   {
     "objectID": "index.html#data-contract-and-deployment",
     "href": "index.html#data-contract-and-deployment",
     "title": "Project Home",
-    "section": "Data Contract And Deployment",
-    "text": "Data Contract And Deployment\nThe site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in data/raw/visitor_arrivals_full_dataset.xlsx, the EDA and ranking views use processed arrivals tables under data/processed/, clustering reads the coordinated clustering artifacts under data/processed/, and forecasting layers in data/raw/tourism_update.xlsx for optional tourism-performance context.\nThe homepage and the Shiny App page both point directly to the deployed application at https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/."
+    "section": "",
+    "text": "The site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in data/raw/visitor_arrivals_full_dataset.xlsx, the EDA and ranking views use processed arrivals tables under data/processed/, clustering reads the coordinated clustering artifacts under data/processed/, and forecasting layers in data/raw/tourism_update.xlsx for optional tourism-performance context.\nThe homepage and the Shiny App page both point directly to the deployed application at https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/."
   },
   {
     "objectID": "index.html#local-run",
     "href": "index.html#local-run",
     "title": "Project Home",
-    "section": "Local Run",
-    "text": "Local Run\nquarto preview\nRscript run_app.R 3838"
+    "section": "",
+    "text": "quarto preview\nRscript run_app.R 3838"
   },
   {
     "objectID": "Proposal/Proposal.html",
@@ -455,53 +455,88 @@
     "text": "Meeting Notes\n\nDecided on Research / Analysis Topic Related To Singapore Tourism. Selected Dataset related to Singapore Tourism Recovery from (CEIC)[(https://insights-ceicdata-com.libproxy.smu.edu.sg/)]\nDistribution of early work across exploratory analysis, modelling, and clustering.\n\n\nACTION ITEMS (Owner and deadline)\n\nExploratory analysis - Xi Zixun (Sunday, 15 March 2026)\nInitial modelling prototype - Jin Qinhao (Sunday, 15 March 2026)\nCluster analysis - Wang Zhuoran (Sunday, 15 March 2026)"
   },
   {
+    "objectID": "Meeting Minutes/Third-Meeting-Record.html",
+    "href": "Meeting Minutes/Third-Meeting-Record.html",
+    "title": "Third Meeting Record",
+    "section": "",
+    "text": "Date / Time: 31 March 2026 (4pm - 4.30pm)\nLocation: Zoom Meeting\nAttendees: Xi Zixun, Wang Zhuoran, Jin Qinhao"
+  },
+  {
+    "objectID": "Meeting Minutes/Third-Meeting-Record.html#meeting-description",
+    "href": "Meeting Minutes/Third-Meeting-Record.html#meeting-description",
+    "title": "Third Meeting Record",
+    "section": "",
+    "text": "Date / Time: 31 March 2026 (4pm - 4.30pm)\nLocation: Zoom Meeting\nAttendees: Xi Zixun, Wang Zhuoran, Jin Qinhao"
+  },
+  {
+    "objectID": "Meeting Minutes/Third-Meeting-Record.html#purpose",
+    "href": "Meeting Minutes/Third-Meeting-Record.html#purpose",
+    "title": "Third Meeting Record",
+    "section": "Purpose",
+    "text": "Purpose\nReview for Shiny App modules and poster discussion."
+  },
+  {
+    "objectID": "Meeting Minutes/Third-Meeting-Record.html#meeting-notes",
+    "href": "Meeting Minutes/Third-Meeting-Record.html#meeting-notes",
+    "title": "Third Meeting Record",
+    "section": "Meeting Notes",
+    "text": "Meeting Notes\n\nReviewed the Shiny app modules, their design direction, and the requirements for the final submission.\nDiscussed the final poster arrangement and what still needed to be finished before submission."
+  },
+  {
+    "objectID": "Meeting Minutes/Third-Meeting-Record.html#action-item---owner-deadline",
+    "href": "Meeting Minutes/Third-Meeting-Record.html#action-item---owner-deadline",
+    "title": "Third Meeting Record",
+    "section": "Action Item - Owner & Deadline",
+    "text": "Action Item - Owner & Deadline\n\nXi Zixun (1 April 2026): Complete the user guide section for the Shiny app visual analysis module.\nWang Zhuoran (1 April 2026): Finalise the poster design and complete the user guide section for time series clustering.\nJin Qinhao (1 April 2026): Complete the user guide section for the forecasting module."
+  },
+  {
+    "objectID": "Meeting Minutes/Third-Meeting-Record.html#expected-deliverables",
+    "href": "Meeting Minutes/Third-Meeting-Record.html#expected-deliverables",
+    "title": "Third Meeting Record",
+    "section": "Expected Deliverables",
+    "text": "Expected Deliverables\n\nFinalised poster design.\nCompleted user guide."
+  },
+  {
     "objectID": "Meeting Minutes/second-meeting-record.html",
     "href": "Meeting Minutes/second-meeting-record.html",
     "title": "Second Meeting Record",
     "section": "",
-    "text": "Date / Time: 29 March 2026 (evening)\nLocation: Online discussion after instructor feedback\nAttendees: Xi Zixun, Wang Zhuoran, Jin Qinhao"
+    "text": "Date / Time: 27 March 2026 (2.30pm - 3pm)\nLocation: Zoom Meeting\nAttendees: Xi Zixun, Wang Zhuoran, Jin Qinhao"
   },
   {
     "objectID": "Meeting Minutes/second-meeting-record.html#meeting-description",
     "href": "Meeting Minutes/second-meeting-record.html#meeting-description",
     "title": "Second Meeting Record",
     "section": "",
-    "text": "Date / Time: 29 March 2026 (evening)\nLocation: Online discussion after instructor feedback\nAttendees: Xi Zixun, Wang Zhuoran, Jin Qinhao"
+    "text": "Date / Time: 27 March 2026 (2.30pm - 3pm)\nLocation: Zoom Meeting\nAttendees: Xi Zixun, Wang Zhuoran, Jin Qinhao"
   },
   {
     "objectID": "Meeting Minutes/second-meeting-record.html#purpose",
     "href": "Meeting Minutes/second-meeting-record.html#purpose",
     "title": "Second Meeting Record",
     "section": "Purpose",
-    "text": "Purpose\nThis meeting recorded the team decision to pivot from the earlier mixed recovery direction into one shared tourism time-series workflow for the final project."
+    "text": "Purpose\nThis meeting purpose is to discuss with Prof KAM Tin Seong regard the first version of proposal’s feedback and Question"
   },
   {
-    "objectID": "Meeting Minutes/second-meeting-record.html#key-decisions",
-    "href": "Meeting Minutes/second-meeting-record.html#key-decisions",
+    "objectID": "Meeting Minutes/second-meeting-record.html#meeting-notes",
+    "href": "Meeting Minutes/second-meeting-record.html#meeting-notes",
     "title": "Second Meeting Record",
-    "section": "Key Decisions",
-    "text": "Key Decisions\n\nUse data/raw/visitor_arrivals_full_dataset.xlsx as the shared arrivals backbone.\nKeep data/raw/tourism_update.xlsx only as supporting tourism context for EDA, CDA, and forecasting interpretation.\nReframe the final app around three modules:\n\nTime Series Visual Analysis\nTime Series Clustering\nForecasting\n\nTreat country-level monthly arrivals as the common analytical target across modules.\nRemove the older standalone modelling materials so the final project only exposes the three shared time-series modules."
+    "section": "Meeting Notes",
+    "text": "Meeting Notes\n\nSuggested on Improvement of data sets from a Single Country -&gt; Multiple Country for Time Series Data Analysis\nQuestioned about EDA, Cluster and other models’ direction\nReframe the final modules to:\n\nTime Series Visual Analytics\nTime Series Clustering\nForecasting Model"
   },
   {
-    "objectID": "Meeting Minutes/second-meeting-record.html#work-split-after-pivot",
-    "href": "Meeting Minutes/second-meeting-record.html#work-split-after-pivot",
+    "objectID": "Meeting Minutes/second-meeting-record.html#action-item---owner-deadline",
+    "href": "Meeting Minutes/second-meeting-record.html#action-item---owner-deadline",
     "title": "Second Meeting Record",
-    "section": "Work Split After Pivot",
-    "text": "Work Split After Pivot\n\nXi Zixun: visual analysis rewrite, proposal intro/data/research questions, shared arrivals framing.\nWang Zhuoran: clustering prototype, clustering Shiny module, storyboard, app shell integration.\nJin Qinhao: forecasting prototype, forecasting Shiny module, user guide, package audit, smoke test updates.\nShared integration work: navigation cleanup, deployment path, meeting records, and final QA."
-  },
-  {
-    "objectID": "Meeting Minutes/second-meeting-record.html#action-items",
-    "href": "Meeting Minutes/second-meeting-record.html#action-items",
-    "title": "Second Meeting Record",
-    "section": "Action Items",
-    "text": "Action Items\n\nBuild processed country-arrivals backbone files from the new full workbook.\nAlign website navigation with the final three-module structure.\nUpdate proposal, storyboard, and user guide so they describe the same app contract.\nDeploy the static website separately from the Shiny app."
+    "section": "Action Item - Owner & Deadline",
+    "text": "Action Item - Owner & Deadline\n\nXi Zixun (30 March 2026 Deadline): EDA Update, proposal intro/data/research questions, shared arrivals framing, EDA ShinyApp Module.\nWang Zhuoran (30 March 2026 Deadline): Clustering Prototype, Clustering ShinyApp module, storyboard, app shell integration.\nJin Qinhao (30 March 2026 Deadline): Dataset update, Forecasting Prototype, Forecasting ShinyApp module, user guide, package audit, smoke test updates.\nShared integration work: navigation cleanup, deployment path, meeting records, and final QA."
   },
   {
     "objectID": "Meeting Minutes/second-meeting-record.html#expected-deliverables",
     "href": "Meeting Minutes/second-meeting-record.html#expected-deliverables",
     "title": "Second Meeting Record",
     "section": "Expected Deliverables",
-    "text": "Expected Deliverables\n\nOne Quarto website with proposal, prototypes, user guide, and meeting records.\nOne Shiny app with visual analysis, clustering, and forecasting modules.\nShared scripts that can regenerate the processed arrivals backbone when the raw workbook changes."
+    "text": "Expected Deliverables\n\nUpdated Quarto Website for Proposal, Prototype, User Guide.\nShiny App Module Compilation of Time Series Visual Analytics(EDA), Time Series Clustering, Forecasting Model.\nAn Updated Version of Share Processed Dataset ."
   },
   {
     "objectID": "app-guide.html",

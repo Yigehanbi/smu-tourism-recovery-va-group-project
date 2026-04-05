@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Package Audit (CRAN Support) – Singapore Tourism Recovery VA Prototype</title>
+<title>Third Meeting Record – Singapore Tourism Recovery VA Prototype</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -180,9 +180,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
-  <li><a href="#required-package-set" id="toc-required-package-set" class="nav-link" data-scroll-target="#required-package-set">Required Package Set</a></li>
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#meeting-description" id="toc-meeting-description" class="nav-link active" data-scroll-target="#meeting-description">Meeting Description</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose">Purpose</a></li>
+  <li><a href="#meeting-notes" id="toc-meeting-notes" class="nav-link" data-scroll-target="#meeting-notes">Meeting Notes</a></li>
+  <li><a href="#action-item---owner-deadline" id="toc-action-item---owner-deadline" class="nav-link" data-scroll-target="#action-item---owner-deadline">Action Item - Owner &amp; Deadline</a></li>
+  <li><a href="#expected-deliverables" id="toc-expected-deliverables" class="nav-link" data-scroll-target="#expected-deliverables">Expected Deliverables</a></li>
   </ul>
 </nav>
     </div>
@@ -191,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Package Audit (CRAN Support)</h1>
+<h1 class="title">Third Meeting Record</h1>
 </div>
 
 
@@ -208,163 +210,36 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="meeting-description" class="level2">
+<h2 class="anchored" data-anchor-id="meeting-description">Meeting Description</h2>
+<p>Date / Time: 31 March 2026 (4pm - 4.30pm)</p>
+<p>Location: Zoom Meeting</p>
+<p>Attendees: Xi Zixun, Wang Zhuoran, Jin Qinhao</p>
+</section>
 <section id="purpose" class="level2">
 <h2 class="anchored" data-anchor-id="purpose">Purpose</h2>
-<p>This page verifies that required packages for the prototype are available on CRAN and ready for project use.</p>
-<p>Audit script:</p>
-<p><code>scripts/check_cran_support.R</code></p>
+<p>Review for Shiny App modules and poster discussion.</p>
 </section>
-<section id="required-package-set" class="level2">
-<h2 class="anchored" data-anchor-id="required-package-set">Required Package Set</h2>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 14%">
-<col style="width: 52%">
-<col style="width: 13%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">package</th>
-<th style="text-align: left;">purpose</th>
-<th style="text-align: left;">installed</th>
-<th style="text-align: left;">cran_available</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">shiny</td>
-<td style="text-align: left;">App runtime</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">bslib</td>
-<td style="text-align: left;">App theming</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">readxl</td>
-<td style="text-align: left;">Excel ingestion</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">dplyr</td>
-<td style="text-align: left;">Data wrangling</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">tidyr</td>
-<td style="text-align: left;">Data reshaping</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">purrr</td>
-<td style="text-align: left;">Iteration helpers</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">lubridate</td>
-<td style="text-align: left;">Date handling</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ggplot2</td>
-<td style="text-align: left;">Charting</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">plotly</td>
-<td style="text-align: left;">Interactive charting</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">DT</td>
-<td style="text-align: left;">Interactive table</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">cluster</td>
-<td style="text-align: left;">Clustering metrics</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">forecast</td>
-<td style="text-align: left;">Baseline forecasting models</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">parsnip</td>
-<td style="text-align: left;">Forecast model specification layer</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">rsample</td>
-<td style="text-align: left;">Time-aware train/test split</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">tidymodels</td>
-<td style="text-align: left;">Forecasting workflow framework</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">timetk</td>
-<td style="text-align: left;">Time-series visualisation helpers</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">modeltime</td>
-<td style="text-align: left;">Modeltime forecasting pipeline</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">tsibble</td>
-<td style="text-align: left;">Time-indexed tibble support</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">feasts</td>
-<td style="text-align: left;">Decomposition and seasonal diagnostics</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">yardstick</td>
-<td style="text-align: left;">Forecast accuracy metrics</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">TRUE</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="interpretation" class="level2">
-<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<section id="meeting-notes" class="level2">
+<h2 class="anchored" data-anchor-id="meeting-notes">Meeting Notes</h2>
 <ol type="1">
-<li>Packages marked <code>cran_available = TRUE</code> are available from CRAN.</li>
-<li>Packages marked <code>installed = TRUE</code> are already ready on this machine.</li>
-<li>Packages not yet installed can be added via <code>install.packages()</code>.</li>
+<li>Reviewed the Shiny app modules, their design direction, and the requirements for the final submission.</li>
+<li>Discussed the final poster arrangement and what still needed to be finished before submission.</li>
+</ol>
+</section>
+<section id="action-item---owner-deadline" class="level2">
+<h2 class="anchored" data-anchor-id="action-item---owner-deadline">Action Item - Owner &amp; Deadline</h2>
+<ol type="1">
+<li>Xi Zixun (1 April 2026): Complete the user guide section for the Shiny app visual analysis module.</li>
+<li>Wang Zhuoran (1 April 2026): Finalise the poster design and complete the user guide section for time series clustering.</li>
+<li>Jin Qinhao (1 April 2026): Complete the user guide section for the forecasting module.</li>
+</ol>
+</section>
+<section id="expected-deliverables" class="level2">
+<h2 class="anchored" data-anchor-id="expected-deliverables">Expected Deliverables</h2>
+<ol type="1">
+<li>Finalised poster design.</li>
+<li>Completed user guide.</li>
 </ol>
 
 
