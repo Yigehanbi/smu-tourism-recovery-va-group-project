@@ -2,139 +2,38 @@
 title: "UI Design"
 ---
 
-## App Flow
+## Design Scope
 
-```{mermaid}
-flowchart LR
-    A["Open the app"] --> B["Choose a module"]
-    B --> C["Configure inputs"]
-    C --> D["Render outputs"]
-    D --> E["Interpret results"]
-    E --> F["Download or compare"]
+This page records the interface direction for the final application. Each module is shown as a working screen rather than a process diagram, so the emphasis stays on layout, visual hierarchy, and the relationship between controls and outputs.
 
-    B --> M1["Time Series Visual Analysis"]
-    B --> M2["Time Series Clustering"]
-    B --> M3["Forecasting"]
-```
+## EDA and CDA Design Reference
 
-## UI Design Sketch
+![](../guide-assets/eda-cda-ui-design.png){.img-fluid .guide-figure}
 
-The sketch below is the additional reference view for the model-centric interface layout.
+The first EDA reference shows the `Market Map` tab. The Visual Analysis design uses a narrow control rail on the left and a two-layer analytical surface on the right. The first layer contains an overview card and an insight card, which gives the user a fast reading of the selected period before moving into the main map or ranking view. The second layer allocates most of the width to the geospatial panel, because this module is about source-market structure and leadership patterns across periods.
 
-![](../guide-assets/ui-design-sketch.png){.img-fluid .guide-figure}
+![](../guide-assets/eda-cda-top-market-ui-design.png){.img-fluid .guide-figure}
 
-## Module 1: Time Series Visual Analysis
+The second EDA reference shows the `Top Market` tab. This view uses the same controls, but shifts the analytical emphasis from spatial coverage to ranked market comparison. Two bar-chart panels compare the pre-COVID and recovery periods side by side, and the ranking table below turns that comparison into a reporting surface with rank, country, volume, and share. The tab split keeps the module readable at a glance, because the user can move between a spatial market overview and a structured period-to-period ranking view without changing the control logic.
 
-```{mermaid}
-flowchart LR
-    A["Select a tourism series"] --> B["Choose the lookback window"]
-    B --> C["Toggle monthly points"]
-    C --> D["Render the comparison chart"]
-    D --> E["Inspect the metadata table"]
-```
+## Clustering Workspace Design
 
-### UI Layout
+![](../guide-assets/clustering-ui-design-sketch.svg){.img-fluid .guide-figure}
 
-::: {.storyboard-box}
-**Left Panel**
+The clustering workspace is designed as the densest analytical surface in the app, so the sketch gives the right side to a tabbed results area and keeps the left side for all parameter choices. The control rail holds the country set, focus market, time window, normalization mode, and cluster count in one vertical sequence, which matches the order in which the user prepares a clustering run.
 
-1. Country or mode selector
-2. Lookback-year selector
-3. Show-points toggle
-4. Module guidance text
-:::
+The results area begins with a dashboard strip for cluster quality and a short insight summary. Below that, the screen is divided into a pattern atlas, a compact cluster profile, a recovery position map, and a silhouette diagnostic. This arrangement makes the main reasoning path explicit. The user first checks whether the clustering is stable, then reads the representative trajectories, then verifies where the focus market sits in the wider recovery landscape.
 
-::: {.storyboard-box}
-**Right Panel**
+The tab row across the top reflects the final module structure in the live app. `Dashboard` anchors the first reading. `Pattern Explorer` supports deeper trajectory inspection. `Recovery Map` and `Focus Market` isolate the comparative placement task. `Membership`, `Cluster Summary`, and `Series Metrics` are treated as reporting and export views.
 
-1. Time-series view
-2. Metadata table
-3. Read-this-first guidance card
-:::
+## Forecasting Studio Design
 
-## Module 2: Time Series Clustering
+![](../guide-assets/forecasting/forecast-tab-overview.png){.img-fluid .guide-figure}
 
-```{mermaid}
-flowchart LR
-    A["Select a set of country series"] --> B["Pick a focus market"]
-    B --> C["Set the year window and normalization"]
-    C --> D["Choose k and run clustering"]
-    D --> E["Read the dashboard"]
-    E --> F["Inspect pattern explorer"]
-    F --> G["Check focus market placement"]
-    G --> H["Download assignments"]
-```
+The forecasting module keeps the same left-control and right-workspace principle, but the output area is organized around model evaluation instead of clustering comparison. The primary chart compares holdout behaviour and forward projection, while the supporting views break the interpretation into model diagnostics, decomposition, and tourism-performance context.
 
-### UI Layout
+The design objective is analytical continuity across modules. Visual Analysis establishes structure. Clustering explains grouped recovery behaviour. Forecasting then projects one selected series forward using the same country-level backbone. The interface language therefore stays stable from one module to the next even though the analytical task changes.
 
-::: {.storyboard-box}
-**Left Panel**
+## Shared Design Logic
 
-1. Series family selector
-2. Country multi-select
-3. Focus market selector
-4. Time window selector
-5. Normalization mode
-6. Cluster count slider
-7. Run clustering button
-8. Reading guide describing how to navigate the module
-:::
-
-::: {.storyboard-box}
-**Right Panel**
-
-1. `Dashboard` tab: quality strip, insight card, pattern atlas, cluster profile, recovery position map, silhouette scan, focus comparison, and priority-market placement
-2. `Pattern Explorer` tab: representative pattern plot plus pattern summary chips
-3. `Focus Market in Context` tab: focused recovery position map, cluster explorer, and placement narrative
-4. `Assignments` tab: membership table, assignment download, cluster summary, and series metrics
-:::
-
-## Module 3: Forecasting
-
-```{mermaid}
-flowchart LR
-    A["Select a target series"] --> B["Set the forecast horizon"]
-    B --> C["Choose the model set"]
-    C --> D["Run forecasting"]
-    D --> E["Review the forecast plot and accuracy table"]
-    D --> F["Inspect tourism context, seasonality, and decomposition"]
-```
-
-### UI Layout
-
-::: {.storyboard-box}
-**Left Panel**
-
-1. Target series selector
-2. Forecast horizon slider
-3. Model selection checklist
-4. Run forecast button
-:::
-
-::: {.storyboard-box}
-**Right Panel**
-
-1. `Forecast Plot` tab: holdout comparison, accuracy table, split summary
-2. `Tourism Performance Context` tab: arrivals versus hotel/stay indicators
-3. `Trend and Seasonal` tab: raw series and seasonal pattern
-4. `Decomposition` tab: trend, seasonal, remainder view
-5. `Forecast Notes` tab: interpretation guide
-:::
-
-## UI Component Mapping
-
-| UI Need | Shiny Component | Reason |
-|---|---|---|
-| Multi-series comparison | `selectInput` / `pickerInput` | flexible series selection |
-| Time window control | `dateRangeInput` | clear start and end selection |
-| Raw vs indexed vs share view | `radioButtons` | mutually exclusive display modes |
-| Clustering parameter tuning | `sliderInput` | fast constrained control |
-| Model execution | `actionButton` | avoid unnecessary reruns |
-| Output tables | `DT::datatable` | sortable and filterable |
-
-## Usability Notes
-
-1. Keep the module order aligned with the final website: visual analysis, clustering, forecasting.
-2. Keep the labels domain-driven and consistent across Proposal, storyboard, and app.
-3. Use the same country names, date windows, and color semantics in all modules.
-4. Make the interaction flow simple enough that users can move from exploration to comparison to forecasting without losing context.
+The three modules use the same visual grammar. Controls stay on the left. Interpretation begins with summary content near the top of the working area. Large visual panels occupy the central reading space. Tables and export views are pushed to secondary tabs or lower-priority regions. This consistency helps the app feel like one integrated analytical product instead of three unrelated screens.
