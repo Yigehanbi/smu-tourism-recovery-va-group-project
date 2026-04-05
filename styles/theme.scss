@@ -15,9 +15,17 @@ $headings-color: #0f3d3e;
 
 body {
   background:
-    radial-gradient(circle at 10% 10%, #dfece6 0%, rgba(223, 236, 230, 0) 40%),
-    radial-gradient(circle at 90% 0%, #f7dccb 0%, rgba(247, 220, 203, 0) 35%),
+    radial-gradient(circle at 10% 10%, #dfece6 0%, rgba(223, 236, 230, 0) 36%),
+    radial-gradient(circle at 95% 0%, #f7dccb 0%, rgba(247, 220, 203, 0) 28%),
     #f4f2eb;
+}
+
+.page-home #title-block-header {
+  display: none;
+}
+
+.navbar {
+  box-shadow: 0 10px 30px rgba(16, 36, 40, 0.12);
 }
 
 .hero-panel {
@@ -33,6 +41,23 @@ body {
 .hero-panel h2,
 .hero-panel h3 {
   color: #fff;
+}
+
+.tagline {
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  color: #d3f0ef;
+}
+
+.quick-links a {
+  display: inline-block;
+  margin: 0.2rem 0.5rem 0.2rem 0;
+  padding: 0.45rem 0.75rem;
+  background: #ffffff;
+  border: 1px solid #c9d8d8;
+  border-radius: 999px;
+  text-decoration: none;
 }
 
 .grid-cards {
@@ -54,23 +79,6 @@ body {
   margin-top: 0.2rem;
 }
 
-.tagline {
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  font-size: 0.82rem;
-  color: #d3f0ef;
-}
-
-.quick-links a {
-  display: inline-block;
-  margin: 0.2rem 0.5rem 0.2rem 0;
-  padding: 0.45rem 0.75rem;
-  background: #ffffff;
-  border: 1px solid #c9d8d8;
-  border-radius: 999px;
-  text-decoration: none;
-}
-
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -90,6 +98,261 @@ body {
   border: 1px solid #ded6c7;
   border-radius: 12px;
   padding: 1rem;
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 2rem;
+  align-items: stretch;
+  margin: 0 0 2.4rem;
+  padding: 1.6rem 0 0.4rem;
+}
+
+.home-hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-eyebrow {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0f6b6f;
+  font-weight: 700;
+}
+
+.home-hero-copy h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  max-width: 9.5ch;
+}
+
+.home-hero-copy p {
+  margin: 0;
+  font-size: 1.06rem;
+  line-height: 1.65;
+  max-width: 54ch;
+  color: #43555a;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.btn-home-primary,
+.btn-home-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.78rem 1.15rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.btn-home-primary {
+  background: #0f6b6f;
+  color: #fff;
+  box-shadow: 0 14px 24px rgba(15, 107, 111, 0.18);
+}
+
+.btn-home-primary:hover,
+.btn-home-secondary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-home-secondary {
+  background: rgba(255, 252, 247, 0.9);
+  color: #204145;
+  border: 1px solid #dfd3c3;
+}
+
+.home-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.home-proof div {
+  padding-top: 0.7rem;
+  border-top: 1px solid #dfd3c3;
+}
+
+.home-proof span {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6d7a7d;
+}
+
+.home-proof strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.96rem;
+  line-height: 1.4;
+  color: #183337;
+}
+
+.home-hero-media {
+  display: flex;
+  align-items: center;
+}
+
+.home-hero-media img {
+  width: 100%;
+  border-radius: 24px;
+  border: 1px solid #e3d8c8;
+  box-shadow: 0 22px 40px rgba(18, 41, 46, 0.12);
+}
+
+.home-insight-band,
+.home-workflow,
+.home-deliverables,
+.home-link-grid {
+  margin: 1rem 0 2rem;
+}
+
+.home-insight-band,
+.home-workflow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-insight,
+.home-workflow-step {
+  padding: 1.1rem 1.2rem 1.2rem;
+  background: rgba(255, 252, 247, 0.86);
+  border: 1px solid #e4d8c8;
+  border-radius: 18px;
+  box-shadow: 0 12px 22px rgba(27, 41, 45, 0.05);
+}
+
+.home-insight h3,
+.home-workflow-step h3 {
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+  font-size: 1.1rem;
+}
+
+.home-step-kicker {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  padding: 0.28rem 0.55rem;
+  background: #e6f1ef;
+  color: #0f5e62;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.home-deliverables {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-deliverable {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 1rem 1.1rem;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(249, 242, 232, 0.98));
+  border: 1px solid #e5d9c9;
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(27, 41, 45, 0.05);
+}
+
+.home-deliverable span {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7678;
+}
+
+.home-deliverable strong {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #173337;
+}
+
+.home-deliverable div {
+  margin-top: 0.5rem;
+  color: #556468;
+}
+
+.home-link-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.home-link-grid a {
+  display: block;
+  padding: 0.95rem 1rem;
+  border-radius: 16px;
+  border: 1px solid #dfd4c4;
+  background: rgba(255, 255, 251, 0.84);
+  color: #204145;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.guide-figure {
+  display: block;
+  width: 100%;
+  margin: 0.8rem 0 1.35rem;
+  border: 1px solid #e4d9c8;
+  border-radius: 18px;
+  box-shadow: 0 14px 24px rgba(24, 42, 45, 0.08);
+}
+
+.guide-callout {
+  background: #fff8ef;
+  border: 1px solid #eadfce;
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+  color: #4f5f68;
+}
+
+#TOC {
+  background: rgba(255, 252, 247, 0.92);
+  border: 1px solid #e2d7c7;
+  border-radius: 16px;
+  padding: 1rem 1.05rem;
+}
+
+@media (max-width: 1100px) {
+  .home-hero,
+  .home-insight-band,
+  .home-workflow,
+  .home-deliverables,
+  .home-link-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-proof {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-copy h1 {
+    max-width: none;
+  }
 }
 
 @keyframes riseIn {

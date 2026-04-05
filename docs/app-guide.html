@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dbb47fbb1ef265d4a223f863a788238f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-bc4169feef28fbbd7b01b8dfa4d2052d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -225,49 +225,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>shiny_app_url <span class="ot">&lt;-</span> <span class="fu">trimws</span>(<span class="fu">Sys.getenv</span>(<span class="st">"SHINY_APP_URL"</span>, <span class="at">unset =</span> <span class="st">""</span>))</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>has_shiny_target <span class="ot">&lt;-</span> <span class="fu">nzchar</span>(shiny_app_url)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>is_local_target <span class="ot">&lt;-</span> has_shiny_target <span class="sc">&amp;&amp;</span> <span class="fu">grepl</span>(<span class="st">"127</span><span class="sc">\\</span><span class="st">.0</span><span class="sc">\\</span><span class="st">.0</span><span class="sc">\\</span><span class="st">.1|localhost"</span>, shiny_app_url)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>shiny_target_label <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span>has_shiny_target) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"No target configured"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (is_local_target) {</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Local target"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Deployment target"</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>shiny_target_note <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span>has_shiny_target) {</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"No external Shiny URL is configured yet. Use the setup instructions below before publishing the static site."</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (is_local_target) {</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"The site currently points to a locally running Shiny process."</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"The site is currently configured to point to the deployed Shiny application."</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 <section id="open-the-app" class="level2">
 <h2 class="anchored" data-anchor-id="open-the-app">Open The App</h2>
 <p>This page is the website entry point for the Shiny application.</p>
-<p>Current target: not configured yet.</p>
-<div class="grid-cards">
-<section id="launch-shiny-app" class="level3 card-block">
-<h3 class="anchored" data-anchor-id="launch-shiny-app">Launch Shiny App</h3>
-<p>Set SHINY_APP_URL before expecting a public launch link here.</p>
-<p>No external Shiny URL is configured yet. Use the setup instructions below before publishing the static site.</p>
-</section>
-<section id="current-target" class="level3 card-block">
-<h3 class="anchored" data-anchor-id="current-target">Current Target</h3>
-<ul>
-<li>Label: No target configured</li>
-<li>URL: Not configured</li>
-<li>Mode: Configuration required</li>
-</ul>
-</section>
-<section id="run-command" class="level3 card-block">
-<h3 class="anchored" data-anchor-id="run-command">Run Command</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runApp</span>(<span class="st">"app"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or from the project root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Rscript run_app<span class="op">.</span><span class="fu">R</span> <span class="dv">3838</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
+<p>Current target: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/</p>
+<div class="home-deliverables">
+<div class="home-deliverable">
+<span>Launch Shiny App</span> <strong><a href="https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/" target="_blank">Open the Shiny app</a></strong>
+<div>
+The site is currently configured to point to the deployed Shiny application.
+</div>
+</div>
+<div class="home-deliverable">
+<span>Current Target</span> <strong>Deployment target</strong>
+<div>
+https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/
+</div>
+</div>
+<div class="home-deliverable">
+<span>Run Command</span> <strong><code>shiny::runApp(\"app\")</code></strong>
+<div>
+<code>Rscript run_app.R 3838</code>
+</div>
+</div>
 </div>
 </section>
 <section id="embedded-preview" class="level2">
@@ -275,9 +255,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>When the target app is available, the frame below gives the website a direct in-page preview.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div style="background:#fff8ef;border:1px solid #eadfce;border-radius:18px;padding:1rem 1.1rem;color:#4f5f68;">
-<strong>Preview unavailable.</strong>
-<div>Set SHINY_APP_URL to a deployed app URL, then re-render the site to enable the launch link and embedded preview.</div>
+<div style="background:#fff;border:1px solid #e3d8c8;border-radius:20px;overflow:hidden;box-shadow:0 16px 30px rgba(27,41,45,0.08);">
+<div style="padding:0.9rem 1rem;border-bottom:1px solid #eadfce;background:#fffaf3;font-weight:700;">Shiny Preview (https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/)</div>
+<iframe src="https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/" title="Singapore Tourism Time-Series VA Prototype" style="width:100%;height:900px;border:0;background:#fff;" loading="lazy"></iframe>
 </div>
 </div>
 </div>
@@ -300,57 +280,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Time Series Visual Analysis</td>
-<td>lightweight explorer</td>
-<td>compare monthly series and metadata before deeper analysis</td>
+<td>integrated EDA dashboard</td>
+<td>map source-market concentration and compare pre-COVID versus recovery leaders</td>
 </tr>
 <tr class="even">
 <td>Time Series Clustering</td>
-<td>active prototype</td>
-<td>Wang branch interaction and visual refinement</td>
+<td>guided workspace</td>
+<td>compare recovery trajectories, recovery position, focus-market placement, and export assignments</td>
 </tr>
 <tr class="odd">
 <td>Forecasting</td>
-<td>active prototype</td>
-<td>Jin branch forecasting workflow with selectable model comparison and fallback runtime support</td>
+<td>forecasting studio</td>
+<td>compare model families, inspect diagnostics, and relate arrivals forecasts to tourism-performance context</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="data-contract" class="level2">
-<h2 class="anchored" data-anchor-id="data-contract">Data Contract</h2>
-<p>The current clustering workflow reads from:</p>
-<ul>
-<li><code>data/raw/visitor_arrivals_full_dataset.xlsx</code></li>
-<li><code>data/processed/clustering_country_wide.csv</code></li>
-<li><code>data/processed/clustering_country_long.csv</code></li>
-<li><code>data/raw/tourism_update.xlsx</code> for optional tourism performance context in the forecasting module</li>
-</ul>
-</section>
 <section id="expected-user-flow" class="level2">
 <h2 class="anchored" data-anchor-id="expected-user-flow">Expected User Flow</h2>
-<ol type="1">
-<li>Open the Shiny app from this page.</li>
-<li>Enter the <code>Time Series Clustering</code> tab.</li>
-<li>Select a focused set of countries.</li>
-<li>Choose a year window and normalization mode.</li>
-<li>Review the outputs in order: <code>Dashboard</code>, <code>Pattern Explorer</code>, <code>Focus Market in Context</code>, <code>Assignments</code>.</li>
-</ol>
+<p>Start in <code>Time Series Visual Analysis</code> to understand the market structure. Move to <code>Time Series Clustering</code> to compare country recovery trajectories and isolate one priority market. Finish in <code>Forecasting</code> to compare model performance and interpret the forward projection with context indicators. The detailed workflow is documented on the <a href="./user-guide.html">User Guide</a> page.</p>
+</section>
+<section id="data-contract" class="level2">
+<h2 class="anchored" data-anchor-id="data-contract">Data Contract</h2>
+<p>The current app reads from:</p>
+<ul>
+<li><code>data/raw/visitor_arrivals_full_dataset.xlsx</code></li>
+<li><code>data/processed/arrivals_country_wide.csv</code></li>
+<li><code>data/processed/arrivals_country_long.csv</code></li>
+<li><code>data/processed/clustering_country_wide.csv</code></li>
+<li><code>data/processed/clustering_country_long.csv</code></li>
+<li><code>data/processed/clustering_series_metadata.csv</code></li>
+<li><code>data/raw/tourism_update.xlsx</code> for tourism-performance context</li>
+</ul>
 </section>
 <section id="deployment-switch" class="level2">
 <h2 class="anchored" data-anchor-id="deployment-switch">Deployment Switch</h2>
 <p>For local testing, start the app directly with <code>shiny::runApp("app")</code> or <code>Rscript run_app.R 3838</code>.</p>
 <p>When you are ready to switch to <code>shinyapps.io</code>, re-render the site with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">SHINY_APP_URL</span><span class="op">=</span><span class="st">'https://YOUR-APP-NAME.shinyapps.io/YOUR-APP/'</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>quarto render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>That will update both the launch button and the embedded preview to the deployed app.</p>
-</section>
-<section id="notes-for-local-testing" class="level2">
-<h2 class="anchored" data-anchor-id="notes-for-local-testing">Notes For Local Testing</h2>
-<ol type="1">
-<li>Start the app first if the preview frame is blank.</li>
-<li>Use the standalone launch link if your browser blocks the embedded frame.</li>
-<li>Keep the browser window at a normal desktop width when checking layout quality.</li>
-</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">SHINY_APP_URL</span><span class="op">=</span><span class="st">'https://YOUR-APP-NAME.shinyapps.io/YOUR-APP/'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>quarto render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That updates both the launch button and the embedded preview to the deployed app.</p>
 
 
 </section>

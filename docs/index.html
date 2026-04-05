@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dbb47fbb1ef265d4a223f863a788238f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-bc4169feef28fbbd7b01b8dfa4d2052d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed page-home fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -202,18 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#working-modules" id="toc-working-modules" class="nav-link active" data-scroll-target="#working-modules">Working Modules</a></li>
-  <li><a href="#key-pages" id="toc-key-pages" class="nav-link" data-scroll-target="#key-pages">Key Pages</a></li>
-  <li><a href="#local-run-commands" id="toc-local-run-commands" class="nav-link" data-scroll-target="#local-run-commands">Local Run Commands</a></li>
-  <li><a href="#deployment-notes" id="toc-deployment-notes" class="nav-link" data-scroll-target="#deployment-notes">Deployment Notes</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -236,73 +225,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>shiny_app_url <span class="ot">&lt;-</span> <span class="fu">trimws</span>(<span class="fu">Sys.getenv</span>(<span class="st">"SHINY_APP_URL"</span>, <span class="at">unset =</span> <span class="st">""</span>))</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>shiny_launch_href <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nzchar</span>(shiny_app_url)) shiny_app_url <span class="cf">else</span> <span class="st">"./app-guide.html"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>shiny_launch_label <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nzchar</span>(shiny_app_url)) <span class="st">"Launch Shiny App"</span> <span class="cf">else</span> <span class="st">"Open Shiny Setup"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="hero-panel">
-<div class="tagline">
-Visual Analytics | Quarto + Shiny | AY2025/26
+<div class="home-hero">
+<div class="home-hero-copy">
+<div class="home-eyebrow">
+Singapore Tourism Recovery | Visual Analytics Project
 </div>
 <section id="singapore-tourism-time-series-visual-analytics" class="level1">
 <h1>Singapore Tourism Time-Series Visual Analytics</h1>
-<section id="core-direction" class="level2">
-<h2 class="anchored" data-anchor-id="core-direction">Core Direction</h2>
-<p>This project reframes Singapore tourism recovery as a comparative time-series problem. The final system combines visual analysis, time-series clustering, and forecasting into one Shiny-supported workflow.</p>
-<p>This site is the working base for:</p>
-<ol type="1">
-<li>Project proposal updates</li>
-<li>Prototype modules</li>
-<li>Shiny integration</li>
-<li>Team coordination and documentation</li>
-</ol>
-<div class="quick-links">
-<p><a href="./Proposal/Proposal.html">Open Proposal</a> <a href="./prototype/module-cluster.html">Open Clustering Prototype</a> <a href="./poster.html">Open Poster</a> <a href="./app-guide.html">Open Shiny App Page</a> <a href="./app-guide.html" target="_blank">Open Shiny Setup</a></p>
+<p>This project studies tourism recovery as a comparative time-series problem. The site and the app work together: the website documents the analytical story, while the Shiny app lets users explore market structure, compare recovery trajectories, and run forward forecasts on a shared arrivals backbone.</p>
+<div class="home-actions">
+<p><a href="https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/" class="btn-home-primary" target="_blank">Open Shiny App</a> <a href="./user-guide.html" class="btn-home-secondary">Read User Guide</a> <a href="./poster.html" class="btn-home-secondary">View Poster</a></p>
+</div>
+<div class="home-proof">
+<div>
+<span>Live modules</span><strong>Visual Analysis, Clustering, Forecasting</strong>
+</div>
+<div>
+<span>Shared backbone</span><strong>Country-level visitor arrivals</strong>
+</div>
+<div>
+<span>Deployment</span><strong>shinyapps.io connected</strong>
+</div>
 </div>
 </section>
+</div>
+<div class="home-hero-media">
+<p><img src="guide-assets/home/clustering-dashboard-hero.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="what-this-system-answers" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-system-answers">What This System Answers</h2>
+<div class="home-insight-band">
+<section id="market-structure" class="level3 home-insight">
+<h3 class="anchored" data-anchor-id="market-structure">Market Structure</h3>
+<p>The visual analysis module shows how source-market concentration changes across pre-COVID, shock, and recovery periods. It helps readers understand who the leading markets are before they move into deeper modelling.</p>
+</section>
+<section id="recovery-patterns" class="level3 home-insight">
+<h3 class="anchored" data-anchor-id="recovery-patterns">Recovery Patterns</h3>
+<p>The clustering module groups country trajectories by recovery shape. It reveals which markets recovered together, which remained delayed, and where a selected priority market sits in the wider landscape.</p>
+</section>
+<section id="forward-projection" class="level3 home-insight">
+<h3 class="anchored" data-anchor-id="forward-projection">Forward Projection</h3>
+<p>The forecasting module compares baseline and model-based forecasts on a holdout window, then places the selected arrivals series next to hotel occupancy, stay length, and room revenue context.</p>
 </section>
 </div>
-<section id="working-modules" class="level2">
-<h2 class="anchored" data-anchor-id="working-modules">Working Modules</h2>
-<div class="grid-cards">
-<section id="time-series-visual-analysis" class="level4 card-block">
-<h4 class="anchored" data-anchor-id="time-series-visual-analysis">Time Series Visual Analysis</h4>
-<p>Compare selected countries and transport modes through raw, indexed, and share-based views.</p>
 </section>
-<section id="time-series-clustering" class="level4 card-block">
-<h4 class="anchored" data-anchor-id="time-series-clustering">Time Series Clustering</h4>
-<p>Group country trajectories with similar recovery paths and interpret how a selected priority market sits in the wider recovery landscape.</p>
-</section>
-<section id="forecasting" class="level4 card-block">
-<h4 class="anchored" data-anchor-id="forecasting">Forecasting</h4>
-<p>Move from historical comparison into short-term prediction for selected tourism series.</p>
-</section>
-<section id="shiny-integration" class="level4 card-block">
-<h4 class="anchored" data-anchor-id="shiny-integration">Shiny Integration</h4>
-<p>Use the website as the entry point, then open or embed the running Shiny app from the Shiny page.</p>
+<section id="one-workflow-three-modules" class="level2">
+<h2 class="anchored" data-anchor-id="one-workflow-three-modules">One Workflow, Three Modules</h2>
+<div class="home-workflow">
+<div class="home-workflow-step">
+<div class="home-step-kicker">
+Module 1
+</div>
+<section id="time-series-visual-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="time-series-visual-analysis">Time Series Visual Analysis</h3>
+<p>Start with the market map and the period ranking view. This establishes the source-market structure, the current leaders, and the shift from pre-COVID to recovery.</p>
 </section>
 </div>
+<div class="home-workflow-step">
+<div class="home-step-kicker">
+Module 2
+</div>
+<section id="time-series-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="time-series-clustering">Time Series Clustering</h3>
+<p>Move into the guided clustering workspace to inspect pattern quality, representative trajectories, recovery position, and focus-market placement.</p>
 </section>
-<section id="key-pages" class="level2">
-<h2 class="anchored" data-anchor-id="key-pages">Key Pages</h2>
-<ol type="1">
-<li><a href="./Proposal/Proposal.html">Proposal</a></li>
-<li><a href="./prototype/module-cluster.html">Time Series Clustering Prototype</a></li>
-<li><a href="./poster.html">Project Poster</a></li>
-<li><a href="./prototype/ui-storyboard.html">UI Storyboard</a></li>
-<li><a href="./app-guide.html">Shiny App</a></li>
-</ol>
+</div>
+<div class="home-workflow-step">
+<div class="home-step-kicker">
+Module 3
+</div>
+<section id="forecasting" class="level3">
+<h3 class="anchored" data-anchor-id="forecasting">Forecasting</h3>
+<p>Finish in the forecasting studio to compare model families, inspect diagnostics, and explain the winning forecast with tourism-performance context.</p>
 </section>
-<section id="local-run-commands" class="level2">
-<h2 class="anchored" data-anchor-id="local-run-commands">Local Run Commands</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> run_app.R 3838</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </section>
-<section id="deployment-notes" class="level2">
-<h2 class="anchored" data-anchor-id="deployment-notes">Deployment Notes</h2>
-<p>No deployed Shiny URL is configured in the current render.</p>
-<p>When the app is deployed to <code>shinyapps.io</code>, re-render the site with <code>SHINY_APP_URL</code> set to the deployed URL so the website button and preview frame point to the public app instead of the setup page.</p>
+<section id="deliverables-on-this-site" class="level2">
+<h2 class="anchored" data-anchor-id="deliverables-on-this-site">Deliverables On This Site</h2>
+<div class="home-deliverables">
+<p><a class="home-deliverable" href="./Proposal/Proposal.html"> <span>Proposal</span> <strong>Project framing, scope, and analytical direction</strong> </a> <a class="home-deliverable" href="./app-guide.html"> <span>Shiny App</span> <strong>Launch page, deployment target, and embedded preview</strong> </a> <a class="home-deliverable" href="./user-guide.html"> <span>User Guide</span> <strong>Merged EDA, clustering, and forecasting walkthrough</strong> </a> <a class="home-deliverable" href="./poster.html"> <span>Poster</span> <strong>Final project poster in website form</strong> </a> <a class="home-deliverable" href="./prototype/ui-storyboard.html"> <span>Storyboard</span> <strong>UI story and prototype flow across the app</strong> </a> <a class="home-deliverable" href="./Meeting Minutes/first-meeting-record.html"> <span>Meeting Minutes</span> <strong>Decision trail, task ownership, and pivot history</strong> </a></p>
+</div>
+</section>
+<section id="analysis-pages-and-prototypes" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-pages-and-prototypes">Analysis Pages And Prototypes</h2>
+<div class="home-link-grid">
+<p><a href="./prototype/EDA.html">EDA prototype</a> <a href="./prototype/CDA.html">CDA prototype</a> <a href="./prototype/module-cluster.html">Clustering prototype</a> <a href="./prototype/forecasting.html">Forecasting prototype</a> <a href="./Meeting Minutes/first-meeting-record.html">First meeting record</a> <a href="./Meeting Minutes/second-meeting-record.html">Pivot meeting record</a></p>
+</div>
+</section>
+<section id="data-contract-and-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="data-contract-and-deployment">Data Contract And Deployment</h2>
+<p>The site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in <code>data/raw/visitor_arrivals_full_dataset.xlsx</code>, the EDA and ranking views use processed arrivals tables under <code>data/processed/</code>, clustering reads the coordinated clustering artifacts under <code>data/processed/</code>, and forecasting layers in <code>data/raw/tourism_update.xlsx</code> for optional tourism-performance context.</p>
+<p>The current website render points to: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/</p>
+</section>
+<section id="local-run" class="level2">
+<h2 class="anchored" data-anchor-id="local-run">Local Run</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> run_app.R 3838</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

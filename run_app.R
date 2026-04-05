@@ -1,4 +1,4 @@
-﻿required_pkgs <- c(
+required_pkgs <- c(
   "shiny", "bslib", "readxl", "dplyr", "ggplot2", "cluster", "DT", "plotly",
   "tidyr", "purrr", "lubridate", "forecast"
 )
