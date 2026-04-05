@@ -305,7 +305,7 @@
     "href": "index.html",
     "title": "Project Home",
     "section": "",
-    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis website presents the project as one connected analytical workflow. Visual Analysis establishes source-market structure. Clustering compares recovery trajectories across countries. Forecasting projects the selected series forward and interprets that projection with tourism-performance context. The live Shiny app, the PDF user guide, and the poster all point to the same three-module structure.\n\nOpen Live Shiny App Open User Guide PDF View Poster\n\n\n\nModulesVisual Analysis, Clustering, Forecasting\n\n\nUser guideFinal PDF embedded on site\n\n\nDeploymentshinyapps.io app linked directly from this page\n\n\n\n\n\n\n\nThe clustering workspace is shown here because it is the central comparison surface in the live application.\n\n\n\n\n\n\nAnalytical Flow\n\n\n\nThe project moves from market structure into recovery-pattern comparison and then into projection. Every page on this site supports that reading order.\n\n\n\n\n\nStage 1\n\n\n\nRead the Visual Analysis module first to see which source markets dominate the pre-COVID baseline and how the recovery window reshapes that ranking.\n\n\n\n\nStage 2\n\n\n\nMove to the clustering workspace to compare country trajectories, identify representative recovery groups, and place one focus market back inside the cluster structure.\n\n\n\n\nStage 3\n\n\n\nFinish in the forecasting studio to compare model families, inspect diagnostics, and explain the selected forecast with hotel and tourism context indicators.\n\n\n\n\n\n\n\nInside The App\n\n\n\nThe live application is organized as a continuous workflow instead of separate demos. Each module answers a different analytical question, and together they form one decision surface.\n\n\n\n\n\nModule 1\n\n\n\nUse the map and ranking views to identify the leading visitor markets in the selected period and to compare the pre-COVID structure with the recovery period.\n\n\n\n\nModule 2\n\n\n\nInspect recovery quality, representative trajectories, recovery position, focus-market placement, and exportable membership tables from one guided interface.\n\n\n\n\nModule 3\n\n\n\nRun one forecasting experiment at a time, compare model performance on a holdout window, and read the winning forecast together with diagnostics and context plots.\n\n\n\n\n\n\n\nSite Structure\n\n\n\nThe website is the documentation layer for the project. The pages below connect the final deliverables with the supporting analytical materials.\n\n\n\n\n\nFinal deliverables\n\n Proposal Project framing, scope, and analytical direction \n Shiny App Launch page with direct deployment link and embedded preview \n User Guide PDF Final guide embedded on site and available for download \n Poster Final project poster in website form \n\n\n\nPrototypes and project records\n\n EDA prototype Market structure and pre-COVID versus recovery ranking views \n CDA prototype Supporting comparative analysis and contextual diagnostics \n Clustering prototype Trajectory grouping, recovery position, and cluster summaries \n Forecasting prototype Model comparison, diagnostics, and context interpretation \n UI storyboard Workflow logic and interface planning across the app \n Meeting records Task ownership, pivot decisions, and project history \n\n\n\n\n\n\nDeployment And Local Run\n\n\n\nThe homepage button opens the deployed Shiny application directly. The PDF guide explains the intended reading order, and the same sequence is preserved inside the website.\n\n\n\nLaunch Deployed Shiny App Open User Guide PDF\n\n\n\nLocal websitequarto preview\n\n\nLocal Shiny appRscript run_app.R 3838\n\n\nShared data backbonedata/raw/visitor_arrivals_full_dataset.xlsx"
+    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis website presents the project as one connected analytical workflow. Visual Analysis establishes source-market structure. Clustering compares recovery trajectories across countries. Forecasting projects the selected series forward and interprets that projection with tourism-performance context. The live Shiny app, the PDF user guide, and the poster all point to the same three-module structure.\n\nOpen Live Shiny App Open User Guide PDF View Poster\n\n\n\nModulesVisual Analysis, Clustering, Forecasting\n\n\nUser guideFinal PDF embedded on site\n\n\nDeploymentshinyapps.io app linked directly from this page\n\n\n\n\n\n\n\nThe clustering workspace is shown here because it is the central comparison surface in the live application.\n\n\n\n\n\n\nAnalytical Flow\n\n\n\nThe project moves from market structure into recovery-pattern comparison and then into projection. Every page on this site supports that reading order.\n\n\n\n\n\nStage 1\n\n\n\nRead the Visual Analysis module first to see which source markets dominate the pre-COVID baseline and how the recovery window reshapes that ranking.\n\n\n\n\nStage 2\n\n\n\nMove to the clustering workspace to compare country trajectories, identify representative recovery groups, and place one focus market back inside the cluster structure.\n\n\n\n\nStage 3\n\n\n\nFinish in the forecasting studio to compare model families, inspect diagnostics, and explain the selected forecast with hotel and tourism context indicators.\n\n\n\n\n\n\n\nInside The App\n\n\n\nThe live application is organized as a continuous workflow instead of separate demos. Each module answers a different analytical question, and together they form one decision surface.\n\n\n\n\n\nModule 1\n\n\n\nUse the map and ranking views to identify the leading visitor markets in the selected period and to compare the pre-COVID structure with the recovery period.\n\n\n\n\nModule 2\n\n\n\nInspect recovery quality, representative trajectories, recovery position, focus-market placement, and exportable membership tables from one guided interface.\n\n\n\n\nModule 3\n\n\n\nRun one forecasting experiment at a time, compare model performance on a holdout window, and read the winning forecast together with diagnostics and context plots.\n\n\n\n\n\n\n\nSite Structure\n\n\n\nThe website is the documentation layer for the project. The pages below connect the final deliverables with the supporting analytical materials.\n\n\n\n\n\nFinal deliverables\n\n Proposal Project framing, scope, and analytical direction \n Shiny App Launch page with direct deployment link and embedded preview \n User Guide PDF Final guide embedded on site and available for download \n Poster Final project poster in website form \n\n\n\nPrototypes and project records\n\n EDA prototype Market structure and pre-COVID versus recovery ranking views \n CDA prototype Supporting comparative analysis and contextual diagnostics \n Clustering prototype Trajectory grouping, recovery position, and cluster summaries \n Forecasting prototype Model comparison, diagnostics, and context interpretation \n UI design Workflow logic and interface planning across the app \n Meeting records Task ownership, pivot decisions, and project history \n\n\n\n\n\n\nDeployment And Local Run\n\n\n\nThe homepage button opens the deployed Shiny application directly. The PDF guide explains the intended reading order, and the same sequence is preserved inside the website.\n\n\n\nLaunch Deployed Shiny App Open User Guide PDF\n\n\n\nLocal websitequarto preview\n\n\nLocal Shiny appRscript run_app.R 3838\n\n\nShared data backbonedata/raw/visitor_arrivals_full_dataset.xlsx"
   },
   {
     "objectID": "index.html#read-the-recovery-story-in-one-pass",
@@ -744,49 +744,49 @@
   {
     "objectID": "prototype/ui-storyboard.html",
     "href": "prototype/ui-storyboard.html",
-    "title": "UI Storyboard",
+    "title": "UI Design",
     "section": "",
     "text": "flowchart LR\n    A[\"Open the app\"] --&gt; B[\"Choose a module\"]\n    B --&gt; C[\"Configure inputs\"]\n    C --&gt; D[\"Render outputs\"]\n    D --&gt; E[\"Interpret results\"]\n    E --&gt; F[\"Download or compare\"]\n\n    B --&gt; M1[\"Time Series Visual Analysis\"]\n    B --&gt; M2[\"Time Series Clustering\"]\n    B --&gt; M3[\"Forecasting\"]"
   },
   {
     "objectID": "prototype/ui-storyboard.html#app-flow",
     "href": "prototype/ui-storyboard.html#app-flow",
-    "title": "UI Storyboard",
+    "title": "UI Design",
     "section": "",
     "text": "flowchart LR\n    A[\"Open the app\"] --&gt; B[\"Choose a module\"]\n    B --&gt; C[\"Configure inputs\"]\n    C --&gt; D[\"Render outputs\"]\n    D --&gt; E[\"Interpret results\"]\n    E --&gt; F[\"Download or compare\"]\n\n    B --&gt; M1[\"Time Series Visual Analysis\"]\n    B --&gt; M2[\"Time Series Clustering\"]\n    B --&gt; M3[\"Forecasting\"]"
   },
   {
     "objectID": "prototype/ui-storyboard.html#module-1-time-series-visual-analysis",
     "href": "prototype/ui-storyboard.html#module-1-time-series-visual-analysis",
-    "title": "UI Storyboard",
+    "title": "UI Design",
     "section": "Module 1: Time Series Visual Analysis",
     "text": "Module 1: Time Series Visual Analysis\n\n\n\n\n\nflowchart LR\n    A[\"Select a tourism series\"] --&gt; B[\"Choose the lookback window\"]\n    B --&gt; C[\"Toggle monthly points\"]\n    C --&gt; D[\"Render the comparison chart\"]\n    D --&gt; E[\"Inspect the metadata table\"]\n\n\n\n\n\n\n\nUI Layout\n\nLeft Panel\n\nCountry or mode selector\nLookback-year selector\nShow-points toggle\nModule guidance text\n\n\n\nRight Panel\n\nTime-series view\nMetadata table\nRead-this-first guidance card"
   },
   {
     "objectID": "prototype/ui-storyboard.html#module-2-time-series-clustering",
     "href": "prototype/ui-storyboard.html#module-2-time-series-clustering",
-    "title": "UI Storyboard",
+    "title": "UI Design",
     "section": "Module 2: Time Series Clustering",
     "text": "Module 2: Time Series Clustering\n\n\n\n\n\nflowchart LR\n    A[\"Select a set of country series\"] --&gt; B[\"Pick a focus market\"]\n    B --&gt; C[\"Set the year window and normalization\"]\n    C --&gt; D[\"Choose k and run clustering\"]\n    D --&gt; E[\"Read the dashboard\"]\n    E --&gt; F[\"Inspect pattern explorer\"]\n    F --&gt; G[\"Check focus market placement\"]\n    G --&gt; H[\"Download assignments\"]\n\n\n\n\n\n\n\nUI Layout\n\nLeft Panel\n\nSeries family selector\nCountry multi-select\nFocus market selector\nTime window selector\nNormalization mode\nCluster count slider\nRun clustering button\nReading guide describing how to navigate the module\n\n\n\nRight Panel\n\nDashboard tab: quality strip, insight card, pattern atlas, cluster profile, recovery position map, silhouette scan, focus comparison, and priority-market placement\nPattern Explorer tab: representative pattern plot plus pattern summary chips\nFocus Market in Context tab: focused recovery position map, cluster explorer, and placement narrative\nAssignments tab: membership table, assignment download, cluster summary, and series metrics"
   },
   {
     "objectID": "prototype/ui-storyboard.html#module-3-forecasting",
     "href": "prototype/ui-storyboard.html#module-3-forecasting",
-    "title": "UI Storyboard",
+    "title": "UI Design",
     "section": "Module 3: Forecasting",
     "text": "Module 3: Forecasting\n\n\n\n\n\nflowchart LR\n    A[\"Select a target series\"] --&gt; B[\"Set the forecast horizon\"]\n    B --&gt; C[\"Choose the model set\"]\n    C --&gt; D[\"Run forecasting\"]\n    D --&gt; E[\"Review the forecast plot and accuracy table\"]\n    D --&gt; F[\"Inspect tourism context, seasonality, and decomposition\"]\n\n\n\n\n\n\n\nUI Layout\n\nLeft Panel\n\nTarget series selector\nForecast horizon slider\nModel selection checklist\nRun forecast button\n\n\n\nRight Panel\n\nForecast Plot tab: holdout comparison, accuracy table, split summary\nTourism Performance Context tab: arrivals versus hotel/stay indicators\nTrend and Seasonal tab: raw series and seasonal pattern\nDecomposition tab: trend, seasonal, remainder view\nForecast Notes tab: interpretation guide"
   },
   {
     "objectID": "prototype/ui-storyboard.html#ui-component-mapping",
     "href": "prototype/ui-storyboard.html#ui-component-mapping",
-    "title": "UI Storyboard",
+    "title": "UI Design",
     "section": "UI Component Mapping",
     "text": "UI Component Mapping\n\n\n\n\n\n\n\n\nUI Need\nShiny Component\nReason\n\n\n\n\nMulti-series comparison\nselectInput / pickerInput\nflexible series selection\n\n\nTime window control\ndateRangeInput\nclear start and end selection\n\n\nRaw vs indexed vs share view\nradioButtons\nmutually exclusive display modes\n\n\nClustering parameter tuning\nsliderInput\nfast constrained control\n\n\nModel execution\nactionButton\navoid unnecessary reruns\n\n\nOutput tables\nDT::datatable\nsortable and filterable"
   },
   {
     "objectID": "prototype/ui-storyboard.html#usability-notes",
     "href": "prototype/ui-storyboard.html#usability-notes",
-    "title": "UI Storyboard",
+    "title": "UI Design",
     "section": "Usability Notes",
     "text": "Usability Notes\n\nKeep the module order aligned with the final website: visual analysis, clustering, forecasting.\nKeep the labels domain-driven and consistent across Proposal, storyboard, and app.\nUse the same country names, date windows, and color semantics in all modules.\nMake the interaction flow simple enough that users can move from exploration to comparison to forecasting without losing context."
   },
@@ -880,5 +880,12 @@
     "title": "User Guide",
     "section": "",
     "text": "The final user guide is delivered as a PDF document. Read it in the embedded viewer below, open it in a separate tab with the browser’s PDF controls, or download it directly.\nOpen User Guide PDF in a New Tab Download User Guide PDF"
+  },
+  {
+    "objectID": "prototype/ui-storyboard.html#ui-design-sketch",
+    "href": "prototype/ui-storyboard.html#ui-design-sketch",
+    "title": "UI Design",
+    "section": "UI Design Sketch",
+    "text": "UI Design Sketch\nThe sketch below is the additional reference view for the model-centric interface layout."
   }
 ]

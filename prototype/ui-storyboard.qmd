@@ -1,5 +1,5 @@
 ---
-title: "UI Storyboard"
+title: "UI Design"
 ---
 
 ## App Flow
@@ -16,6 +16,12 @@ flowchart LR
     B --> M2["Time Series Clustering"]
     B --> M3["Forecasting"]
 ```
+
+## UI Design Sketch
+
+The sketch below is the additional reference view for the model-centric interface layout.
+
+![](../guide-assets/ui-design-sketch.png){.img-fluid .guide-figure}
 
 ## Module 1: Time Series Visual Analysis
 

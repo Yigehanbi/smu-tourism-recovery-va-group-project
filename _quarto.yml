@@ -41,7 +41,7 @@ website:
           - href: prototype/forecasting.qmd
             text: Forecasting
           - href: prototype/ui-storyboard.qmd
-            text: UI Storyboard
+            text: UI Design
       - text: Documentation
         menu:
           - href: app-guide.qmd

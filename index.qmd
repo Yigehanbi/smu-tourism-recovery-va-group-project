@@ -164,7 +164,7 @@ The website is the documentation layer for the project. The pages below connect 
 </a>
 
 <a class="landing-resource-link" href="./prototype/ui-storyboard.html">
-<span>UI storyboard</span>
+<span>UI design</span>
 <strong>Workflow logic and interface planning across the app</strong>
 </a>
 
