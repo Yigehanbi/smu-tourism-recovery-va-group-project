@@ -7,33 +7,35 @@ format:
 ---
 
 ```{r, include=FALSE}
-shiny_app_url <- trimws(Sys.getenv("SHINY_APP_URL", unset = ""))
-shiny_launch_href <- if (nzchar(shiny_app_url)) shiny_app_url else "./app-guide.html"
-shiny_launch_label <- if (nzchar(shiny_app_url)) "Launch Live Shiny App" else "Open Shiny Setup"
+live_shiny_app_url <- "https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/"
+shiny_app_url <- trimws(Sys.getenv("SHINY_APP_URL", unset = live_shiny_app_url))
+if (!nzchar(shiny_app_url)) {
+  shiny_app_url <- live_shiny_app_url
+}
 ```
 
 ::: {.home-hero}
 ::: {.home-hero-copy}
 <div class="home-eyebrow">Singapore Tourism Recovery | Visual Analytics Project</div>
 
-# Singapore Tourism Time-Series Visual Analytics
+# Singapore Tourism Recovery
 
-This project frames tourism recovery as a comparative time-series problem. The website carries the analytical story, while the Shiny app turns that story into an interactive workspace for market structure, recovery pattern comparison, and forward projection.
+This project studies tourism recovery as a comparative time-series problem. The website presents the analytical story, the merged user guide explains the full workflow across all three modules, and the deployed Shiny app turns that structure into an interactive workspace for market structure, recovery pattern comparison, and forward projection.
 
 ::: {.home-actions}
-[Open Shiny App](`r shiny_launch_href`){target="_blank" .btn-home-primary}
-[Read User Guide](./user-guide.html){.btn-home-secondary}
+[Open Live Shiny App](`r shiny_app_url`){target="_blank" .btn-home-primary}
+[Read Merged User Guide](./user-guide.html){.btn-home-secondary}
 [View Poster](./poster.html){.btn-home-secondary}
 :::
 
 ::: {.home-proof}
 <div><span>Live modules</span><strong>Visual Analysis, Clustering, Forecasting</strong></div>
 <div><span>Shared backbone</span><strong>Country-level visitor arrivals</strong></div>
-<div><span>Deployment</span><strong>`r if (nzchar(shiny_app_url)) "shinyapps.io connected" else "render without SHINY_APP_URL"`</strong></div>
+<div><span>Deployment</span><strong>shinyapps.io linked from this homepage</strong></div>
 :::
 
 ::: {.home-hero-note}
-The intended reading flow is direct. Start with market structure, move into trajectory clustering, then finish with forecasting and context interpretation.
+Start with market structure, continue into recovery clustering, and finish with forecasting. The merged user guide follows that same order and the homepage button opens the deployed app directly.
 :::
 :::
 
@@ -119,7 +121,7 @@ The app is designed as one continuous decision surface rather than three isolate
 </a>
 <a class="home-deliverable" href="./user-guide.html">
 <span>User Guide</span>
-<strong>Merged EDA, clustering, and forecasting walkthrough</strong>
+<strong>Merged walkthrough across visual analysis, clustering, and forecasting</strong>
 </a>
 <a class="home-deliverable" href="./poster.html">
 <span>Poster</span>
@@ -150,7 +152,7 @@ The app is designed as one continuous decision surface rather than three isolate
 
 The site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in `data/raw/visitor_arrivals_full_dataset.xlsx`, the EDA and ranking views use processed arrivals tables under `data/processed/`, clustering reads the coordinated clustering artifacts under `data/processed/`, and forecasting layers in `data/raw/tourism_update.xlsx` for optional tourism-performance context.
 
-`r if (nzchar(shiny_app_url)) paste("The current website render points to:", shiny_app_url) else "This render does not yet have SHINY_APP_URL injected, so the launch button falls back to the Shiny setup page."`
+The homepage and the Shiny App page both point directly to the deployed application at `r shiny_app_url`.
 
 ## Local Run
 

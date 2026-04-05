@@ -305,7 +305,7 @@
     "href": "index.html",
     "title": "Project Home",
     "section": "",
-    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis project frames tourism recovery as a comparative time-series problem. The website carries the analytical story, while the Shiny app turns that story into an interactive workspace for market structure, recovery pattern comparison, and forward projection.\n\nOpen Shiny App Read User Guide View Poster\n\n\n\nLive modulesVisual Analysis, Clustering, Forecasting\n\n\nShared backboneCountry-level visitor arrivals\n\n\nDeploymentrender without SHINY_APP_URL\n\n\n\nThe intended reading flow is direct. Start with market structure, move into trajectory clustering, then finish with forecasting and context interpretation."
+    "text": "Singapore Tourism Recovery | Visual Analytics Project\n\n\n\nThis project studies tourism recovery as a comparative time-series problem. The website presents the analytical story, the merged user guide explains the full workflow across all three modules, and the deployed Shiny app turns that structure into an interactive workspace for market structure, recovery pattern comparison, and forward projection.\n\nOpen Live Shiny App Read Merged User Guide View Poster\n\n\n\nLive modulesVisual Analysis, Clustering, Forecasting\n\n\nShared backboneCountry-level visitor arrivals\n\n\nDeploymentshinyapps.io linked from this homepage\n\n\n\nStart with market structure, continue into recovery clustering, and finish with forecasting. The merged user guide follows that same order and the homepage button opens the deployed app directly."
   },
   {
     "objectID": "index.html#read-the-recovery-story-in-one-pass",
@@ -333,7 +333,7 @@
     "href": "index.html#deliverables-on-this-site",
     "title": "Project Home",
     "section": "Deliverables On This Site",
-    "text": "Deliverables On This Site\n\n Proposal Project framing, scope, and analytical direction   Shiny App Launch page, deployment target, and embedded preview   User Guide Merged EDA, clustering, and forecasting walkthrough   Poster Final project poster in website form   Storyboard UI story and prototype flow across the app   Meeting Minutes Decision trail, task ownership, and pivot history"
+    "text": "Deliverables On This Site\n\n Proposal Project framing, scope, and analytical direction   Shiny App Launch page, deployment target, and embedded preview   User Guide Merged walkthrough across visual analysis, clustering, and forecasting   Poster Final project poster in website form   Storyboard UI story and prototype flow across the app   Meeting Minutes Decision trail, task ownership, and pivot history"
   },
   {
     "objectID": "index.html#analysis-pages-and-prototypes",
@@ -347,7 +347,7 @@
     "href": "index.html#data-contract-and-deployment",
     "title": "Project Home",
     "section": "Data Contract And Deployment",
-    "text": "Data Contract And Deployment\nThe site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in data/raw/visitor_arrivals_full_dataset.xlsx, the EDA and ranking views use processed arrivals tables under data/processed/, clustering reads the coordinated clustering artifacts under data/processed/, and forecasting layers in data/raw/tourism_update.xlsx for optional tourism-performance context.\nThis render does not yet have SHINY_APP_URL injected, so the launch button falls back to the Shiny setup page."
+    "text": "Data Contract And Deployment\nThe site and the Shiny application are aligned to one shared arrivals backbone. The common arrival series live in data/raw/visitor_arrivals_full_dataset.xlsx, the EDA and ranking views use processed arrivals tables under data/processed/, clustering reads the coordinated clustering artifacts under data/processed/, and forecasting layers in data/raw/tourism_update.xlsx for optional tourism-performance context.\nThe homepage and the Shiny App page both point directly to the deployed application at https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/."
   },
   {
     "objectID": "index.html#local-run",
@@ -508,14 +508,14 @@
     "href": "app-guide.html",
     "title": "Shiny App",
     "section": "",
-    "text": "This page is the website entry point for the Shiny application.\nCurrent target: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\nLaunch Shiny App Open the Shiny app\n\nThe site is currently configured to point to the deployed Shiny application.\n\n\n\nCurrent Target Deployment target\n\nhttps://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\n\nRun Command shiny::runApp(\\\"app\\\")\n\nRscript run_app.R 3838"
+    "text": "This page is the website entry point for the Shiny application.\nCurrent target: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\nLaunch Shiny App Open the Shiny app\n\nThe site is currently configured to point to the deployed Shiny application.\n\n\n\nCurrent Target Deployment target\n\nhttps://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\n\nMerged User Guide Open the full guide\n\nOne combined walkthrough for visual analysis, clustering, and forecasting."
   },
   {
     "objectID": "app-guide.html#open-the-app",
     "href": "app-guide.html#open-the-app",
     "title": "Shiny App",
     "section": "",
-    "text": "This page is the website entry point for the Shiny application.\nCurrent target: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\nLaunch Shiny App Open the Shiny app\n\nThe site is currently configured to point to the deployed Shiny application.\n\n\n\nCurrent Target Deployment target\n\nhttps://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\n\nRun Command shiny::runApp(\\\"app\\\")\n\nRscript run_app.R 3838"
+    "text": "This page is the website entry point for the Shiny application.\nCurrent target: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\nLaunch Shiny App Open the Shiny app\n\nThe site is currently configured to point to the deployed Shiny application.\n\n\n\nCurrent Target Deployment target\n\nhttps://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/\n\n\n\nMerged User Guide Open the full guide\n\nOne combined walkthrough for visual analysis, clustering, and forecasting."
   },
   {
     "objectID": "app-guide.html#embedded-preview",
@@ -546,11 +546,11 @@
     "text": "Data Contract\nThe current app reads from:\n\ndata/raw/visitor_arrivals_full_dataset.xlsx\ndata/processed/arrivals_country_wide.csv\ndata/processed/arrivals_country_long.csv\ndata/processed/clustering_country_wide.csv\ndata/processed/clustering_country_long.csv\ndata/processed/clustering_series_metadata.csv\ndata/raw/tourism_update.xlsx for tourism-performance context"
   },
   {
-    "objectID": "app-guide.html#deployment-switch",
-    "href": "app-guide.html#deployment-switch",
+    "objectID": "app-guide.html#local-run",
+    "href": "app-guide.html#local-run",
     "title": "Shiny App",
-    "section": "Deployment Switch",
-    "text": "Deployment Switch\nFor local testing, start the app directly with shiny::runApp(\"app\") or Rscript run_app.R 3838.\nWhen you are ready to switch to shinyapps.io, re-render the site with:\n$env:SHINY_APP_URL='https://YOUR-APP-NAME.shinyapps.io/YOUR-APP/'\nquarto render\nThat updates both the launch button and the embedded preview to the deployed app."
+    "section": "Local Run",
+    "text": "Local Run\nFor local testing, start the app directly with shiny::runApp(\"app\") or Rscript run_app.R 3838.\nIf the deployment target ever changes, re-render the site with:\n$env:SHINY_APP_URL='https://YOUR-APP-NAME.shinyapps.io/YOUR-APP/'\nquarto render\nThat updates both the launch button and the embedded preview to the deployed app."
   },
   {
     "objectID": "poster.html",

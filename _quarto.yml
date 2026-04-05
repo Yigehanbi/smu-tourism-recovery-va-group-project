@@ -24,7 +24,7 @@ website:
         text: Proposal
       - href: poster.qmd
         text: Poster
-      - href: app-guide.qmd
+      - href: https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/
         text: Shiny App
       - href: user-guide.qmd
         text: User Guide
@@ -42,6 +42,8 @@ website:
             text: UI Storyboard
       - text: Documentation
         menu:
+          - href: app-guide.qmd
+            text: Shiny App Guide
           - href: Meeting Minutes/first-meeting-record.qmd
             text: First Meeting Record
           - href: Meeting Minutes/second-meeting-record.qmd

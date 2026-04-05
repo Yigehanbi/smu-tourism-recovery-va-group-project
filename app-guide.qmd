@@ -6,7 +6,11 @@ format:
 ---
 
 ```{r, include=FALSE}
-shiny_app_url <- trimws(Sys.getenv("SHINY_APP_URL", unset = ""))
+live_shiny_app_url <- "https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/"
+shiny_app_url <- trimws(Sys.getenv("SHINY_APP_URL", unset = live_shiny_app_url))
+if (!nzchar(shiny_app_url)) {
+  shiny_app_url <- live_shiny_app_url
+}
 has_shiny_target <- nzchar(shiny_app_url)
 is_local_target <- has_shiny_target && grepl("127\\.0\\.0\\.1|localhost", shiny_app_url)
 shiny_target_label <- if (!has_shiny_target) {
@@ -43,9 +47,9 @@ This page is the website entry point for the Shiny application.
 <div>`r if (has_shiny_target) shiny_app_url else "Not configured"`</div>
 </div>
 <div class="home-deliverable">
-<span>Run Command</span>
-<strong>`shiny::runApp(\"app\")`</strong>
-<div>`Rscript run_app.R 3838`</div>
+<span>Merged User Guide</span>
+<strong>[Open the full guide](./user-guide.html)</strong>
+<div>One combined walkthrough for visual analysis, clustering, and forecasting.</div>
 </div>
 :::
 
@@ -101,11 +105,11 @@ The current app reads from:
 - `data/processed/clustering_series_metadata.csv`
 - `data/raw/tourism_update.xlsx` for tourism-performance context
 
-## Deployment Switch
+## Local Run
 
 For local testing, start the app directly with `shiny::runApp("app")` or `Rscript run_app.R 3838`.
 
-When you are ready to switch to `shinyapps.io`, re-render the site with:
+If the deployment target ever changes, re-render the site with:
 
 ```powershell
 $env:SHINY_APP_URL='https://YOUR-APP-NAME.shinyapps.io/YOUR-APP/'

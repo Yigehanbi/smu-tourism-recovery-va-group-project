@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3df65affd6afc8f3370003f7c889d758.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a2b43b9e98a9be2d37f103d5bf3981bb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -138,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Poster</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./app-guide.html" aria-current="page"> 
+    <a class="nav-link" href="https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/"> 
 <span class="menu-text">Shiny App</span></a>
   </li>  
   <li class="nav-item">
@@ -177,6 +177,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Documentation</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-documentation">    
+        <li>
+    <a class="dropdown-item" href="./app-guide.html">
+ <span class="dropdown-text">Shiny App Guide</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="./Meeting Minutes/first-meeting-record.html">
  <span class="dropdown-text">First Meeting Record</span></a>
@@ -243,9 +247,9 @@ https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/
 </div>
 </div>
 <div class="home-deliverable">
-<span>Run Command</span> <strong><code>shiny::runApp(\"app\")</code></strong>
+<span>Merged User Guide</span> <strong><a href="./user-guide.html">Open the full guide</a></strong>
 <div>
-<code>Rscript run_app.R 3838</code>
+One combined walkthrough for visual analysis, clustering, and forecasting.
 </div>
 </div>
 </div>
@@ -313,10 +317,10 @@ https://zrwang2025mitbsmuedusg.shinyapps.io/singapore-tourism-va/
 <li><code>data/raw/tourism_update.xlsx</code> for tourism-performance context</li>
 </ul>
 </section>
-<section id="deployment-switch" class="level2">
-<h2 class="anchored" data-anchor-id="deployment-switch">Deployment Switch</h2>
+<section id="local-run" class="level2">
+<h2 class="anchored" data-anchor-id="local-run">Local Run</h2>
 <p>For local testing, start the app directly with <code>shiny::runApp("app")</code> or <code>Rscript run_app.R 3838</code>.</p>
-<p>When you are ready to switch to <code>shinyapps.io</code>, re-render the site with:</p>
+<p>If the deployment target ever changes, re-render the site with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">SHINY_APP_URL</span><span class="op">=</span><span class="st">'https://YOUR-APP-NAME.shinyapps.io/YOUR-APP/'</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>quarto render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That updates both the launch button and the embedded preview to the deployed app.</p>
