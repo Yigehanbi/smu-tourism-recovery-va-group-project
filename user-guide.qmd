@@ -10,12 +10,12 @@ format:
 
 The final user guide is delivered as a PDF document. Read it in the embedded viewer below, open it in a separate tab with the browser's PDF controls, or download it directly.
 
-[Open User Guide PDF in a New Tab](pdf/App_UserGuide_20260405.pdf){target="_blank" .btn-home-primary}
-[Download User Guide PDF](pdf/App_UserGuide_20260405.pdf){download="App_UserGuide_20260405.pdf" .btn-home-secondary}
+[Open User Guide PDF in a New Tab](/pdf/App_UserGuide_20260405.pdf){target="_blank" .btn-home-primary}
+[Download User Guide PDF](/pdf/App_UserGuide_20260405.pdf){download="App_UserGuide_20260405.pdf" .btn-home-secondary}
 
 ::: {.pdf-frame-wrap}
 <iframe
-  src="pdf/App_UserGuide_20260405.pdf#view=FitH"
+  src="/pdf/App_UserGuide_20260405.pdf#view=FitH"
   title="User Guide PDF"
   class="pdf-frame">
 </iframe>

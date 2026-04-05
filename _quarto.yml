@@ -1,8 +1,8 @@
-﻿project:
+project:
   type: website
   output-dir: docs
-  resources:
-    - "pdf/**"
+  post-render:
+    - powershell -NoProfile -ExecutionPolicy Bypass -File scripts/copy-user-guide-pdf.ps1
   render:
     - "*.qmd"
     - "prototype/*.qmd"
